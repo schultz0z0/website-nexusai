@@ -94,13 +94,17 @@ Versão: 0.1.0 · Última atualização: 2026-07-24
 
 ## 5. Raios
 
+**Padrão do KV**: `rounded-xl` (12px) é o raio padrão para containers (nav pill, box de destaque, drawer mobile, CTAs).
+Elementos internos (links, badges, hambúrguer-trigger quando h<12) usam `rounded-lg` (8px) para criar hierarquia visual sem fugir do padrão.
+
 Base shadcn: `0.625rem` (10px).
 
 | Token | Valor | Uso |
 |---|---|---|
-| `rounded-full` | `9999px` | Nav pill, CTA arredondado total |
-| `rounded-2xl` | `0.875rem` (14px) | Botões CTA, drawer mobile |
-| `rounded-xl` | `0.75rem` (12px) | Não usado ainda, disponível |
+| `rounded-full` | `9999px` | Não usado no KV atual (reservado pra avatares/circulos perfeitos) |
+| `rounded-xl` | `0.75rem` (12px) | **Padrão KV** — nav pill, CTAs, box destaque, drawer |
+| `rounded-lg` | `0.5rem` (8px) | Elementos internos: links do nav, badge "Nexus AI", CTA Falar |
+| `rounded-md` | `calc(var(--radius) * 0.8)` | Não usado |
 
 ---
 

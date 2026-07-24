@@ -412,6 +412,20 @@ export function PixelHero({
 
       {/* Top Container: Tahoe Glass Header */}
       <div className="flex flex-col items-center justify-center text-center order-1 pointer-events-none w-full">
+        <div className="relative isolate mb-4 md:mb-6 pointer-events-auto">
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 rounded-xl opacity-60 nexus-nav-sheen"
+          />
+          <div className="inline-flex items-center gap-3 rounded-xl bg-card/40 backdrop-blur-md px-3 py-2 ring-1 ring-border/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_4px_16px_rgba(0,0,0,0.3)]">
+            <span className="rounded-lg bg-foreground px-3 py-1 text-[10px] md:text-[11px] font-semibold uppercase tracking-wider text-background">
+              Nexus AI
+            </span>
+            <span className="pr-2 text-xs md:text-sm text-foreground/85 font-medium">
+              Stack 2026 · agentes em produção
+            </span>
+          </div>
+        </div>
         <h1 className="tahoe-glass-text flex flex-row items-center justify-center gap-1.5 sm:gap-3 md:gap-5 lg:gap-6 px-1 w-full flex-wrap text-[2.65rem] leading-[0.95] sm:text-5xl md:text-7xl lg:text-8xl">
           <span className="font-serif italic font-medium">{word1}</span>
           <span className="font-sans font-extrabold tracking-tighter">{word2}</span>
