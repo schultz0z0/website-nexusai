@@ -434,7 +434,7 @@ export function PixelHero({
 
       {/* Center Container: Description & Mobile Vector Marquee */}
       <div className="flex flex-col items-center justify-center text-center order-2 px-1 w-full pointer-events-none">
-        <p className="text-sm sm:text-lg md:text-xl font-light text-foreground/85 max-w-[95%] sm:max-w-md md:max-w-xl px-1 leading-relaxed">
+        <p className="text-lg sm:text-xl md:text-2xl font-normal text-foreground max-w-[95%] sm:max-w-xl md:max-w-2xl px-1 leading-snug">
           {description}
         </p>
 

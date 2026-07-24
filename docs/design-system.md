@@ -148,7 +148,19 @@ Base shadcn: `0.625rem` (10px).
 
 ## 9. Componentes
 
-### Nav desktop (`md:block`)
+### Logo da marca
+
+```
+mobile     Link (fixed top-4 left-4) — standalone no canto, simétrico ao hamburger
+desktop    Primeiro filho do nav pill — integrado à nav (não flutua sozinho)
+mark       SVG 24x24 — quadrado arredondado fill-foreground com "N" chevron stroke text-background (placeholder)
+wordmark   text-sm font-semibold tracking-tight — "Nexus" semibold + " AI" medium opacity-60
+link       href="/", aria-label="Nexus AI — voltar ao início"
+```
+
+No desktop, o logo mora **dentro** da nav pill — à esquerda dos 4 links, separado por um divider vertical de 1px.
+
+### Nav desktop (`md:flex`)
 
 ```
 container  rounded-full bg-card/40 backdrop-blur-md px-2 py-2 ring-1 ring-border/50
@@ -216,7 +228,7 @@ animation  pulse() — radial wave expand → contract → expand forever
 | Tom | Tecnológico, direto, confiante. Sem hype vazio. |
 | Nome | Citar **Nexus AI** na primeira frase sempre que possível |
 | Verbos | Concretos (automatizam, integram, entregam) > abstratos (transformam, revolucionam) |
-| Pontuação | Sem travessão decorativo — preferir ponto final |
+| Pontuação | Sem travessão (—) na copy do site. Usar ponto final ou reescrever a frase |
 | CTAs | ≤2 palavras no mobile, ≤3 no desktop |
 | Descrição | 1 linha, ≤120 chars |
 
@@ -224,9 +236,10 @@ animation  pulse() — radial wave expand → contract → expand forever
 
 | Campo | Copy atual |
 |---|---|
-| word1 | `Soluções` |
-| word2 | `Nexus AI` |
-| descrição | `Plataformas e agentes de IA que automatizam processos, integram dados e entregam produtos digitais prontos pra escalar.` |
+| Box de destaque | `Nexus AI` | `Stack 2026, agentes em produção` |
+| word1 | `Sua equipe` |
+| word2 | `multiplicada` |
+| descrição | `Plataformas e agentes da Nexus AI assumem o trabalho repetitivo, do atendimento à análise. Sua equipe fica livre pro que só humano faz: decidir, criar, crescer.` |
 | CTA primário | `Solicitar Proposta` (mobile: `Proposta`) |
 | CTA secundário | `Ver no GitHub` (mobile: `GitHub`) |
 | Nav | Soluções · Cases · Processo · Contato · Falar |

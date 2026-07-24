@@ -146,9 +146,18 @@
     "marquee-desktop": { "value": "10", "type": "number" }
   },
   "components": {
+    "brand-logo": {
+      "selector-mobile": "Link (fixed top-4 left-4) — standalone no canto",
+      "selector-desktop": "Primeiro filho do nav pill — integrado à nav",
+      "mark": "24x24 SVG — rounded square fill-foreground, 'N' chevron path stroke text-background. Placeholder, swap for official SVG.",
+      "wordmark": "text-sm font-semibold tracking-tight. 'Nexus' semibold + ' AI' medium com opacity 60%.",
+      "interactive": "href='/', aria-label='Nexus AI — voltar ao início', hover:text-foreground"
+    },
     "nav-desktop": {
-      "selector": "nav (fixed top-6 left-1/2)",
+      "selector": "nav (fixed top-6 left-1/2, hidden md:flex)",
       "container": "flex items-center gap-1 rounded-xl bg-card/40 backdrop-blur-md px-2 py-2 ring-1 ring-border/50",
+      "layout": "Logo | divider | 4 links | CTA — tudo na mesma pill",
+      "divider": "h-5 w-px bg-border/50 entre logo e primeiro link",
       "link": "px-4 py-2 text-sm font-medium text-foreground/85 hover:text-foreground rounded-lg hover:bg-foreground/5",
       "cta": "ml-1 h-9 px-4 gap-1.5 rounded-lg bg-gradient-to-b from-primary/90 to-primary text-xs font-semibold text-primary-foreground"
     },
@@ -192,10 +201,10 @@
   "voice": {
     "tone": "Tecnológico, direto, confiante. Sem hype vazio.",
     "language": "pt-BR",
-    "principles": [
+  "principles": [
       "Citar o nome da empresa (Nexus AI) na primeira frase sempre que possível",
       "Verbos concretos (automatizam, integram, entregam) em vez de abstratos (transformam, revolucionam)",
-      "Sem travessão decorativo — preferir ponto final",
+      "Sem travessão (—) na copy do site. Usar ponto final ou reescrever a frase",
       "CTAs curtos (≤2 palavras no mobile, ≤3 no desktop)"
     ]
   }

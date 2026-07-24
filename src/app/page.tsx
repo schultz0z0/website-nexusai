@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen bg-background">
       <PixelHero
-        word1="Soluções"
-        word2="Nexus AI"
-        description="Plataformas e agentes de IA que automatizam processos, integram dados e entregam produtos digitais prontos pra escalar."
+        word1="Sua equipe"
+        word2="multiplicada"
+        description="Plataformas e agentes da Nexus AI assumem o trabalho repetitivo, do atendimento à análise. Sua equipe fica livre pro que só humano faz: decidir, criar, crescer."
         primaryCta="Solicitar Proposta"
         primaryCtaMobile="Proposta"
         secondaryCta="Ver no GitHub"
