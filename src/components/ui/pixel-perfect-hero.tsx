@@ -463,9 +463,10 @@ export function PixelHero({
           Trusted by industry leaders
         </span>
         <div className="relative w-full max-w-5xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
-          <div className="flex w-max gap-16 py-3 animate-marquee">
-            <div className="flex gap-16 items-center">{BRAND_LOGOS.map((Logo, i) => <Logo key={i} />)}</div>
-            <div className="flex gap-16 items-center" aria-hidden="true">{BRAND_LOGOS.map((Logo, i) => <Logo key={`c-${i}`} />)}</div>
+          <div className="flex w-max animate-marquee">
+            {/* ponytail: gap only between logos inside one group; padding-right stitches the two groups so translateX(-50%) loops with no seam. */}
+            <div className="flex gap-16 items-center pr-16">{BRAND_LOGOS.map((Logo, i) => <Logo key={i} />)}</div>
+            <div className="flex gap-16 items-center pr-16" aria-hidden="true">{BRAND_LOGOS.map((Logo, i) => <Logo key={`c-${i}`} />)}</div>
           </div>
         </div>
       </div>

@@ -1,0 +1,196 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "Nexus AI Design System",
+  "version": "0.1.0",
+  "description": "Tokens extracted from src/app/globals.css and src/components/ui/pixel-perfect-hero.tsx. Source of truth is the code; this file is a machine-readable mirror.",
+  "color": {
+    "base": {
+      "background": { "value": "oklch(0.145 0 0)", "type": "color", "description": "Dark canvas background (forced dark theme)" },
+      "foreground": { "value": "oklch(0.985 0 0)", "type": "color", "description": "Primary text on dark surfaces" },
+      "card": { "value": "oklch(0.205 0 0)", "type": "color", "description": "Elevated surfaces (nav pill, secondary CTA)" },
+      "card-foreground": { "value": "oklch(0.985 0 0)", "type": "color" },
+      "popover": { "value": "oklch(0.205 0 0)", "type": "color" },
+      "popover-foreground": { "value": "oklch(0.985 0 0)", "type": "color" }
+    },
+    "brand": {
+      "primary": { "value": "oklch(0.922 0 0)", "type": "color", "description": "Primary CTA fill (near-white on dark)" },
+      "primary-foreground": { "value": "oklch(0.205 0 0)", "type": "color", "description": "Text on primary CTA (near-black)" },
+      "secondary": { "value": "oklch(0.269 0 0)", "type": "color" },
+      "secondary-foreground": { "value": "oklch(0.985 0 0)", "type": "color" },
+      "accent": { "value": "oklch(0.269 0 0)", "type": "color" },
+      "accent-foreground": { "value": "oklch(0.985 0 0)", "type": "color" },
+      "muted": { "value": "oklch(0.269 0 0)", "type": "color" },
+      "muted-foreground": { "value": "oklch(0.708 0 0)", "type": "color", "description": "Pixel canvas dots, secondary text" }
+    },
+    "border": {
+      "border": { "value": "oklch(1 0 0 / 10%)", "type": "color", "description": "Hairline borders on dark" },
+      "input": { "value": "oklch(1 0 0 / 15%)", "type": "color" },
+      "ring": { "value": "oklch(0.556 0 0)", "type": "color", "description": "Focus ring color" }
+    },
+    "state": {
+      "destructive": { "value": "oklch(0.704 0.191 22.216)", "type": "color" }
+    },
+    "decorative": {
+      "tahoe-glass-stops": {
+        "value": [
+          { "position": "0%", "color": "rgba(255, 255, 255, 1)" },
+          { "position": "25%", "color": "rgba(255, 255, 255, 0.4)" },
+          { "position": "45%", "color": "rgba(255, 255, 255, 0.1)" },
+          { "position": "55%", "color": "rgba(255, 255, 255, 0.9)" },
+          { "position": "75%", "color": "rgba(255, 255, 255, 0.2)" },
+          { "position": "100%", "color": "rgba(255, 255, 255, 1)" }
+        ],
+        "type": "gradient",
+        "description": "Tahoe glass text gradient (used on hero title)"
+      },
+      "tahoe-glass-stroke": { "value": "rgba(255, 255, 255, 0.3)", "type": "color", "description": "Text stroke for tahoe effect" },
+      "tahoe-glass-shadow": { "value": "drop-shadow(0 15px 35px rgba(0,0,0,0.4)) drop-shadow(0 5px 10px rgba(0,0,0,0.2))", "type": "shadow" },
+      "nav-sheen-stops": {
+        "value": [
+          { "position": "0%", "color": "rgba(255, 255, 255, 0)" },
+          { "position": "25%", "color": "rgba(255, 255, 255, 0.12)" },
+          { "position": "50%", "color": "rgba(255, 255, 255, 0.28)" },
+          { "position": "75%", "color": "rgba(255, 255, 255, 0.12)" },
+          { "position": "100%", "color": "rgba(255, 255, 255, 0)" }
+        ],
+        "type": "gradient",
+        "description": "Animated sheen across nav pill (12s loop)"
+      }
+    }
+  },
+  "typography": {
+    "font-family": {
+      "sans": { "value": "Space Grotesk", "type": "fontFamily", "description": "Primary — body, headings, UI" },
+      "mono": { "value": "Geist Mono", "type": "fontFamily" },
+      "serif": { "value": "serif", "type": "fontFamily", "description": "Browser default — used italic for hero word1" }
+    },
+    "font-size": {
+      "hero-title-mobile": { "value": "2.65rem", "type": "dimension", "description": "Mobile (default) — 42.4px" },
+      "hero-title-tablet": { "value": "3rem", "type": "dimension", "description": "sm: — 48px" },
+      "hero-title-desktop": { "value": "4.5rem", "type": "dimension", "description": "md: — 72px" },
+      "hero-title-wide": { "value": "6rem", "type": "dimension", "description": "lg: — 96px" },
+      "body-mobile": { "value": "0.875rem", "type": "dimension", "description": "14px — mobile description" },
+      "body-desktop": { "value": "1.125rem", "type": "dimension", "description": "18px — desktop description" },
+      "cta": { "value": "0.875rem", "type": "dimension", "description": "14px — primary/secondary CTA labels" },
+      "nav-link": { "value": "0.875rem", "type": "dimension", "description": "14px" },
+      "marquee-label-mobile": { "value": "10px", "type": "dimension", "description": "Trusted by label, mobile" },
+      "marquee-label-desktop": { "value": "0.75rem", "type": "dimension", "description": "12px, desktop" }
+    },
+    "font-weight": {
+      "light": { "value": "300", "type": "fontWeight" },
+      "regular": { "value": "400", "type": "fontWeight" },
+      "medium": { "value": "500", "type": "fontWeight" },
+      "semibold": { "value": "600", "type": "fontWeight" },
+      "bold": { "value": "700", "type": "fontWeight" },
+      "extrabold": { "value": "800", "type": "fontWeight" }
+    },
+    "line-height": {
+      "hero-title": { "value": "0.95", "type": "number", "description": "Tight — keeps title compact in 2-word layout" }
+    },
+    "letter-spacing": {
+      "tahoe-stroke": { "value": "1.5px", "type": "dimension" },
+      "marquee-label": { "value": "0.18em", "type": "dimension", "description": "Uppercase tracking for 'Trusted by' label" }
+    }
+  },
+  "spacing": {
+    "page-padding-mobile": { "value": "1rem", "type": "dimension", "description": "px-4 — mobile" },
+    "page-padding-desktop": { "value": "1.5rem", "type": "dimension", "description": "sm:px-6 — tablet+" },
+    "hero-section-gap-mobile": { "value": "1.75rem", "type": "dimension", "description": "gap-7 — between title/desc/cta mobile" },
+    "hero-section-gap-desktop": { "value": "1.5rem", "type": "dimension", "description": "md:gap-6" },
+    "hero-vertical-padding-mobile": { "value": "5rem", "type": "dimension", "description": "py-20 — reserves space for floating hamburger" },
+    "cta-button-height": { "value": "3rem", "type": "dimension", "description": "h-12 — 48px touch target" },
+    "cta-gap": { "value": "0.75rem", "type": "dimension", "description": "gap-3 — between stacked CTAs mobile" },
+    "marquee-gap": { "value": "4rem", "type": "dimension", "description": "gap-16 — between logos in marquee (desktop)" },
+    "marquee-gap-mobile": { "value": "2rem", "type": "dimension", "description": "gap-8 — mobile" },
+    "marquee-pr": { "value": "4rem", "type": "dimension", "description": "pr-16 — stitches the two duplicated groups for seamless loop" }
+  },
+  "radius": {
+    "base": { "value": "0.625rem", "type": "dimension", "description": "10px — shadcn radius token" },
+    "sm": { "value": "calc(var(--radius) * 0.6)", "type": "dimension", "description": "6px" },
+    "md": { "value": "calc(var(--radius) * 0.8)", "type": "dimension", "description": "8px" },
+    "lg": { "value": "0.625rem", "type": "dimension", "description": "10px" },
+    "xl": { "value": "calc(var(--radius) * 1.4)", "type": "dimension", "description": "14px" },
+    "2xl": { "value": "calc(var(--radius) * 1.8)", "type": "dimension", "description": "18px" },
+    "3xl": { "value": "calc(var(--radius) * 2.2)", "type": "dimension", "description": "22px" },
+    "4xl": { "value": "calc(var(--radius) * 2.6)", "type": "dimension", "description": "26px" },
+    "full": { "value": "9999px", "type": "dimension", "description": "Used for nav pill and avatar-ish shapes" }
+  },
+  "shadow": {
+    "nav-pill": { "value": "inset 0 1px 1px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.3)", "type": "shadow" },
+    "nav-drawer": { "value": "0 8px 32px rgba(0,0,0,0.4)", "type": "shadow" },
+    "cta-primary": { "value": "inset 0 1px 1px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.15), 0 12px 24px rgba(0,0,0,0.15)", "type": "shadow" },
+    "cta-secondary": { "value": "inset 0 1px 1px rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.05), 0 12px 24px rgba(0,0,0,0.05)", "type": "shadow" },
+    "ring-primary": { "value": "0 0 0 1px oklch(0.922 0 0 / 20%)", "type": "shadow", "description": "Primary CTA hairline ring" }
+  },
+  "motion": {
+    "tahoe-shimmer": { "value": "8s linear infinite", "type": "duration", "description": "Hero title gradient sweep" },
+    "nav-sheen": { "value": "12s linear infinite", "type": "duration", "description": "Nav pill animated highlight" },
+    "marquee": { "value": "25s linear infinite", "type": "duration", "description": "Logo marquee scroll" },
+    "cta-press": { "value": "200ms ease-out", "type": "duration", "description": "Hover/active scale transition" },
+    "drawer-open": { "value": "300ms ease-out", "type": "duration", "description": "Mobile menu drawer fade+scale" },
+    "hero-enter": { "value": "1000ms ease-out", "type": "duration", "description": "Hero CTA/marquee fade-in on mount" },
+    "pixel-pulse-step": { "value": "0.012", "type": "number", "description": "Step = maxSize * 0.012 per frame; full breathing cycle ~3-4s" },
+    "pixel-canvas-opacity": { "value": "0.35", "type": "number", "description": "Hero canvas dot opacity" },
+    "canvas-gap": { "value": "6", "type": "dimension", "description": "px between canvas dots" }
+  },
+  "breakpoint": {
+    "sm": { "value": "640px", "type": "dimension" },
+    "md": { "value": "768px", "type": "dimension", "description": "Hero switches from mobile (stacked) to desktop (pill nav, side-by-side CTAs)" },
+    "lg": { "value": "1024px", "type": "dimension" }
+  },
+  "z-index": {
+    "canvas": { "value": "0", "type": "number" },
+    "nav-mobile-drawer": { "value": "40", "type": "number" },
+    "nav-mobile-button": { "value": "50", "type": "number" },
+    "nav-desktop": { "value": "50", "type": "number" },
+    "marquee-desktop": { "value": "10", "type": "number" }
+  },
+  "components": {
+    "nav-desktop": {
+      "selector": "nav (fixed top-6 left-1/2)",
+      "container": "flex items-center gap-1 rounded-full bg-card/40 backdrop-blur-md px-2 py-2 ring-1 ring-border/50",
+      "link": "px-4 py-2 text-sm font-medium text-foreground/85 hover:text-foreground rounded-full hover:bg-foreground/5",
+      "cta": "ml-1 h-9 px-4 gap-1.5 rounded-full bg-gradient-to-b from-primary/90 to-primary text-xs font-semibold text-primary-foreground"
+    },
+    "nav-mobile": {
+      "trigger": "fixed top-4 right-4 h-11 w-11 rounded-full bg-card/60 backdrop-blur-md",
+      "drawer": "rounded-2xl bg-card/70 backdrop-blur-xl ring-1 ring-border/50",
+      "link": "px-4 py-3.5 text-base font-medium text-foreground/90 hover:bg-foreground/5 rounded-xl",
+      "cta": "px-4 py-3 rounded-xl bg-gradient-to-b from-primary/90 to-primary text-sm font-semibold"
+    },
+    "cta-primary": {
+      "shape": "h-12 px-6 md:px-8 rounded-xl",
+      "fill": "bg-gradient-to-b from-primary/90 to-primary",
+      "text": "text-sm font-semibold text-primary-foreground",
+      "press": "hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200"
+    },
+    "cta-secondary": {
+      "shape": "h-12 px-6 md:px-8 rounded-xl",
+      "fill": "bg-gradient-to-b from-card/80 to-card backdrop-blur-md",
+      "text": "text-sm font-semibold text-card-foreground",
+      "press": "hover:scale-[1.02] active:scale-[0.98] transition-transform duration-200"
+    },
+    "hero-title": {
+      "mobile": "text-[2.65rem] leading-[0.95]",
+      "tablet": "sm:text-5xl",
+      "desktop": "md:text-7xl",
+      "wide": "lg:text-8xl",
+      "effect": ".tahoe-glass-text (defined in globals.css @layer components)"
+    },
+    "canvas": {
+      "wrapper": "absolute inset-0 z-0 pointer-events-none",
+      "selector": ".pixel-canvas-fade (opacity 0.35, fade-in 1.2s)",
+      "animation": "pulse — radial wave expand→contract→expand, floor at 25% maxSize"
+    }
+  },
+  "voice": {
+    "tone": "Tecnológico, direto, confiante. Sem hype vazio.",
+    "language": "pt-BR",
+    "principles": [
+      "Citar o nome da empresa (Nexus AI) na primeira frase sempre que possível",
+      "Verbos concretos (automatizam, integram, entregam) em vez de abstratos (transformam, revolucionam)",
+      "Sem travessão decorativo — preferir ponto final",
+      "CTAs curtos (≤2 palavras no mobile, ≤3 no desktop)"
+    ]
+  }
+}
