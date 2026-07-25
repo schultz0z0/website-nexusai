@@ -119,7 +119,7 @@ function HeroSection() {
     <CinematicHero
       brandName="Nexus AI"
       tagline1="Sua equipe"
-      tagline2="multiplicada"
+            tagline2="multiplicada por IA"
       cardHeading="A gente encontra o gargalo da sua operação e entrega a automação."
       cardDescription={
         <>
