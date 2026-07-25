@@ -129,6 +129,25 @@
   }
 }
 
+/* ponytail: pre-hide cinematic elements until GSAP runs, eliminating
+   the SSR/CSR flash on first paint. Removed by JS once mounted.
+   ponytail ceiling: relies on the CinematicHero component adding
+   `.cinematic-ready` to its container in useLayoutEffect. */
+.cinematic-pre-init .text-track,
+.cinematic-pre-init .text-days,
+.cinematic-pre-init .main-card,
+.cinematic-pre-init .mockup-scroll-wrapper,
+.cinematic-pre-init .phone-widget,
+.cinematic-pre-init .floating-badge,
+.cinematic-pre-init .card-left-text,
+.cinematic-pre-init .card-right-text,
+.cinematic-pre-init .cta-wrapper {
+  visibility: hidden;
+}
+.cinematic-pre-init .main-card {
+  transform: translateY(100vh);
+}
+
 @layer components {
   .tahoe-glass-text {
     color: transparent;

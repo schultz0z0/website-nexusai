@@ -208,15 +208,20 @@ export function CinematicHero({
   const requestRef = useRef<number>(0);
 
   // ponytail: inject styles once via useLayoutEffect (avoids hydration mismatch
-  // and double-injection under React 19 strict mode)
+  // and double-injection under React 19 strict mode); also strip pre-init class
+  // so SSR-hidden elements become visible only after GSAP has set initial state.
   useLayoutEffect(() => {
     if (typeof document === "undefined") return;
     const id = "cinematic-hero-styles";
-    if (document.getElementById(id)) return;
-    const el = document.createElement("style");
-    el.id = id;
-    el.textContent = INJECTED_STYLES;
-    document.head.appendChild(el);
+    if (!document.getElementById(id)) {
+      const el = document.createElement("style");
+      el.id = id;
+      el.textContent = INJECTED_STYLES;
+      document.head.appendChild(el);
+    }
+    if (containerRef.current) {
+      containerRef.current.classList.remove("cinematic-pre-init");
+    }
     return () => {
       const cur = document.getElementById(id);
       if (cur) cur.remove();
@@ -318,7 +323,10 @@ export function CinematicHero({
   return (
     <div
       ref={containerRef}
-      className={cn("relative w-screen h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased", className)}
+      className={cn(
+        "cinematic-pre-init relative w-screen h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased",
+        className,
+      )}
       style={{ perspective: "1500px" }}
       {...props}
     >
