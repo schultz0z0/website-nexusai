@@ -15,6 +15,7 @@
 - Tailwind v4 + shadcn (slate base, dark forçado)
 - next/font/google: Space Grotesk (display+body), JetBrains Mono (reservado)
 - lucide-react (ícones)
+- GSAP 3 (ScrollTrigger plugin) — animação pin/scrub da home (Fase 3)
 - Sem libs novas sem justificar — adicionar custa
 
 ## Estrutura final do site
@@ -72,7 +73,35 @@ Total: **4 páginas + footer global + nav atualizada**.
 
 ---
 
-### Fase 3 — Form funcional
+### Fase 3 — Home cinemática (multiatos pinned)
+**Objetivo:** substituir a estrutura atual da home (1 hero + 8 seções scrollando normal) por **9 atos cinemáticos encadeados via scroll-pin contínuo**, preservando o KV atual.
+
+**Escopo:**
+- 9 atos: Hero (cinemático puro) → Manifesto (preservado) → Métricas (counter stagger) → Pilares (dominó 3D) → 2 Showcases (preservados) → Bento (scale+blur) → Stack → CTA Final (pulse) → FAQ
+- Pin global: ~3.000vh de pin ativo + ~600vh rolando normal entre Stack e FAQ
+- GSAP + ScrollTrigger (lib nova — justificável pelo scrub pin)
+- `StockMockDashboard` dentro do card profundo do ato Hero (substitui o iPhone da referência)
+- Mockup type: `StockMockDashboard` no Hero; `CopilotMockDashboard` no showcase
+- Scroll-pin: SIM — todo o scroll da home é pinado entre os atos
+- KV preservado integralmente via `src/lib/content.ts` (nenhuma copy nova hardcoded)
+
+**Dependência:** nenhuma técnica; PRD pronto em `docs/prd/fase-3-home-cinematica.md` e desenho técnico em `docs/tech-design/fase-3.md`.
+
+**Aceite:**
+- [ ] `src/lib/content.ts` continua sendo single source of truth (sem copy nova hardcoded)
+- [ ] 9 atos visíveis com KV idêntico ao atual
+- [ ] Hero mostra `StockMockDashboard` dentro do card azul profundo
+- [ ] Mockup tilt reativo a mouse (desktop); mobile ignora
+- [ ] Manifesto preserva mecânica atual sem regressão visual
+- [ ] Pin global funciona do topo ao footer; nenhum ato pula
+- [ ] Mobile (375px): scroll-pin funciona; 3D tilt desabilitado
+- [ ] `prefers-reduced-motion: reduce` desabilita parallax + scrub
+- [ ] `next build` passa
+- [ ] `browser_vision` no `localhost:3000` confirma cada ato
+
+---
+
+### Fase 4 — Form funcional
 **Objetivo:** lead chega no email, não fica preso no form.
 
 **Escopo:**

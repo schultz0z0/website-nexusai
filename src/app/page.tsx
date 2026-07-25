@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { PixelHero } from "@/components/ui/pixel-perfect-hero";
+import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
 import { BackgroundCanvas } from "@/components/background-canvas";
 import { JsonLd } from "@/components/json-ld";
 import { TiltCard } from "@/components/tilt-card";
@@ -73,7 +73,7 @@ export default function Home() {
       <JsonLd schema={[orgSchema, siteSchema]} />
 
       {/* HERO */}
-      <HeroSection />
+            <HeroSection />
 
       {/* MANIFESTO */}
       <ManifestoSection />
@@ -126,26 +126,23 @@ export default function Home() {
 
 function HeroSection() {
   return (
-    <div className="relative w-full">
-      <BackgroundCanvas variant="home" />
-      <PixelHero
-        word1="Sua equipe"
-        word2="multiplicada"
-        description="Plataformas e agentes da Nexus AI assumem o trabalho repetitivo, do atendimento à análise. Sua equipe fica livre pro que só humano faz: decidir, criar, crescer."
-        primaryCta="Solicitar Proposta"
-        primaryCtaMobile="Proposta"
-        secondaryCta="Ver processo"
-        secondaryCtaMobile="Processo"
-        primaryHref="/contato"
-        githubUrl="/processo"
-      />
-      {/* Trust strip — pequeno, logo abaixo do hero */}
-      <div className="relative z-10 px-4 pb-12 md:pb-16 text-center">
-        <p className="text-xs md:text-sm text-foreground/55 uppercase tracking-[0.18em]">
-          Plataforma e agentes em produção · Resposta humana em até 24h úteis · Sem lock-in
-        </p>
-      </div>
-    </div>
+    <CinematicHero
+      brandName="Nexus AI"
+      tagline1="Sua equipe"
+      tagline2="multiplicada"
+      cardHeading="Plataformas que assumem o trabalho repetitivo."
+      cardDescription={
+        <>
+          <span className="text-white font-semibold">Nexus AI</span> entrega
+          agentes e plataformas de IA que tiram do caminho da sua equipe tudo
+          que é repetitivo, do atendimento à análise.
+        </>
+      }
+      metricValue={12}
+      metricLabel="Implantações ativas"
+      ctaHeading="Pronto pra liberar sua equipe?"
+      ctaDescription="Diagnóstico inicial é gratuito. Você sai com clareza sobre o que automatizar, em que ordem e quanto custa."
+    />
   );
 }
 
