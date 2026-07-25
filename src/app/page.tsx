@@ -10,13 +10,10 @@ import {
   Package,
   Sparkles,
   Bot,
-  Zap,
-  X,
 } from "lucide-react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useRef } from "react";
 import { CinematicHero } from "@/components/ui/cinematic-landing-hero";
-import { BackgroundCanvas } from "@/components/background-canvas";
 import { JsonLd } from "@/components/json-ld";
 import { TiltCard } from "@/components/tilt-card";
 import { CountUp } from "@/components/count-up";
@@ -28,7 +25,6 @@ import {
   CopilotMockDashboard,
 } from "@/components/mock-dashboards";
 import {
-  MANIFESTO_CHUNKS,
   METRICAS,
   PILARES,
   STACK,
@@ -37,11 +33,8 @@ import {
   COMPANY,
 } from "@/lib/content";
 
-const MANIFESTO_ICONS = { Compass, Zap, X, Users };
-
-// ponytail: metadata is exported from ./metadata.ts (server-only) since page.tsx
-// is "use client" and Next disallows metadata export from client components.
-
+// ponytail: Manifesto foi absorvido pelo card azul profundo do CinematicHero
+// (4 chunks → 1 parágrafo direto). Mantido Manifesto removido: 1 seção a menos.
 const PILLAR_ICONS = { Compass, Layers, GitBranch, Users };
 const CAPABILITY_ICONS = { Package, Sparkles, Bot, Compass };
 
@@ -75,11 +68,8 @@ export default function Home() {
       {/* HERO */}
             <HeroSection />
 
-      {/* MANIFESTO */}
-      <ManifestoSection />
-
-      {/* MÉTRICAS */}
-      <MetricasSection />
+            {/* MÉTRICAS */}
+            <MetricasSection />
 
       {/* PILARES */}
       <PilaresSection />
@@ -130,12 +120,12 @@ function HeroSection() {
       brandName="Nexus AI"
       tagline1="Sua equipe"
       tagline2="multiplicada"
-      cardHeading="Plataformas que assumem o trabalho repetitivo."
+      cardHeading="A gente encontra o gargalo da sua operação e entrega a automação."
       cardDescription={
         <>
-          <span className="text-white font-semibold">Nexus AI</span> entrega
-          agentes e plataformas de IA que tiram do caminho da sua equipe tudo
-          que é repetitivo, do atendimento à análise.
+          Plataformas e agentes de IA sob medida, sem slides de 80 páginas,
+          sem SaaS engessado, sem lock-in. Sua equipe entende, opera e fica
+          livre pro que só humano faz.
         </>
       }
       metricValue={12}
@@ -143,321 +133,6 @@ function HeroSection() {
       ctaHeading="Pronto pra liberar sua equipe?"
       ctaDescription="Diagnóstico inicial é gratuito. Você sai com clareza sobre o que automatizar, em que ordem e quanto custa."
     />
-  );
-}
-
-/**
- * Manifesto: scroll-pinned story (estilo Apple product page).
- * A seção é 4 viewports de altura; dentro dela um painel sticky h-screen
- * cicla 1→2→3→4 conforme o scroll, com flip 3D por palavra em cada frase.
- * Só libera o scroll normal depois da quarta frase.
- *
- * Mobile usa h-[400svh] + sticky h-[100svh] pra não pular com address bar.
- * ponytail: sem libs novas — só useScroll + useTransform. Teto: 4 cenas;
- * se crescer, calcular ranges dinâmico via MANIFESTO_CHUNKS.length.
- */
-function ManifestoSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
-  // Bounds em ref mutável (não re-renderiza). useScroll+offset+sticky buga
-  // no framer — mede manualmente. range = 0: top da seção no top do viewport;
-  // 1: bottom da seção no bottom do viewport. Recalcula no resize.
-  const bounds = useRef<{ start: number; end: number }>({ start: 0, end: 1 });
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const measure = () => {
-      if (!ref.current) return;
-      const top = ref.current.offsetTop;
-      const h = ref.current.offsetHeight;
-      const vh = window.innerHeight;
-      bounds.current = { start: top, end: top + h - vh };
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-  const progress = useTransform(scrollY, (y) => {
-    const { start, end } = bounds.current;
-    if (end <= start) return 0;
-    return Math.min(1, Math.max(0, (y - start) / (end - start)));
-  });
-
-  return (
-    <section
-      ref={ref}
-      // 5 viewports = 1.25vh por cena. Sem wallpaper, o conteúdo cabe
-      // confortavelmente em 1 viewport sticky; range extra só pro scroll
-      // pin funcionar.
-      className="relative z-10 h-[500svh] md:h-[500vh]"
-      aria-label="Manifesto Nexus AI"
-    >
-      <div className="sticky top-0 h-[100svh] md:h-screen overflow-hidden flex items-center">
-        <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6">
-          <AnimatedItem className="absolute -top-10 md:-top-14 left-4 sm:left-6 text-xs md:text-sm font-semibold text-foreground/55 uppercase tracking-[0.2em]">
-            Por que Nexus AI
-          </AnimatedItem>
-
-          <ProgressDots progress={progress} />
-
-          <div className="relative w-full">
-            {MANIFESTO_CHUNKS.map((chunk, i) => {
-              const Icon =
-                MANIFESTO_ICONS[chunk.icon as keyof typeof MANIFESTO_ICONS];
-              const start = i / MANIFESTO_CHUNKS.length;
-              const end = (i + 1) / MANIFESTO_CHUNKS.length;
-              return (
-                <ManifestoScene
-                  key={chunk.n}
-                  n={chunk.n}
-                  title={chunk.title}
-                  text={chunk.text}
-                  Icon={Icon}
-                  start={start}
-                  end={end}
-                  progress={progress}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** 4 dots no topo direito. Dot ativo "enche" conforme o scroll cruza a faixa. */
-function ProgressDots({
-  progress,
-}: {
-  progress: import("framer-motion").MotionValue<number>;
-}) {
-  return (
-    <div
-      aria-hidden
-      className="absolute top-0 right-4 sm:right-6 flex items-center gap-1.5"
-    >
-      {MANIFESTO_CHUNKS.map((_, i) => {
-        const start = i / MANIFESTO_CHUNKS.length;
-        const end = (i + 1) / MANIFESTO_CHUNKS.length;
-        return (
-          <ProgressDot key={i} start={start} end={end} progress={progress} />
-        );
-      })}
-    </div>
-  );
-}
-
-function ProgressDot({
-  start,
-  end,
-  progress,
-}: {
-  start: number;
-  end: number;
-  progress: import("framer-motion").MotionValue<number>;
-}) {
-  // Barra enche só na PRIMEIRA metade do range; a partir de 50% fica cheia.
-  // A "barra na metade" significa "texto já formado 100%" → leitura nos
-  // 50% finais. Com clamp: true, fora do range o valor é 0 (antes) ou 1
-  // (depois) conforme apropriado.
-  const mid = start + (end - start) * 0.5;
-  const fill = useTransform(
-    progress,
-    [start, mid, end],
-    [0, 1, 1],
-    { clamp: true },
-  );
-  return (
-    <span className="relative inline-block h-1 w-6 rounded-full bg-foreground/15 overflow-hidden">
-      <motion.span
-        style={{ scaleX: fill }}
-        className="absolute inset-0 origin-left bg-foreground/60"
-      />
-    </span>
-  );
-}
-
-/**
- * Cena individual. Empilhada absolute; visibility + translate + blur
- * atrelados a [start, end] do scrollYProgress. Dentro do texto, flip 3D
- * por palavra proporcional ao range da cena.
- *
- * ponytail: opacity 0→1→1→0 em [start-0.05, start+0.05, end-0.05, end+0.05]
- * suaviza overlap entre cenas. Overlap de 0.05 = 5% do scroll por cena.
- */
-function ManifestoScene({
-  n,
-  title,
-  text,
-  Icon,
-  start,
-  end,
-  progress,
-}: {
-  n: string;
-  title: string;
-  text: string;
-  Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  start: number;
-  end: number;
-  progress: import("framer-motion").MotionValue<number>;
-}) {
-  // Cena 1: visível desde o início.
-  // Cena 4: trava no final.
-  // Cenas 2-3: fade-in 30% do range da cena, fade-out 15%. Janela leitura
-  // (opacity 1) = 30% → 85% do range = 55%.
-  // 50% do range = cena 100% + flip 3D concluído + barra ProgressDot cheia.
-  const isFirst = start === 0;
-  const isLast = end === 1;
-  const range = end - start;
-  const fadeIn = isFirst ? 0 : range * 0.3;
-  const fadeOut = isLast ? 0 : range * 0.15;
-  const opacity = useTransform(
-    progress,
-    isFirst
-      ? [0, 0, end - fadeOut, end]
-      : isLast
-        ? [0, start, start + fadeIn, end, 1]
-        : [0, start, start + fadeIn, end - fadeOut, end],
-    isFirst
-      ? [1, 1, 1, 0]
-      : isLast
-        ? [0, 0, 1, 1, 1]
-        : [0, 0, 1, 1, 0],
-    { clamp: true },
-  );
-  const y = useTransform(
-    progress,
-    isFirst
-      ? [0, 0, end - fadeOut, end]
-      : isLast
-        ? [0, start, start + fadeIn, end, 1]
-        : [0, start, start + fadeIn, end - fadeOut, end],
-    isFirst
-      ? [0, 0, 0, -60]
-      : isLast
-        ? [60, 60, 0, 0, 0]
-        : [60, 60, 0, 0, -60],
-    { clamp: true },
-  );
-
-  const words = text.split(/(\s+)/);
-  const wordCount = words.filter((x) => !/\s+/.test(x)).length;
-
-  return (
-    <motion.div
-      style={{ opacity, y }}
-      className="absolute inset-0 grid grid-cols-1 md:grid-cols-[140px_1fr] gap-6 md:gap-12 items-center"
-    >
-      <div className="flex md:flex-col items-start gap-4 md:gap-3">
-        <span className="text-5xl md:text-6xl font-semibold text-foreground/30 tabular-nums tracking-tighter leading-none">
-          {n}
-        </span>
-        <div className="flex items-center gap-2">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-foreground/[0.05] ring-1 ring-border/60 text-foreground/65">
-            <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
-          </span>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/55">
-            {title}
-          </span>
-        </div>
-      </div>
-
-      <p
-        className="relative text-2xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.2] text-foreground"
-        style={{ perspective: "1200px" }}
-      >
-        {words.map((w, i) => {
-          if (/\s+/.test(w)) return <span key={i}>{w}</span>;
-          const wordIdx = words
-            .slice(0, i)
-            .filter((x) => !/\s+/.test(x)).length;
-          // Cena 1: palavras estáticas, sem flip 3D (já devem estar visíveis
-          // ao entrar na seção). Cenas 2-4: flip 3D scroll-linked com clamp
-          // pra não virem fantasma em progress=0.
-          if (start === 0) {
-            return (
-              <span key={i} className="inline-block">
-                {w}
-              </span>
-            );
-          }
-          // Flip 3D cobre só a PRIMEIRA METADE do range da cena. Nos 50%
-          // finais, palavras já estão 100% formadas (rotateX 0, opacity 1)
-          // — coincide com a barra do ProgressDot cheia. Leitura nos 50%
-          // finais é ininterrupta.
-          const wStart = start + (wordIdx / wordCount) * 0.5 * (end - start);
-          const wEnd = start + ((wordIdx + 1) / wordCount) * 0.5 * (end - start);
-          return (
-            <ScrollWord
-              key={i}
-              start={wStart}
-              end={wEnd}
-              progress={progress}
-            >
-              {w}
-            </ScrollWord>
-          );
-        })}
-      </p>
-    </motion.div>
-  );
-}
-
-/**
- * Palavra com flip 3D scroll-linked. rotateX 90°→0° + opacity 0.15→1 + y 14→0
- * mapeado para [start, end] do scrollYProgress dividido por palavra.
- * ponytail: ~30 instâncias por linha × 4 linhas = 120 nodes. Framer lida
- * bem. Teto conhecido: 8 linhas; acima disso, agrupar chunks.
- */
-function ScrollWord({
-  start,
-  end,
-  progress,
-  initialVisible = false,
-  children,
-}: {
-  start: number;
-  end: number;
-  progress: import("framer-motion").MotionValue<number>;
-  /** cena 1: palavras já visíveis no start, sem flip 3D (range do scroll). */
-  initialVisible?: boolean;
-  children: string;
-}) {
-  // initialVisible: cena 1 nasce visível. Se o progress ficar < start (cross
-  // fade da cena anterior), mantém rotateX 0 / opacity 1 — não vira fantasma.
-  const rotateX = useTransform(
-    progress,
-    [start, end],
-    [90, 0],
-    { clamp: true },
-  );
-  const opacity = useTransform(
-    progress,
-    [start, end],
-    [0.15, 1],
-    { clamp: true },
-  );
-  const y = useTransform(
-    progress,
-    [start, end],
-    [14, 0],
-    { clamp: true },
-  );
-  return (
-    <motion.span
-      style={{
-        rotateX: initialVisible ? 0 : rotateX,
-        opacity: initialVisible ? 1 : opacity,
-        y: initialVisible ? 0 : y,
-        transformStyle: "preserve-3d",
-        transformOrigin: "50% 100%",
-      }}
-      className="inline-block"
-    >
-      {children}
-    </motion.span>
   );
 }
 
