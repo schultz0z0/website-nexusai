@@ -1,0 +1,283 @@
+/**
+ * Single source of truth for site copy. Edit here, propagates everywhere.
+ * Used by /solucoes, /processo, /, /contato (timeline refs message copy).
+ */
+
+import {
+  MessageCircle,
+  TrendingUp,
+  PackageSearch,
+  BarChart3,
+  Plug,
+  Cog,
+  type LucideIcon,
+} from "lucide-react";
+
+export type Area = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  example: string;
+};
+
+export const AREAS: readonly Area[] = [
+  {
+    icon: MessageCircle,
+    title: "Atendimento ao cliente",
+    desc: "Agentes que respondem, qualificam e escalam conversas 24/7.",
+    example: "Chatbot no WhatsApp que filtra leads antes de passar pro time comercial.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Marketing e vendas",
+    desc: "Automação de campanhas, nutrição de leads e follow-up personalizado.",
+    example: "Sequência de e-mails que reativa leads frios com base no comportamento deles.",
+  },
+  {
+    icon: PackageSearch,
+    title: "Controle de estoque com IA",
+    desc: "Previsão de demanda, alertas de ruptura e reposição automática.",
+    example: "Sistema que antecipa quando um SKU vai acabar e gera pedido de compra pro fornecedor.",
+  },
+  {
+    icon: BarChart3,
+    title: "Análise de dados",
+    desc: "Relatórios e dashboards gerados a partir dos seus dados internos.",
+    example: "Relatório semanal de vendas montado automaticamente com insights das variações.",
+  },
+  {
+    icon: Plug,
+    title: "Integração de sistemas",
+    desc: "Pontes entre as ferramentas que sua equipe já usa.",
+    example: "Sincronizar pedidos do e-commerce com o ERP sem digitação manual.",
+  },
+  {
+    icon: Cog,
+    title: "Operações internas",
+    desc: "Automação de processos repetitivos do dia a dia.",
+    example: "Aprovação de cadastros, follow-up de clientes que pararam de responder.",
+  },
+] as const;
+
+export type Etapa = {
+  n: string;
+  title: string;
+  prazo: string;
+  desc: string;
+  entregaveis: readonly string[];
+};
+
+export const ETAPAS: readonly Etapa[] = [
+  {
+    n: "01",
+    title: "Diagnóstico",
+    prazo: "1 a 2 semanas",
+    desc: "Conversa com a equipe, mapeamento de gargalos e definição de escopo. Saímos com um diagnóstico escrito.",
+    entregaveis: [
+      "Mapa de processos atuais com gargalos identificados",
+      "Lista priorizada de oportunidades com impacto estimado",
+      "Diagnóstico escrito entregue pra sua equipe",
+    ],
+  },
+  {
+    n: "02",
+    title: "Proposta",
+    prazo: "1 semana",
+    desc: "Escopo detalhado, prazo, investimento e ROI esperado. Sem letra miúda.",
+    entregaveis: [
+      "Proposta técnica com escopo, prazo e investimento por etapa",
+      "Critérios de aceite claros pra cada entrega",
+      "Estimativa de ROI baseada nos dados do diagnóstico",
+    ],
+  },
+  {
+    n: "03",
+    title: "Implementação",
+    prazo: "4 a 12 semanas",
+    desc: "Desenvolvimento, integração com sistemas da empresa e testes com sua equipe. Você acompanha de perto.",
+    entregaveis: [
+      "Solução rodando em produção integrada à sua stack",
+      "Treinamento da equipe que vai operar",
+      "Documentação técnica + guia de uso",
+    ],
+  },
+  {
+    n: "04",
+    title: "Suporte contínuo",
+    prazo: "Mensal",
+    desc: "Monitoramento, ajustes e evolução conforme o uso real aparece.",
+    entregaveis: [
+      "Dashboard de saúde da solução",
+      "Relatório mensal de uso e oportunidades de melhoria",
+      "Ajustes incluídos no contrato",
+    ],
+  },
+] as const;
+
+export type FaqItem = { q: string; a: string };
+
+export const FAQ_ITEMS: readonly FaqItem[] = [
+  {
+    q: "Quanto custa?",
+    a: "Depende do escopo. O diagnóstico inicial é gratuito e a proposta vem com valores claros por etapa. Sem surpresa no final.",
+  },
+  {
+    q: "Quanto tempo até ver resultado?",
+    a: "Primeiros ganhos operacionais entre 4 e 8 semanas após o implementação começar. O diagnóstico já entrega valor por si só.",
+  },
+  {
+    q: "Vocês integram com [ferramenta X]?",
+    a: "Provavelmente sim. Integramos com a stack que sua empresa já usa — listamos as integrações cobertas na proposta.",
+  },
+  {
+    q: "E se não funcionar?",
+    a: "Cada entrega tem critério de aceite combinado com você. Se não atender, ajustamos sem custo extra antes de seguir.",
+  },
+  {
+    q: "Vocês atendem [setor X]?",
+    a: "Atendemos qualquer empresa com processo repetitivo ou dado subutilizado. Setor não é barreira — já atuamos em indústria, serviços, e-commerce e tech.",
+  },
+  {
+    q: "Preciso ter equipe técnica?",
+    a: "Não. A gente opera. Você acompanha resultado. Se sua equipe quiser aprender a manter internamente depois, a gente transfere.",
+  },
+] as const;
+
+export const PRA_QUEM_E = [
+  "Empresa com processo repetitivo tomando tempo de equipe qualificada",
+  "Dados internos subutilizados que gerariam decisão melhor se analisados",
+  "Ferramentas que não conversam entre si e travam a operação",
+  "Resultado mensurável em 3-6 meses, não pesquisa acadêmica",
+  "Preferência por solução sob medida a SaaS engessado",
+];
+
+export const PRA_QUEM_NAO_E = [
+  "Quer solução pronta em 24h sem nenhuma conversa",
+  "Procura 'IA mágica' sem entender o problema por trás",
+  "Precisa de escala massiva (milhões de eventos/segundo, fora do escopo MVP)",
+  "Prefere assinar mensal barato sem nenhum compromisso",
+];
+
+export const TIMELINE_CONTATO = [
+  {
+    n: "01",
+    prazo: "Em até 24h úteis",
+    title: "Confirmação humana",
+    desc: "Você recebe uma resposta confirmando que recebemos — sem bot, sem auto-reply genérico.",
+  },
+  {
+    n: "02",
+    prazo: "Em 3-5 dias",
+    title: "Call de contexto",
+    desc: "Marcamos 30 minutos pra entender seu cenário. Sem pitch, só escuta.",
+  },
+  {
+    n: "03",
+    prazo: "Em 1 semana",
+    title: "Diagnóstico inicial",
+    desc: "Você recebe escopo, prazo e investimento estimado por etapa. Sem compromisso até aqui.",
+  },
+] as const;
+
+export const MANIFESTO =
+  "Cada operação tem um gargalo que ninguém tem tempo de mapear. A Nexus AI existe pra encontrar esse gargalo, entregar a automação e sair do caminho. Sem slides de 80 páginas, sem SaaS engessado, sem lock-in. Plataforma sob medida que sua equipe entende e opera.";
+
+export const METRICAS = [
+  { value: 12, suffix: "+", label: "Implantações ativas" },
+  { value: 8, suffix: "", label: "Setores cobertos" },
+  { value: 4, suffix: " a 12 sem", label: "Entrega média por projeto" },
+  { value: 100, suffix: "%", label: "Suporte contínuo após entrega" },
+];
+
+export const PILARES = [
+  {
+    icon: "Compass",
+    title: "Diagnóstico antes de proposta",
+    desc: "Cada projeto começa com 1 a 2 semanas de mapeamento. Você sai do diagnóstico com clareza sobre o que automatizar e o que deixar de lado. A proposta vem depois disso, com escopo fechado e ROI estimado.",
+  },
+  {
+    icon: "Layers",
+    title: "Stack aberta, sem lock-in",
+    desc: "Trabalhamos com LLMs (OpenAI, Anthropic), Postgres, n8n, Vercel, Next.js. Você fica com o código, os dados e a documentação. Se quiser trocar de fornecedor amanhã, consegue.",
+  },
+  {
+    icon: "GitBranch",
+    title: "Entrega contínua, não big bang",
+    desc: "Implementação em ciclos curtos. Você vê a primeira entrega rodando em 2-3 semanas. Ajustes entram no mesmo contrato, sem renegociar escopo a cada release.",
+  },
+  {
+    icon: "Users",
+    title: "Sua equipe opera, a gente sustenta",
+    desc: "Não dependemos da sua equipe técnica interna. A gente opera o sistema no dia a dia. Sua equipe acompanha resultado, não vira refém de vendor.",
+  },
+];
+
+export const STACK = [
+  "OpenAI",
+  "Anthropic",
+  "Next.js",
+  "Postgres",
+  "Vercel",
+  "n8n",
+  "TypeScript",
+  "Python",
+];
+
+export type Capability = {
+  title: string;
+  desc: string;
+  cta?: { label: string; href: string };
+  icon: string;
+  variant?: "primary" | "default";
+};
+
+export const CAPABILITIES: readonly Capability[] = [
+  {
+    title: "Nexus Stock — gestão de estoque com IA",
+    desc: "Previsão de demanda por SKU, alertas de ruptura antes de acontecer, controle de capital parado e sugestão automática de compra. Vendedor recebe aviso, gerente acompanha dashboard, decisão é informada.",
+    icon: "Package",
+    variant: "primary",
+  },
+  {
+    title: "Nexus Copilot — copiloto de marketing",
+    desc: "Geração de imagem, copy, pesquisa de mercado, análise de concorrência e insights automáticos. Briefings prontos pra aprovar. Integrado com Meta Ads, Google Ads e CRM.",
+    icon: "Sparkles",
+    variant: "primary",
+  },
+  {
+    title: "Agentes sob medida",
+    desc: "Atendimento, vendas, operações internas — qualquer processo repetitivo vira agente autônomo que entende contexto e age.",
+    icon: "Bot",
+    cta: { label: "Ver soluções", href: "/solucoes" },
+  },
+  {
+    title: "Diagnóstico antes de proposta",
+    desc: "1 a 2 semanas de mapeamento. Você sai com clareza sobre o que automatizar, quanto custa e o que deixar de lado.",
+    icon: "Compass",
+    cta: { label: "Ver processo", href: "/processo" },
+  },
+];
+
+export const FAQ_HOME = [
+  {
+    q: "Vocês atendem qualquer porte de empresa?",
+    a: "Sim. Atendemos desde PME até operação nacional. O escopo se ajusta — o método é o mesmo.",
+  },
+  {
+    q: "Quanto custa um projeto típico?",
+    a: "Depende do escopo do diagnóstico. O diagnóstico em si é gratuito. Proposta vem com valores claros por etapa, sem surpresa.",
+  },
+  {
+    q: "Em quanto tempo vejo resultado?",
+    a: "Primeiros ganhos operacionais entre 4 e 8 semanas após o início da implementação. O diagnóstico já entrega valor por si só.",
+  },
+];
+
+export const COMPANY = {
+  name: "Nexus AI",
+  legalName: "Nexus AI",
+  url: "https://nexusai.com.br",
+  email: "contato@nexusai.com.br",
+  description:
+    "Plataformas e agentes de IA que assumem o trabalho repetitivo, do atendimento à análise. Sua equipe fica livre pro que só humano faz.",
+} as const;
