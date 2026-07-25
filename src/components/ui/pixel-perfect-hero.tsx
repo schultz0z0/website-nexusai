@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-
+import { cn } from "@/lib/utils";
 // ponytail: lucide dropped brand icons (trademark); inline the GitHub mark.
 function Github(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -20,7 +21,6 @@ function Github(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-import { cn } from "@/lib/utils";
 
 /* -----------------------------------------------------------------------------
  * VECTOR BRAND LOGO COMPONENTS
@@ -346,6 +346,7 @@ interface PixelHeroProps {
   onPrimaryClick?: () => void;
   onSecondaryClick?: () => void;
   githubUrl?: string;
+  primaryHref?: string;
 }
 
 export function PixelHero({
@@ -359,6 +360,7 @@ export function PixelHero({
   onPrimaryClick,
   onSecondaryClick,
   githubUrl = "https://github.com",
+  primaryHref,
 }: PixelHeroProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [themeColors, setThemeColors] = useState<string[]>([]);
@@ -432,23 +434,11 @@ export function PixelHero({
         </h1>
       </div>
 
-      {/* Center Container: Description & Mobile Vector Marquee */}
+      {/* Center Container: Description */}
       <div className="flex flex-col items-center justify-center text-center order-2 px-1 w-full pointer-events-none">
         <p className="text-lg sm:text-xl md:text-2xl font-normal text-foreground max-w-[95%] sm:max-w-xl md:max-w-2xl px-1 leading-snug">
           {description}
         </p>
-
-        <div className="block md:hidden w-full mt-8 pointer-events-auto">
-          <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground/80 font-medium mb-3">
-            Trusted by industry leaders
-          </div>
-          <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
-            <div className="flex w-max gap-8 py-1 animate-marquee">
-              <div className="flex gap-8 items-center">{BRAND_LOGOS.map((Logo, i) => <Logo key={i} />)}</div>
-              <div className="flex gap-8 items-center" aria-hidden="true">{BRAND_LOGOS.map((Logo, i) => <Logo key={`c-${i}`} />)}</div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Bottom Container: CTA Row — stacked on mobile, side-by-side from sm */}
@@ -456,33 +446,27 @@ export function PixelHero({
         className={cn("pointer-events-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-2 md:mt-10 mb-4 md:mb-0 order-3 transition-all duration-1000 transform px-1 w-full max-w-sm sm:max-w-none mx-auto", isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}
         style={{ transitionDelay: "450ms" }}
       >
-        <button onClick={onPrimaryClick} className="relative inline-flex h-12 md:h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-primary/90 to-primary px-6 md:px-8 text-sm md:text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15),0_12px_24px_rgba(0,0,0,0.15)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
-          <span className="inline md:hidden">{primaryCtaMobile}</span>
-          <span className="hidden md:inline">{primaryCta}</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+        {primaryHref && !onPrimaryClick ? (
+          <Link
+            href={primaryHref}
+            className="relative inline-flex h-12 md:h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-primary/90 to-primary px-6 md:px-8 text-sm md:text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15),0_12px_24px_rgba(0,0,0,0.15)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+          >
+            <span className="inline md:hidden">{primaryCtaMobile}</span>
+            <span className="hidden md:inline">{primaryCta}</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        ) : (
+          <button onClick={onPrimaryClick} className="relative inline-flex h-12 md:h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-primary/90 to-primary px-6 md:px-8 text-sm md:text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15),0_12px_24px_rgba(0,0,0,0.15)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
+            <span className="inline md:hidden">{primaryCtaMobile}</span>
+            <span className="hidden md:inline">{primaryCta}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        )}
         <a href={githubUrl} target="_blank" rel="noopener noreferrer" onClick={onSecondaryClick} className="relative inline-flex h-12 md:h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-card/80 to-card px-6 md:px-8 text-sm md:text-sm font-semibold text-card-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),0_2px_4px_rgba(0,0,0,0.05),0_12px_24px_rgba(0,0,0,0.05)] ring-1 ring-border/50 backdrop-blur-md transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
           <Github className="w-4 h-4" />
           <span className="inline md:hidden">{secondaryCtaMobile}</span>
           <span className="hidden md:inline">{secondaryCta}</span>
         </a>
-      </div>
-
-      {/* Desktop-only Marquee Block */}
-      <div
-        className={cn("hidden md:flex absolute bottom-8 left-0 right-0 w-full z-10 pointer-events-auto flex-col items-center justify-center gap-4 transition-all duration-1000 transform order-4", isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}
-        style={{ transitionDelay: "600ms" }}
-      >
-        <span className="text-xs uppercase tracking-wider text-muted-foreground/80 font-medium select-none">
-          Trusted by industry leaders
-        </span>
-        <div className="relative w-full max-w-5xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
-          <div className="flex w-max animate-marquee">
-            {/* ponytail: gap only between logos inside one group; padding-right stitches the two groups so translateX(-50%) loops with no seam. */}
-            <div className="flex gap-16 items-center pr-16">{BRAND_LOGOS.map((Logo, i) => <Logo key={i} />)}</div>
-            <div className="flex gap-16 items-center pr-16" aria-hidden="true">{BRAND_LOGOS.map((Logo, i) => <Logo key={`c-${i}`} />)}</div>
-          </div>
-        </div>
       </div>
     </div>
   );

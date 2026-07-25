@@ -1,10 +1,10 @@
-"use client";
-
 import { PixelHero } from "@/components/ui/pixel-perfect-hero";
+import { BackgroundCanvas } from "@/components/background-canvas";
 
 export default function Home() {
   return (
-    <div className="w-full min-h-screen bg-background">
+    <div className="relative w-full min-h-screen bg-background">
+      <BackgroundCanvas variant="home" />
       <PixelHero
         word1="Sua equipe"
         word2="multiplicada"
@@ -13,8 +13,7 @@ export default function Home() {
         primaryCtaMobile="Proposta"
         secondaryCta="Ver no GitHub"
         secondaryCtaMobile="GitHub"
-        onPrimaryClick={() => console.log("Primary click action triggered.")}
-        onSecondaryClick={() => console.log("Secondary click action triggered.")}
+        primaryHref="/contato"
         githubUrl="https://github.com"
       />
     </div>

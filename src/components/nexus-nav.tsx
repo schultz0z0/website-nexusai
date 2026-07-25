@@ -5,10 +5,9 @@ import { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 
 const ITEMS = [
-  { label: "Soluções", href: "#solucoes" },
-  { label: "Cases", href: "#cases" },
-  { label: "Processo", href: "#processo" },
-  { label: "Contato", href: "#contato" },
+  { label: "Soluções", href: "/solucoes" },
+  { label: "Processo", href: "/processo" },
+  { label: "Contato", href: "/contato" },
 ] as const;
 
 export function NexusNav() {
@@ -56,7 +55,7 @@ export function NexusNav() {
           </Link>
         ))}
         <Link
-          href="#contato"
+          href="/contato"
           className="ml-1 inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-b from-primary/90 to-primary px-4 text-xs font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
           Falar
@@ -132,7 +131,7 @@ export function NexusNav() {
               ))}
               <li className="mt-1 pt-1 border-t border-border/40">
                 <Link
-                  href="#contato"
+                  href="/contato"
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 mx-2 my-2 px-4 py-3 rounded-lg bg-gradient-to-b from-primary/90 to-primary text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)] ring-1 ring-primary/20"
                 >

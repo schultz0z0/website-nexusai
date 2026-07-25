@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NexusNav } from "@/components/nexus-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -30,7 +31,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <NexusNav />
-        {children}
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );
