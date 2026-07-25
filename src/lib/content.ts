@@ -179,8 +179,37 @@ export const TIMELINE_CONTATO = [
   },
 ] as const;
 
-export const MANIFESTO =
-  "Cada operação tem um gargalo que ninguém tem tempo de mapear. A Nexus AI existe pra encontrar esse gargalo, entregar a automação e sair do caminho. Sem slides de 80 páginas, sem SaaS engessado, sem lock-in. Plataforma sob medida que sua equipe entende e opera.";
+/**
+ * Manifesto dividido em 4 chunks visuais. Copy completa preservada.
+ * Cada pedaço vira um card com ícone + nº + reveal palavra-por-palavra.
+ * ponytail: ordem e quebras importam — frases montam a tese inteira.
+ */
+export const MANIFESTO_CHUNKS = [
+  {
+    n: "01",
+    icon: "Compass" as const,
+    title: "O gargalo escondido",
+    text: "Cada operação tem um gargalo que ninguém tem tempo de mapear.",
+  },
+  {
+    n: "02",
+    icon: "Zap" as const,
+    title: "O que a gente faz",
+    text: "A Nexus AI existe pra encontrar esse gargalo, entregar a automação e sair do caminho.",
+  },
+  {
+    n: "03",
+    icon: "X" as const,
+    title: "O que a gente não faz",
+    text: "Sem slides de 80 páginas, sem SaaS engessado, sem lock-in.",
+  },
+  {
+    n: "04",
+    icon: "Users" as const,
+    title: "O que fica com você",
+    text: "Plataforma sob medida que sua equipe entende e opera.",
+  },
+] as const;
 
 export const METRICAS = [
   { value: 12, suffix: "+", label: "Implantações ativas" },
