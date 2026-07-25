@@ -459,7 +459,7 @@ export function CinematicHero({
                 </div>
 
                 {/* Floating Glass Badges */}
-                <div className="floating-badge absolute flex top-6 lg:top-12 left-[-15px] lg:left-[-80px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+                <div className="floating-badge absolute flex top-6 lg:top-12 left-[-15px] lg:left-[-140px] floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
                   <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-blue-500/20 to-blue-900/10 flex items-center justify-center border border-blue-400/30 shadow-inner">
                     <span className="text-base lg:text-xl drop-shadow-lg" aria-hidden="true">🔥</span>
                   </div>
