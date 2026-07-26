@@ -265,10 +265,11 @@ export function CinematicHero({
   }, []);
 
   // 2. Complex Cinematic Scroll Timeline
-  useEffect(() => {
+  useLayoutEffect(() => {
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
+      gsap.set([".hero-text-wrapper", ".bg-grid-theme"], { clearProps: "opacity,visibility,filter,transform" });
       gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 });
       gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0px 100% 0px 0px)" });
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });

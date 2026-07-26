@@ -102,7 +102,7 @@ export function MetricCard({
       {/* Live indicator dot (subtle "telemetry feed" cue) */}
       <div className="absolute top-3 right-3 flex items-center gap-1.5">
         <span className="relative flex h-1.5 w-1.5">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping" />
+          <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 animate-ping motion-reduce:animate-none" />
           <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
         </span>
         <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-foreground/45">

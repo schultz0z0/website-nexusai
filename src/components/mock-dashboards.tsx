@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { ArrowUpRight, ArrowDownRight, Package, AlertTriangle, TrendingUp, Shield, Sparkles } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Package, AlertTriangle, TrendingUp, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 export function StockMockDashboard() {
   return (
-    <div className="bg-card/40 p-6 md:p-8">
+    <div className="bg-card/40 p-4 sm:p-6 md:p-8">
       {/* Header bar */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/40">
         <div className="flex items-center gap-3">
@@ -30,15 +30,15 @@ export function StockMockDashboard() {
       </div>
 
       {/* Top stats */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         <MockStat label="SKUs ativos" value="1.248" delta="+12" trend="up" />
         <MockStat label="Capital parado" value="R$ 84k" delta="-6%" trend="up" />
         <MockStat label="Rupturas (30d)" value="3" delta="-71%" trend="up" />
       </div>
 
       {/* Chart mock + alert stack */}
-      <div className="grid grid-cols-3 gap-3">
-        <div className="col-span-2 rounded-lg bg-background/40 p-4 ring-1 ring-border/30">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="md:col-span-2 rounded-lg bg-background/40 p-4 ring-1 ring-border/30">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs text-muted-foreground uppercase tracking-wider">
               Previsão de demanda · 14 dias
@@ -175,17 +175,25 @@ function MockAlert({
 }
 
 export function CopilotMockDashboard() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(rootRef, { amount: 0.1 });
+  const reducedMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
+  const displayProgress = reducedMotion ? 100 : progress;
+
   useEffect(() => {
+    if (reducedMotion) return;
+    if (!inView) return;
+
     // Simulate a streaming generation — visual only
     const id = setInterval(() => {
       setProgress((p) => (p >= 100 ? 0 : p + 5));
     }, 120);
     return () => clearInterval(id);
-  }, []);
+  }, [inView, reducedMotion]);
 
   return (
-    <div className="bg-card/40 p-6 md:p-8">
+    <div ref={rootRef} className="bg-card/40 p-4 sm:p-6 md:p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/40">
         <div className="flex items-center gap-3">
@@ -199,26 +207,26 @@ export function CopilotMockDashboard() {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[10px] text-foreground/60 uppercase tracking-wider">
-            {progress < 100 ? "Gerando…" : "Pronto"}
+            {displayProgress < 100 ? "Gerando…" : "Pronto"}
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* Prompt + image preview */}
-        <div className="col-span-2 space-y-3">
+        <div className="md:col-span-2 space-y-3">
           {/* Image preview area */}
           <div className="relative aspect-[16/9] rounded-lg overflow-hidden ring-1 ring-border/30 bg-gradient-to-br from-foreground/10 via-foreground/5 to-background">
-            <CopilotImageMock progress={progress} />
+            <CopilotImageMock progress={displayProgress} />
             <div className="absolute bottom-2 left-2 right-2 flex items-center gap-2">
               <div className="flex-1 h-1 rounded-full bg-foreground/10 overflow-hidden">
                 <div
                   className="h-full bg-primary"
-                  style={{ width: `${progress}%`, transition: "width 0.12s linear" }}
+                  style={{ width: `${displayProgress}%`, transition: "width 0.12s linear" }}
                 />
               </div>
               <span className="text-[10px] text-foreground/85 tabular-nums w-8 text-right">
-                {progress}%
+                {displayProgress}%
               </span>
             </div>
           </div>
@@ -231,7 +239,7 @@ export function CopilotMockDashboard() {
             <div className="text-xs text-foreground/85 leading-relaxed">
               Banner Black Friday para público 25-34, São Paulo. Foco em desconto agressivo, fundo escuro com elemento dourado, headline curta e CTA visível.
             </div>
-            <div className="flex items-center gap-2 mt-2.5">
+            <div className="flex flex-wrap items-center gap-2 mt-2.5">
               <Tag>Público: SP, 25-34</Tag>
               <Tag>Estilo: Editorial</Tag>
               <Tag>Formato: 1080×1080</Tag>
