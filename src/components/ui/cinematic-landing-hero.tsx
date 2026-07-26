@@ -57,10 +57,11 @@ filter:
 drop-shadow(0px 4px 14px color-mix(in srgb, var(--color-foreground) 25%, transparent));
 }
 
-/* ponytail: clip-path inset on .text-days to hide the hard gradient edge at
-   the bottom. Must match the GSAP clipPath values below. */
+/* ponytail: clip-path inset on .text-days hides the hard gradient edge.
+   The static value matches the GSAP initial state (100% right clip);
+   the introTl animates to the final state with -20% -20px -40px. */
 .text-days {
-clip-path: inset(0px -20% -20px -40px);
+clip-path: inset(0px 100% 0px 0px);
 }
 
 .text-card-silver-matte {
@@ -269,7 +270,7 @@ export function CinematicHero({
 
     const ctx = gsap.context(() => {
       gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 });
-      gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0px 100% 0px -40px)" });
+      gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0px 100% 0px 0px)" });
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
       gsap.set([".card-left-text", ".card-right-text", ".mockup-scroll-wrapper", ".floating-badge", ".phone-widget"], { autoAlpha: 0 });
       gsap.set(".cta-wrapper", { autoAlpha: 0, scale: 0.8, filter: "blur(30px)" });

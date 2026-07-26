@@ -18,6 +18,7 @@ import { JsonLd } from "@/components/json-ld";
 import { TiltCard } from "@/components/tilt-card";
 import { CountUp } from "@/components/count-up";
 import { AnimatedItem } from "@/components/animated-section";
+import { MetricCard } from "@/components/metric-card";
 import { ProductShowcase } from "@/components/product-showcase";
 import { BentoCapabilities } from "@/components/bento-capabilities";
 import {
@@ -139,26 +140,24 @@ function HeroSection() {
 function MetricasSection() {
   return (
     <section className="relative z-10 px-4 sm:px-6 py-16 md:py-24 max-w-6xl mx-auto">
-      <AnimatedItem className="text-center mb-12">
+      <AnimatedItem className="text-center mb-10">
         <span className="text-xs md:text-sm font-semibold text-foreground/55 uppercase tracking-[0.2em]">
           Onde estamos hoje
         </span>
       </AnimatedItem>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {METRICAS.map((m, i) => (
-          <AnimatedItem
-            key={m.label}
-            offset={24}
-            delay={i * 0.08}
-            className="rounded-xl bg-card/40 backdrop-blur-md p-6 ring-1 ring-border/50 text-center"
-          >
-            <div className="text-3xl md:text-5xl font-semibold text-foreground tracking-tighter tabular-nums">
-              <CountUp to={m.value} suffix={m.suffix} duration={1.4} />
-            </div>
-            <div className="text-xs md:text-sm text-foreground/65 mt-2 leading-snug">
-              {m.label}
-            </div>
-          </AnimatedItem>
+          <AnimatedItem key={m.label} offset={20} delay={i * 0.1}>
+                      <MetricCard
+                        icon={m.icon}
+                        eyebrow={m.eyebrow}
+                        value={m.value}
+                        suffix={m.suffix}
+                        prefix={m.prefix}
+                        label={m.label}
+                        note={m.note}
+                      />
+                    </AnimatedItem>
         ))}
       </div>
     </section>

@@ -179,12 +179,51 @@ export const TIMELINE_CONTATO = [
   },
 ] as const;
 
-export const METRICAS = [
-  { value: 12, suffix: "+", label: "Implantações ativas" },
-  { value: 8, suffix: "", label: "Setores cobertos" },
-  { value: 4, suffix: " a 12 sem", label: "Entrega média por projeto" },
-  { value: 100, suffix: "%", label: "Suporte contínuo após entrega" },
-];
+export type Metrica = {
+  icon: "Activity" | "Cpu" | "Timer" | "ShieldCheck";
+  eyebrow: string;
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  /** optional caveat (e.g. "depende do porte"). */
+  note?: string;
+  label: string;
+};
+
+export const METRICAS: readonly Metrica[] = [
+  {
+    icon: "Activity",
+    eyebrow: "Em produção",
+    value: 12,
+    suffix: "+",
+    label: "Plataformas operando",
+    note: "Em cliente, com uso real",
+  },
+  {
+    icon: "Cpu",
+    eyebrow: "Cobertura",
+    value: 8,
+    suffix: "",
+    label: "Setores atendidos",
+    note: "Advocacia · estoque · marketing · finanças · investimento · vendas · +",
+  },
+  {
+    icon: "Timer",
+    eyebrow: "Tempo médio",
+    value: 8,
+    suffix: " sem",
+    label: "Da proposta à entrega",
+    note: "Varia conforme o porte do projeto",
+  },
+  {
+    icon: "ShieldCheck",
+    eyebrow: "Pós-entrega",
+    value: 100,
+    suffix: "%",
+    label: "Suporte contínuo",
+    note: "Monitoramento, ajustes e evolução inclusos",
+  },
+] as const;
 
 export const PILARES = [
   {
