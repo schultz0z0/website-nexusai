@@ -1,8 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { ArrowRight, Check } from "lucide-react";
 import { useActionState, useId } from "react";
-import { ArrowRight } from "lucide-react";
+
 import { enviarMensagem } from "./actions";
+import styles from "./contato-cinematic.module.css";
 
 type FormState =
   | { ok: true }
@@ -18,27 +21,29 @@ export function ContactForm() {
 
   if (state?.ok === true) {
     return (
-      <div className="rounded-xl bg-card/40 backdrop-blur-md p-8 md:p-10 ring-1 ring-border/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_4px_16px_rgba(0,0,0,0.3)] text-center">
-        <div className="text-3xl mb-3 text-emerald-400" aria-hidden>
-          ✓
+      <motion.div
+        className={styles.successState}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        role="status"
+        aria-live="polite"
+      >
+        <div>
+          <span className={styles.successSignal} aria-hidden="true">
+            <Check />
+          </span>
+          <h2>Mensagem enviada</h2>
+          <p>
+            Recebemos. Vamos responder em até 24h úteis com próximos passos.
+          </p>
         </div>
-        <h2 className="text-lg font-semibold text-foreground mb-2">
-          Mensagem enviada
-        </h2>
-        <p className="text-sm text-foreground/85 leading-relaxed">
-          Recebemos. Vamos responder em até 24h úteis com próximos passos.
-        </p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <form
-      action={formAction}
-      className="rounded-xl bg-card/40 backdrop-blur-md p-6 md:p-8 ring-1 ring-border/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_4px_16px_rgba(0,0,0,0.3)]"
-      noValidate
-    >
-      {/* honeypot — bots preenchem, humanos não veem */}
+    <form action={formAction} className={styles.contactForm} noValidate>
       <input
         type="text"
         name="website"
@@ -48,7 +53,12 @@ export function ContactForm() {
         className="absolute opacity-0 pointer-events-none h-0 w-0"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div className={styles.formTopline} aria-hidden="true">
+        <span>Briefing inicial</span>
+        <span>Resposta humana</span>
+      </div>
+
+      <div className={styles.fieldGrid}>
         <FormField id={`${formId}-nome`} label="Nome" name="nome" required />
         <FormField
           id={`${formId}-email`}
@@ -70,7 +80,8 @@ export function ContactForm() {
           options={CARGOS}
         />
       </div>
-      <div className="mb-4">
+
+      <div className={styles.fieldBlock}>
         <FormSelect
           id={`${formId}-setor`}
           label="Setor principal"
@@ -78,7 +89,8 @@ export function ContactForm() {
           options={SETORES}
         />
       </div>
-      <div className="mb-6">
+
+      <div className={styles.fieldBlock}>
         <FormTextarea
           id={`${formId}-mensagem`}
           label="Conte rapidamente seu cenário"
@@ -89,31 +101,33 @@ export function ContactForm() {
         />
       </div>
 
-      {state && state.ok === false && (
-        <p
-          className="text-sm text-rose-400 mb-4"
+      {state && state.ok === false ? (
+        <motion.p
+          className={styles.formError}
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
           role="alert"
           aria-live="assertive"
         >
           {state.error}
-        </p>
-      )}
+        </motion.p>
+      ) : null}
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-        <a
-          href="mailto:contato@nexusai.com.br"
-          className="text-sm text-foreground/70 hover:text-foreground transition-colors"
-        >
+      <div className={styles.formActions}>
+        <a href="mailto:contato@nexusai.com.br" className={styles.directLink}>
           Ou escreva direto: contato@nexusai.com.br
         </a>
-        <button
+        <motion.button
           type="submit"
           disabled={pending}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-primary/90 to-primary px-8 text-sm font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15),0_12px_24px_rgba(0,0,0,0.15)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+          className={styles.submitButton}
+          whileHover={pending ? undefined : { y: -2 }}
+          whileTap={pending ? undefined : { scale: 0.985 }}
+          transition={{ duration: 0.16 }}
         >
           {pending ? "Enviando..." : "Enviar mensagem"}
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          <ArrowRight aria-hidden="true" />
+        </motion.button>
       </div>
     </form>
   );
@@ -153,25 +167,9 @@ function FormField({
   required?: boolean;
 }) {
   return (
-    <div>
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium text-foreground/70 uppercase tracking-wider mb-1.5"
-      >
-        {label}
-        {required && (
-          <span aria-hidden className="text-rose-400 ml-0.5">
-            *
-          </span>
-        )}
-      </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        required={required}
-        className="w-full h-11 px-4 rounded-lg bg-background/40 border border-border/60 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors"
-      />
+    <div className={styles.field}>
+      <FieldLabel id={id} label={label} required={required} />
+      <input id={id} name={name} type={type} required={required} />
     </div>
   );
 }
@@ -188,25 +186,15 @@ function FormSelect({
   options: readonly string[];
 }) {
   return (
-    <div>
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium text-foreground/70 uppercase tracking-wider mb-1.5"
-      >
-        {label}
-      </label>
-      <select
-        id={id}
-        name={name}
-        defaultValue=""
-        className="w-full h-11 px-4 rounded-lg bg-background/40 border border-border/60 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors"
-      >
+    <div className={styles.field}>
+      <FieldLabel id={id} label={label} />
+      <select id={id} name={name} defaultValue="">
         <option value="" disabled>
           Selecione...
         </option>
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
           </option>
         ))}
       </select>
@@ -230,18 +218,8 @@ function FormTextarea({
   maxLength?: number;
 }) {
   return (
-    <div>
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium text-foreground/70 uppercase tracking-wider mb-1.5"
-      >
-        {label}
-        {required && (
-          <span aria-hidden className="text-rose-400 ml-0.5">
-            *
-          </span>
-        )}
-      </label>
+    <div className={styles.field}>
+      <FieldLabel id={id} label={label} required={required} />
       <textarea
         id={id}
         name={name}
@@ -249,8 +227,28 @@ function FormTextarea({
         minLength={minLength}
         maxLength={maxLength}
         rows={5}
-        className="w-full px-4 py-3 rounded-lg bg-background/40 border border-border/60 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors resize-y"
       />
     </div>
+  );
+}
+
+function FieldLabel({
+  id,
+  label,
+  required,
+}: {
+  id: string;
+  label: string;
+  required?: boolean;
+}) {
+  return (
+    <label htmlFor={id}>
+      {label}
+      {required ? (
+        <span aria-hidden="true" className={styles.required}>
+          *
+        </span>
+      ) : null}
+    </label>
   );
 }
