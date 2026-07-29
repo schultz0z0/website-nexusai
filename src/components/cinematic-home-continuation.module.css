@@ -171,7 +171,6 @@
     0 18px 42px rgb(0 0 0 / 38%);
 }
 
-.metricNode,
 .mapCenter {
   position: absolute;
   z-index: 3;
@@ -191,11 +190,7 @@
   font-weight: 650;
 }
 
-.metricNode {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+/* ponytail: .metricNode "N" badge removed — confirmed unwanted */
 
 .principlesChapter {
   padding: clamp(5rem, 9vw, 9rem) 0 clamp(9rem, 16vw, 14rem);
@@ -330,27 +325,7 @@
   order: 1;
 }
 
-.productSignal {
-  position: absolute;
-  top: -12rem;
-  left: 50%;
-  width: 1px;
-  height: 13rem;
-  background: linear-gradient(transparent, rgb(55 120 255 / 76%));
-  box-shadow: 0 0 18px rgb(55 120 255 / 65%);
-}
-
-.productSignal::after {
-  position: absolute;
-  bottom: -4px;
-  left: -4px;
-  width: 9px;
-  height: 9px;
-  content: "";
-  border-radius: 50%;
-  background: #6c9bff;
-  box-shadow: 0 0 20px #3778ff;
-}
+/* ponytail: .productSignal vertical pin removed — confirmed unwanted */
 
 .productCopy {
   position: relative;
@@ -953,11 +928,7 @@ a.mapCard:focus-visible {
     padding: 1rem;
   }
 
-  .metricNode {
-    width: 3.7rem;
-    height: 3.7rem;
-    font-size: 1.25rem;
-  }
+  /* ponytail: .metricNode mobile override removed (no element) */
 
   .principlesChapter {
     padding: 5rem 0 7rem;

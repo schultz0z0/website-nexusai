@@ -5,9 +5,9 @@ import { COMPANY } from "@/lib/content";
 
 import { ContatoCinematic } from "./contato-cinematic";
 
-const TITLE = "Solicitar Proposta · Nexus AI";
+const TITLE = "Fale com a Nexus AI · Diagnóstico inicial";
 const DESCRIPTION =
-  "Diagnóstico inicial gratuito, sem compromisso. Resposta humana em até 24h úteis.";
+  "Conte onde sua operação perde tempo. A equipe responde em até 24h úteis e organiza o próximo passo com você.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -20,11 +20,20 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
+    images: [
+      {
+        url: `${COMPANY.url}/images/cinematic/contact-hero-desktop.webp`,
+        width: 1586,
+        height: 992,
+        alt: "Conversa de diagnóstico com a equipe Nexus AI",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    images: [`${COMPANY.url}/images/cinematic/contact-hero-desktop.webp`],
   },
 };
 

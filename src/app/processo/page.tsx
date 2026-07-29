@@ -5,9 +5,9 @@ import { COMPANY, FAQ_ITEMS } from "@/lib/content";
 
 import { ProcessoCinematic } from "./processo-cinematic";
 
-const TITLE = "Como trabalhamos · Nexus AI";
+const TITLE = "Processo de implementação de IA · Nexus AI";
 const DESCRIPTION =
-  "Quatro etapas do diagnóstico à entrega contínua. Prazos claros, sem letra miúda. Diagnóstico inicial gratuito, sem compromisso.";
+  "Diagnóstico, proposta, implementação e suporte com prazos e entregas verificáveis. Menos risco antes do código e acompanhamento depois da entrega.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -20,11 +20,20 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
+    images: [
+      {
+        url: `${COMPANY.url}/images/cinematic/process-hero-desktop.webp`,
+        width: 1586,
+        height: 992,
+        alt: "Equipe mapeando um processo antes da implementação",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    images: [`${COMPANY.url}/images/cinematic/process-hero-desktop.webp`],
   },
 };
 

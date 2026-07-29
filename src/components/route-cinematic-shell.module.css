@@ -45,6 +45,14 @@
   mask-image: linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%);
 }
 
+.desktopOnly {
+  display: block;
+}
+
+.mobileOnly {
+  display: none;
+}
+
 .chapter {
   position: relative;
   content-visibility: auto;
@@ -133,31 +141,8 @@
   text-align: center;
 }
 
-.ctaChapter::before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(980px, 88vw);
-  height: min(520px, 62vw);
-  content: "";
-  border: 1px solid rgb(55 120 255 / 16%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgb(55 120 255 / 13%), transparent 68%);
-  filter: blur(0.2px);
-  transform: translate(-50%, -50%) perspective(700px) rotateX(70deg);
-}
-
-.ctaHorizon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(1020px, 88vw);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #78a1ff 48%, transparent);
-  box-shadow: 0 0 34px rgb(55 120 255 / 58%);
-  transform: translate(-50%, -50%);
-  transform-origin: center;
-}
+/* ponytail: removed ctaChapter::before "blue platform" disc — confirmed unwanted on all routes */
+/* ponytail: removed .ctaHorizon line — confirmed unwanted (appears random on mobile, see JSX in solucoes/processo) */
 
 .ctaContent {
   position: relative;
@@ -244,6 +229,14 @@
 }
 
 @media (max-width: 767px) {
+  .desktopOnly {
+    display: none;
+  }
+
+  .mobileOnly {
+    display: block;
+  }
+
   .root::before {
     position: absolute;
   }
@@ -298,9 +291,5 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-
-  .ctaHorizon {
-    transform: translate(-50%, -50%) !important;
   }
 }

@@ -36,6 +36,30 @@ mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
 -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
 }
 
+.home-hero-media {
+opacity: 0.78;
+transform-origin: center;
+will-change: transform, opacity, filter;
+}
+
+.home-hero-media-shade {
+background:
+radial-gradient(ellipse at center, rgba(5, 6, 9, 0.08) 0%, rgba(5, 6, 9, 0.34) 54%, rgba(5, 6, 9, 0.72) 100%),
+linear-gradient(to bottom, rgba(5, 6, 9, 0.12), rgba(5, 6, 9, 0.34));
+}
+
+@media (max-width: 767px) {
+.home-hero-media {
+opacity: 0.72;
+}
+
+.home-hero-media-shade {
+background:
+linear-gradient(to bottom, rgba(5, 6, 9, 0.12) 0%, rgba(5, 6, 9, 0.26) 48%, rgba(5, 6, 9, 0.56) 100%),
+radial-gradient(ellipse at 50% 32%, rgba(5, 6, 9, 0.08), rgba(5, 6, 9, 0.42) 76%);
+}
+}
+
 /* -------------------------------------------------------------------
 PHYSICAL SKEUOMORPHIC MATERIALS (Restored 3D Depth)
 ---------------------------------------------------------------------- */
@@ -269,7 +293,7 @@ export function CinematicHero({
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
-      gsap.set([".hero-text-wrapper", ".bg-grid-theme"], { clearProps: "opacity,visibility,filter,transform" });
+      gsap.set([".hero-text-wrapper", ".bg-grid-theme", ".home-hero-media"], { clearProps: "opacity,visibility,filter,transform" });
       gsap.set(".text-track", { autoAlpha: 0, y: 60, scale: 0.85, filter: "blur(20px)", rotationX: -20 });
       gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0px 100% 0px 0px)" });
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
@@ -293,7 +317,7 @@ export function CinematicHero({
       });
 
       scrollTl
-        .to([".hero-text-wrapper", ".bg-grid-theme"], { scale: 1.15, filter: "blur(20px)", opacity: 0.2, ease: "power2.inOut", duration: 2 }, 0)
+        .to([".hero-text-wrapper", ".bg-grid-theme", ".home-hero-media"], { scale: 1.15, filter: "blur(20px)", opacity: 0.2, ease: "power2.inOut", duration: 2 }, 0)
         .to(".main-card", { y: 0, ease: "power3.inOut", duration: 2 }, 0)
         .to(".main-card", { width: "100%", height: "100%", borderRadius: "0px", ease: "power3.inOut", duration: 1.5 })
         .fromTo(".mockup-scroll-wrapper",
@@ -331,17 +355,40 @@ export function CinematicHero({
     <div
       ref={containerRef}
       className={cn(
-        "cinematic-pre-init relative w-screen h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased",
+        "cinematic-pre-init relative w-full h-screen overflow-hidden flex items-center justify-center bg-background text-foreground font-sans antialiased",
         className,
       )}
       style={{ perspective: "1500px" }}
       {...props}
     >
       <div className="film-grain" aria-hidden="true" />
+      <div
+        className="home-hero-media absolute inset-0 z-0 overflow-hidden pointer-events-none"
+        data-home-hero-media
+        aria-hidden="true"
+      >
+        <picture className="absolute inset-0 block h-full w-full">
+          <source
+            media="(max-width: 767px)"
+            srcSet="/images/cinematic/home-hero-mobile.webp"
+          />
+          <img
+            src="/images/cinematic/home-hero-desktop.webp"
+            alt=""
+            width={1920}
+            height={1081}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover object-center"
+          />
+        </picture>
+        <div className="home-hero-media-shade absolute inset-0" />
+      </div>
       <div className="bg-grid-theme absolute inset-0 z-0 pointer-events-none opacity-50" aria-hidden="true" />
 
       {/* BACKGROUND LAYER: Hero Texts */}
-      <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 will-change-transform transform-style-3d">
+      <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 will-change-transform transform-style-3d">
         <h1 className="text-track gsap-reveal text-3d-matte text-5xl md:text-7xl lg:text-[6rem] font-bold tracking-tight mb-2">
           {tagline1}
         </h1>
@@ -351,7 +398,7 @@ export function CinematicHero({
       </div>
 
       {/* BACKGROUND LAYER 2: Tactile CTA Buttons */}
-      <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
+      <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 gsap-reveal pointer-events-auto will-change-transform">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-silver-matte">
           {ctaHeading}
         </h2>

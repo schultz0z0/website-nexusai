@@ -80,7 +80,8 @@ export function getRouteMotionMode({
   reducedMotion: boolean;
   desktop: boolean;
 }) {
-  return desktop && !reducedMotion ? "scroll" : "static";
+  if (reducedMotion) return "static";
+  return desktop ? "scroll" : "mobile";
 }
 
 function assertValidStepCount(stepCount: number) {

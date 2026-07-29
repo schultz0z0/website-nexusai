@@ -73,6 +73,7 @@ export function SolucoesCinematic() {
       media.add(
         {
           desktop: "(min-width: 768px)",
+          mobile: "(max-width: 767px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
         ({ conditions }) => {
@@ -82,6 +83,167 @@ export function SolucoesCinematic() {
           });
 
           if (mode === "static") return;
+
+          if (mode === "mobile") {
+            const scene = root.querySelector<HTMLElement>(
+              "[data-solutions-mobile-scene]",
+            );
+            const mediaLayer = root.querySelector<HTMLElement>(
+              "[data-solutions-mobile-media]",
+            );
+            const shade = root.querySelector<HTMLElement>(
+              "[data-solutions-mobile-shade]",
+            );
+            const hero = root.querySelector<HTMLElement>(
+              "[data-solutions-mobile-hero]",
+            );
+            const panels = gsap.utils.toArray<HTMLElement>(
+              "[data-solutions-mobile-panel]",
+              root,
+            );
+            const progressFill = root.querySelector<HTMLElement>(
+              "[data-solutions-mobile-progress]",
+            );
+
+            if (
+              !scene ||
+              !mediaLayer ||
+              !shade ||
+              !hero ||
+              !panels.length ||
+              !progressFill
+            ) {
+              return;
+            }
+
+            const windows = createSceneWindows(panels.length + 1);
+
+            gsap.set(panels, {
+              autoAlpha: 0,
+              y: 48,
+              scale: 0.94,
+              clipPath: "inset(12% 0% 12% 0% round 24px)",
+            });
+            gsap.set(progressFill, { scaleX: 0 });
+
+            const timeline = gsap.timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: scene,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.72,
+                invalidateOnRefresh: true,
+              },
+            });
+
+            timeline
+              .fromTo(
+                mediaLayer,
+                { scale: 1.01, yPercent: 0 },
+                { scale: 1.14, yPercent: -3.5, duration: 1 },
+                0,
+              )
+              .to(
+                hero,
+                {
+                  autoAlpha: 0,
+                  y: -44,
+                  filter: "blur(10px)",
+                  duration: 0.07,
+                },
+                windows[0].focus,
+              )
+              .to(
+                shade,
+                { opacity: 0.88, duration: 0.1 },
+                windows[0].focus,
+              );
+
+            panels.forEach((panel, index) => {
+              const sceneWindow = windows[index + 1];
+              const enterAt = Math.max(sceneWindow.start - 0.015, 0);
+              const previous = panels[index - 1];
+
+              if (previous) {
+                timeline.to(
+                  previous,
+                  {
+                    autoAlpha: 0,
+                    y: -34,
+                    scale: 0.97,
+                    filter: "blur(7px)",
+                    duration: 0.055,
+                  },
+                  enterAt,
+                );
+              }
+
+              timeline
+                .to(
+                  panel,
+                  {
+                    autoAlpha: 1,
+                    y: 0,
+                    scale: 1,
+                    clipPath: "inset(0% 0% 0% 0% round 24px)",
+                    filter: "blur(0px)",
+                    duration: 0.07,
+                    ease: "power2.out",
+                  },
+                  enterAt,
+                )
+                .to(
+                  progressFill,
+                  {
+                    scaleX: (index + 1) / panels.length,
+                    duration: 0.07,
+                  },
+                  enterAt,
+                );
+            });
+
+            const fitColumns = gsap.utils.toArray<HTMLElement>(
+              "[data-solutions-fit-column]",
+              root,
+            );
+            if (fitColumns.length) {
+              gsap.fromTo(
+                fitColumns,
+                { y: 42, opacity: 0.28 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  stagger: 0.08,
+                  ease: "power2.out",
+                  scrollTrigger: {
+                    trigger: "[data-solutions-fit]",
+                    start: "top 78%",
+                    end: "top 28%",
+                    scrub: 0.55,
+                  },
+                },
+              );
+            }
+
+            gsap.fromTo(
+              "[data-solutions-cta-content]",
+              { y: 42, opacity: 0.26 },
+              {
+                y: 0,
+                opacity: 1,
+                ease: "power2.out",
+                scrollTrigger: {
+                  trigger: "[data-solutions-cta]",
+                  start: "top 82%",
+                  end: "center 62%",
+                  scrub: 0.55,
+                },
+              },
+            );
+
+            return;
+          }
 
           const scene = root.querySelector<HTMLElement>("[data-solutions-scene]");
           const heading = root.querySelector<HTMLElement>(
@@ -100,6 +262,9 @@ export function SolucoesCinematic() {
           const progressNodes = gsap.utils.toArray<HTMLElement>(
             "[data-solutions-progress-node]",
             root,
+          );
+          const mediaLayer = root.querySelector<HTMLElement>(
+            "[data-solutions-desktop-media]",
           );
 
           if (!scene || !heading || !intro || !overview) return;
@@ -121,10 +286,6 @@ export function SolucoesCinematic() {
               x: 70,
               opacity: 0.24,
             });
-            gsap.set(layer.querySelector("[data-field-sweep]"), {
-              xPercent: -620,
-              opacity: 0,
-            });
           });
 
           const timeline = gsap.timeline({
@@ -138,8 +299,8 @@ export function SolucoesCinematic() {
           });
 
           timeline
-            .to(
-              "[data-solutions-title]",
+             .to(
+               "[data-solutions-title]",
               {
                 y: -46,
                 scale: 0.62,
@@ -147,7 +308,17 @@ export function SolucoesCinematic() {
                 filter: "blur(2px)",
                 duration: 0.16,
               },
-              0.08,
+               0.08,
+             )
+            .to(
+              mediaLayer,
+              {
+                scale: 1.08,
+                opacity: 0.12,
+                filter: "saturate(0.82)",
+                duration: 0.17,
+              },
+              0.07,
             )
             .to(
               "[data-solutions-hero-copy]",
@@ -238,16 +409,6 @@ export function SolucoesCinematic() {
                 window.start + 0.025,
               )
               .to(
-                layer.querySelector("[data-field-sweep]"),
-                {
-                  xPercent: 620,
-                  opacity: 0.9,
-                  duration: Math.max(window.end - window.start - 0.06, 0.1),
-                  ease: "none",
-                },
-                window.start + 0.025,
-              )
-              .to(
                 progressNodes[index + 1],
                 {
                   color: "#dfe8ff",
@@ -285,7 +446,64 @@ export function SolucoesCinematic() {
       <div className={shell.grid} aria-hidden="true" />
 
       <section
-        className={styles.sceneTrack}
+        className={`${styles.mobileSceneTrack} ${shell.mobileOnly}`}
+        style={
+          {
+            "--scene-scroll": `${getSceneScrollVh(AREAS.length + 1)}svh`,
+          } as SceneStyle
+        }
+        data-solutions-mobile-scene
+        aria-labelledby="solutions-mobile-title"
+      >
+        <div className={styles.mobileSceneSticky}>
+          <div
+            className={styles.mobileSceneMedia}
+            data-solutions-mobile-media
+            aria-hidden="true"
+          />
+          <div
+            className={styles.mobileSceneShade}
+            data-solutions-mobile-shade
+            aria-hidden="true"
+          />
+
+          <header
+            className={styles.mobileHero}
+            data-solutions-mobile-hero
+          >
+            <p className={shell.eyebrow}>Soluções sob medida</p>
+            <h1 id="solutions-mobile-title">
+              Tire o peso da operação.
+            </h1>
+            <p>
+              A IA entra onde sua equipe perde tempo. Do atendimento ao estoque,
+              cada solução nasce do contexto real.
+            </p>
+          </header>
+
+          <div className={styles.mobilePanelStack}>
+            {AREAS.map((area, index) => (
+              <MobileSolutionPanel
+                key={area.title}
+                area={area}
+                index={index}
+                layerLabel={SOLUTION_LAYERS[Math.floor(index / 2)].label}
+              />
+            ))}
+          </div>
+
+          <div className={styles.mobileProgress} aria-hidden="true">
+            <span>01</span>
+            <div>
+              <i data-solutions-mobile-progress />
+            </div>
+            <span>06</span>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className={`${styles.sceneTrack} ${shell.desktopOnly}`}
         style={
           {
             "--scene-scroll": `${getSceneScrollVh(
@@ -297,6 +515,11 @@ export function SolucoesCinematic() {
         aria-labelledby="solutions-title"
       >
         <div className={styles.sceneSticky}>
+          <div
+            className={styles.desktopHeroMedia}
+            data-solutions-desktop-media
+            aria-hidden="true"
+          />
           <header className={styles.heroHeading} data-solutions-heading>
             <h1
               id="solutions-title"
@@ -309,19 +532,20 @@ export function SolucoesCinematic() {
               className={shell.heroCopy}
               data-solutions-hero-copy
             >
-              Atendimento, marketing, estoque, dados, integração e operações
-              internas. Cada uma, sob medida pro seu contexto.
+              A IA entra onde sua equipe perde tempo: atendimento, vendas,
+              estoque, dados, integrações e rotinas internas. Tudo sob medida
+              pro contexto real.
             </p>
           </header>
 
           <div className={styles.sceneIntro} data-solutions-intro>
             <p className={shell.eyebrow}>Áreas onde entregamos</p>
             <h2 className={styles.sceneTitle}>
-              Um campo. Três camadas operacionais.
+              Seis frentes. Uma regra: resolver o gargalo real.
             </h2>
             <p>
-              As seis capacidades trabalham em pares. O ponto de convergência é
-              sempre o contexto real da operação.
+              Começamos pelo problema, conectamos a operação e só então
+              escolhemos o que automatizar.
             </p>
           </div>
 
@@ -365,11 +589,6 @@ export function SolucoesCinematic() {
                   <h2 id={`${layer.id}-title`} className={shell.srOnly}>
                     {layer.label}
                   </h2>
-                  <div
-                    className={styles.fieldSweep}
-                    data-field-sweep
-                    aria-hidden="true"
-                  />
                   <SolutionFieldCard
                     area={leftArea}
                     capabilityIndex={layerIndex * 2 + 1}
@@ -410,13 +629,14 @@ export function SolucoesCinematic() {
         <div className={shell.sectionShell}>
           <header className={styles.fitHeader}>
             <div>
-              <p className={shell.eyebrow}>É pra Nexus AI?</p>
+              <p className={shell.eyebrow}>Antes da proposta</p>
               <h2 id="fit-title" className={shell.displayTitle}>
-                O ponto de aderência
+                Veja se faz sentido.
               </h2>
             </div>
             <p className={shell.sectionDescription}>
-              Veja se sua empresa se encaixa antes de preencher o formulário.
+              Em dois minutos, você identifica se o nosso jeito de trabalhar
+              combina com o momento da sua operação.
             </p>
           </header>
 
@@ -436,20 +656,55 @@ export function SolucoesCinematic() {
         data-solutions-cta
         aria-labelledby="solutions-cta-title"
       >
-        <div className={shell.ctaHorizon} aria-hidden="true" />
-        <div className={shell.ctaContent}>
-          <h2 id="solutions-cta-title">Pronto pra começar?</h2>
+        <div className={shell.ctaContent} data-solutions-cta-content>
+          <h2 id="solutions-cta-title">
+            Qual gargalo vale resolver primeiro?
+          </h2>
           <p>
-            Diagnóstico inicial gratuito, sem compromisso. Resposta humana em
-            até 24h úteis.
+            Conte o contexto. Em até 24h úteis, a gente responde com o próximo
+            passo mais útil, sem compromisso.
           </p>
           <Link href="/contato" className={shell.ctaButton}>
-            Solicitar Proposta
+            Solicitar diagnóstico
             <ArrowRight aria-hidden="true" />
           </Link>
         </div>
       </section>
     </main>
+  );
+}
+
+function MobileSolutionPanel({
+  area,
+  index,
+  layerLabel,
+}: {
+  area: Area;
+  index: number;
+  layerLabel: string;
+}) {
+  const Icon = area.icon;
+
+  return (
+    <article
+      className={styles.mobilePanel}
+      data-solutions-mobile-panel
+      aria-labelledby={`mobile-solution-${index + 1}`}
+    >
+      <div className={styles.mobilePanelTopline}>
+        <span className={styles.mobilePanelIcon} aria-hidden="true">
+          <Icon />
+        </span>
+        <span>{String(index + 1).padStart(2, "0")} / 06</span>
+      </div>
+      <p className={styles.mobileLayerLabel}>{layerLabel}</p>
+      <h2 id={`mobile-solution-${index + 1}`}>{area.title}</h2>
+      <p className={styles.mobilePanelDescription}>{area.desc}</p>
+      <div className={styles.mobileExample}>
+        <span>Na prática</span>
+        <p>{area.example}</p>
+      </div>
+    </article>
   );
 }
 
@@ -498,7 +753,10 @@ function FitColumn({
   muted?: boolean;
 }) {
   return (
-    <div className={`${styles.fitColumn} ${muted ? styles.fitMuted : ""}`}>
+    <div
+      className={`${styles.fitColumn} ${muted ? styles.fitMuted : ""}`}
+      data-solutions-fit-column
+    >
       <h3>{title}</h3>
       <ul>
         {items.map((item, index) => (

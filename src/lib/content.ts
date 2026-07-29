@@ -123,7 +123,7 @@ export const FAQ_ITEMS: readonly FaqItem[] = [
   },
   {
     q: "Quanto tempo até ver resultado?",
-    a: "Primeiros ganhos operacionais entre 4 e 8 semanas após o implementação começar. O diagnóstico já entrega valor por si só.",
+    a: "Primeiros ganhos operacionais entre 4 e 8 semanas após a implementação começar. O diagnóstico já entrega valor por si só.",
   },
   {
     q: "Vocês integram com [ferramenta X]?",
@@ -162,14 +162,14 @@ export const TIMELINE_CONTATO = [
   {
     n: "01",
     prazo: "Em até 24h úteis",
-    title: "Confirmação humana",
-    desc: "Você recebe uma resposta confirmando que recebemos — sem bot, sem auto-reply genérico.",
+    title: "Retorno inicial",
+    desc: "Confirmamos o recebimento e, se faltar contexto, já perguntamos o necessário.",
   },
   {
     n: "02",
     prazo: "Em 3-5 dias",
-    title: "Call de contexto",
-    desc: "Marcamos 30 minutos pra entender seu cenário. Sem pitch, só escuta.",
+    title: "Conversa de contexto",
+    desc: "Marcamos 30 minutos pra entender o cenário, o impacto e a prioridade. Sem apresentação comercial.",
   },
   {
     n: "03",

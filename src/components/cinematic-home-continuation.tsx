@@ -114,12 +114,6 @@ export function CinematicHomeContinuation() {
                 ease: "power2.out",
               },
               0.08,
-            )
-            .fromTo(
-              "[data-metric-node]",
-              { scale: 0.65, opacity: 0 },
-              { scale: 1, opacity: 1, ease: "back.out(1.5)" },
-              0.24,
             );
 
           gsap.fromTo(
@@ -321,9 +315,6 @@ function MetricsChapter() {
               </div>
             ))}
           </div>
-          <div className={styles.metricNode} data-metric-node aria-hidden="true">
-            N
-          </div>
         </div>
       </div>
     </section>
@@ -398,7 +389,6 @@ function ProductChapter({
       data-direction={reverse ? "reverse" : "forward"}
       aria-labelledby={`${id}-title`}
     >
-      <div className={styles.productSignal} aria-hidden="true" />
       <div className={styles.productSticky}>
         <div className={styles.productCopy} data-product-copy>
           <p className={styles.productIndex}>{index}</p>

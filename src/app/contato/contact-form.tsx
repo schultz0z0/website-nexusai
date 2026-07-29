@@ -33,9 +33,10 @@ export function ContactForm() {
           <span className={styles.successSignal} aria-hidden="true">
             <Check />
           </span>
-          <h2>Mensagem enviada</h2>
+          <h2>Mensagem recebida</h2>
           <p>
-            Recebemos. Vamos responder em até 24h úteis com próximos passos.
+            A equipe vai responder em até 24h úteis com o próximo passo mais
+            útil para o seu cenário.
           </p>
         </div>
       </motion.div>
@@ -54,8 +55,8 @@ export function ContactForm() {
       />
 
       <div className={styles.formTopline} aria-hidden="true">
-        <span>Briefing inicial</span>
-        <span>Resposta humana</span>
+        <span>Contexto inicial</span>
+        <span>Lido pela equipe</span>
       </div>
 
       <div className={styles.fieldGrid}>
@@ -93,7 +94,7 @@ export function ContactForm() {
       <div className={styles.fieldBlock}>
         <FormTextarea
           id={`${formId}-mensagem`}
-          label="Conte rapidamente seu cenário"
+          label="Onde sua operação perde tempo hoje?"
           name="mensagem"
           required
           minLength={10}
@@ -125,7 +126,7 @@ export function ContactForm() {
           whileTap={pending ? undefined : { scale: 0.985 }}
           transition={{ duration: 0.16 }}
         >
-          {pending ? "Enviando..." : "Enviar mensagem"}
+          {pending ? "Enviando..." : "Enviar contexto"}
           <ArrowRight aria-hidden="true" />
         </motion.button>
       </div>

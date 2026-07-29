@@ -741,6 +741,30 @@
     linear-gradient(145deg, #07080b, #040507 62%);
 }
 
+.desktopHeroMedia {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 0.52;
+  background-image: url("/images/cinematic/contact-hero-desktop.webp");
+  background-position: center;
+  background-size: cover;
+  filter: saturate(0.94) contrast(1.04);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 99%);
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+
+.desktopHeroMedia::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, rgb(4 5 7 / 42%), transparent 42%, transparent 84%, rgb(4 5 7 / 34%)),
+    linear-gradient(to bottom, rgb(4 5 7 / 20%), transparent 44%, rgb(4 5 7 / 72%));
+}
+
 .signalGrid {
   position: absolute;
   inset: 0;
@@ -894,6 +918,7 @@
 .briefingChapter {
   min-height: auto;
   padding: clamp(7rem, 12vw, 11rem) 0;
+  scroll-margin-top: 4.5rem;
 }
 
 .briefingLayout {
@@ -1061,6 +1086,372 @@
   box-shadow: 0 0 0 6px #06070b;
 }
 
+.mobileSignalScene {
+  position: relative;
+  min-height: var(--scene-scroll, 232svh);
+}
+
+.mobileSignalSticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #050609;
+}
+
+.mobileSignalMedia {
+  position: absolute;
+  inset: -4% -3%;
+  z-index: -3;
+  background-image: url("/images/cinematic/contact-hero-mobile.webp");
+  background-position: center bottom;
+  background-size: cover;
+  filter: saturate(0.95) contrast(1.04);
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.mobileSignalShade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.36;
+  background:
+    linear-gradient(to bottom, rgb(4 5 8 / 10%) 0%, rgb(4 5 8 / 7%) 38%, rgb(4 5 8 / 68%) 82%, #050609 100%),
+    linear-gradient(90deg, rgb(4 5 8 / 20%), transparent 72%);
+  will-change: opacity;
+}
+
+.mobileContactHero {
+  position: absolute;
+  top: clamp(6.8rem, 13svh, 8rem);
+  right: 18px;
+  left: 18px;
+  z-index: 3;
+  max-width: 430px;
+  margin-inline: auto;
+  will-change: transform, opacity, filter;
+}
+
+.mobileContactHero h1 {
+  max-width: 420px;
+  margin: 0;
+  color: #f8f9fb;
+  font-size: clamp(3.05rem, 13.8vw, 4.4rem);
+  font-weight: 590;
+  line-height: 0.9;
+  letter-spacing: -0.067em;
+  text-wrap: balance;
+  text-shadow: 0 12px 46px rgb(0 0 0 / 68%);
+}
+
+.mobileContactHero > p:last-of-type {
+  max-width: 365px;
+  margin: 1.15rem 0 0;
+  color: rgb(244 246 250 / 82%);
+  font-size: 0.93rem;
+  line-height: 1.54;
+  text-wrap: pretty;
+  text-shadow: 0 5px 24px rgb(0 0 0 / 74%);
+}
+
+.mobileHeroCta {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.45rem;
+  padding: 0.78rem 1.15rem 0.78rem 1.3rem;
+  color: #111318;
+  font-size: 0.82rem;
+  font-weight: 720;
+  text-decoration: none;
+  border: 1px solid rgb(255 255 255 / 74%);
+  border-radius: 0.8rem;
+  background: linear-gradient(#fff, #dcdde1);
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 90%),
+    0 14px 36px rgb(0 0 0 / 38%);
+}
+
+.mobileHeroCta:focus-visible {
+  outline: 2px solid #80a6ff;
+  outline-offset: 4px;
+}
+
+.mobileHeroCta svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mobileTransmission {
+  position: absolute;
+  right: 18px;
+  bottom: 2rem;
+  left: 18px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  color: rgb(217 225 244 / 52%);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.11em;
+}
+
+.mobileTransmission > div {
+  position: relative;
+  height: 1px;
+  background: rgb(255 255 255 / 14%);
+}
+
+.mobileTransmission i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: linear-gradient(90deg, #9ab7ff, #e2eaff);
+  box-shadow: 0 0 18px rgb(55 120 255 / 55%);
+  transform: scaleX(0.02);
+  transform-origin: left;
+}
+
+.mobileTransmission b {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 9px;
+  aspect-ratio: 1;
+  border: 2px solid #e6edff;
+  border-radius: 50%;
+  background: #6b97ff;
+  box-shadow:
+    0 0 16px #8eafff,
+    0 0 32px rgb(55 120 255 / 72%);
+  transform: translate(-50%, -50%);
+}
+
+.mobileReceipt {
+  position: absolute;
+  top: clamp(7.5rem, 16svh, 9.5rem);
+  right: 18px;
+  left: 18px;
+  z-index: 5;
+  max-width: 420px;
+  margin-inline: auto;
+  padding: 1.4rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 1.35rem;
+  background:
+    radial-gradient(circle at 85% 0%, rgb(55 120 255 / 16%), transparent 34%),
+    linear-gradient(150deg, rgb(15 19 28 / 88%), rgb(5 7 11 / 94%));
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 8%),
+    0 30px 86px rgb(0 0 0 / 52%);
+  backdrop-filter: blur(16px);
+  will-change: transform, opacity;
+}
+
+.mobileReceipt > span {
+  display: block;
+  margin-bottom: 1rem;
+  color: #8eafff;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.mobileReceipt strong {
+  display: block;
+  color: #f7f8fb;
+  font-size: clamp(2.65rem, 12.5vw, 3.75rem);
+  font-weight: 580;
+  line-height: 0.9;
+  letter-spacing: -0.062em;
+  text-wrap: balance;
+}
+
+.mobileReceipt > p {
+  margin: 1rem 0 0;
+  color: rgb(231 235 244 / 72%);
+  font-size: 0.86rem;
+  line-height: 1.52;
+}
+
+.mobileResponseScene {
+  position: relative;
+  min-height: var(--scene-scroll, 300svh);
+}
+
+.mobileResponseSticky {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  overflow: hidden;
+  padding: 6.8rem 16px 4.8rem;
+  background:
+    radial-gradient(circle at 72% 58%, rgb(55 120 255 / 12%), transparent 28%),
+    linear-gradient(to bottom, #050609, #080a0f 54%, #050609);
+}
+
+.mobileResponseHeader {
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.mobileResponseHeader h2 {
+  max-width: 410px;
+  margin: 0;
+  color: #f6f7fa;
+  font-size: clamp(2.8rem, 13.5vw, 4.2rem);
+  font-weight: 580;
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.mobileResponseStage {
+  position: absolute;
+  top: clamp(18rem, 39svh, 21rem);
+  right: 16px;
+  bottom: 5.2rem;
+  left: 16px;
+  display: grid;
+  place-items: center;
+}
+
+.mobileResponsePanel {
+  position: absolute;
+  display: grid;
+  width: min(420px, 100%);
+  min-height: min(360px, calc(100svh - 25rem));
+  align-content: center;
+  visibility: hidden;
+  opacity: 0;
+  padding: 1.5rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 84% 8%, rgb(55 120 255 / 16%), transparent 34%),
+    linear-gradient(150deg, rgb(15 19 28 / 94%), rgb(5 7 11 / 98%));
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 8%),
+    0 34px 90px rgb(0 0 0 / 52%);
+  transform: translateY(38px) scale(0.95);
+  will-change: transform, opacity, filter;
+}
+
+.mobileResponsePanel:first-child {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
+
+.mobileResponsePanel > span {
+  color: #91aff8;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mobileResponsePanel > strong {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.4rem;
+  color: rgb(138 171 255 / 20%);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 4.2rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.mobileResponsePanel h3 {
+  max-width: 330px;
+  margin: 0.9rem 0 0;
+  color: #f5f7fb;
+  font-size: clamp(2.1rem, 10.5vw, 3rem);
+  font-weight: 580;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.mobileResponsePanel p {
+  max-width: 340px;
+  margin: 1rem 0 0;
+  color: rgb(231 235 244 / 70%);
+  font-size: 0.84rem;
+  line-height: 1.56;
+}
+
+.mobileResponseRail {
+  position: absolute;
+  right: 16px;
+  bottom: 1.65rem;
+  left: 16px;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+
+.mobileResponseRail > div,
+.mobileResponseRail i {
+  position: absolute;
+  top: 50%;
+  right: 16.6%;
+  left: 16.6%;
+  height: 1px;
+}
+
+.mobileResponseRail > div {
+  background: rgb(255 255 255 / 13%);
+}
+
+.mobileResponseRail i {
+  top: 0;
+  right: 0;
+  left: 0;
+  display: block;
+  background: linear-gradient(90deg, #9ab7ff, #4d82ff);
+  box-shadow: 0 0 18px rgb(55 120 255 / 55%);
+  transform: scaleX(0.333);
+  transform-origin: left;
+}
+
+.mobileResponseRail > span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 32px;
+  aspect-ratio: 1;
+  place-items: center;
+  color: rgb(218 226 245 / 72%);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.52rem;
+  border: 1px solid rgb(103 150 255 / 36%);
+  border-radius: 50%;
+  background: #07090e;
+  box-shadow: 0 0 0 5px rgb(5 6 9 / 88%);
+}
+
+@media (min-width: 768px) {
+  .briefingCopy h2 {
+    max-width: none;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+    font-size: clamp(3.2rem, 4.35vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
+  }
+}
+
 @media (max-width: 980px) {
   .heroCopyBlock {
     left: 2.5rem;
@@ -1201,6 +1592,57 @@
   }
 }
 
+@media (max-width: 767px) and (max-height: 740px) {
+  .mobileContactHero {
+    top: 5.8rem;
+  }
+
+  .mobileContactHero h1 {
+    font-size: clamp(2.55rem, 12.2vw, 3.3rem);
+  }
+
+  .mobileContactHero > p:last-of-type {
+    margin-top: 0.8rem;
+    font-size: 0.83rem;
+  }
+
+  .mobileHeroCta {
+    min-height: 44px;
+    margin-top: 1rem;
+    padding-block: 0.65rem;
+  }
+
+  .mobileReceipt {
+    top: 6.2rem;
+    padding: 1.15rem;
+  }
+
+  .mobileReceipt strong {
+    font-size: clamp(2.25rem, 10.8vw, 2.9rem);
+  }
+
+  .mobileResponseSticky {
+    padding-top: 5.8rem;
+  }
+
+  .mobileResponseHeader h2 {
+    font-size: clamp(2.35rem, 11.2vw, 3.1rem);
+  }
+
+  .mobileResponseStage {
+    top: 15.5rem;
+  }
+
+  .mobileResponsePanel {
+    min-height: min(320px, calc(100svh - 20.5rem));
+    padding: 1.2rem;
+  }
+
+  .mobileResponsePanel h3 {
+    font-size: clamp(1.9rem, 9.3vw, 2.55rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .signalScene,
   .responseScene {
@@ -1257,6 +1699,86 @@
   }
 
   .responseRail {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .mobileSignalScene,
+  .mobileResponseScene {
+    min-height: auto;
+  }
+
+  .mobileSignalSticky,
+  .mobileResponseSticky {
+    position: relative;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .mobileSignalSticky {
+    padding: 6.8rem 16px 5rem;
+  }
+
+  .mobileSignalMedia {
+    inset: 0;
+    height: 88svh;
+    transform: none !important;
+  }
+
+  .mobileSignalShade {
+    height: 88svh;
+    opacity: 0.52 !important;
+  }
+
+  .mobileContactHero {
+    position: relative;
+    inset: auto;
+    display: flex;
+    min-height: 72svh;
+    flex-direction: column;
+    justify-content: flex-start;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .mobileTransmission {
+    display: none;
+  }
+
+  .mobileReceipt {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  .mobileResponseSticky {
+    display: block;
+    padding: 6rem 16px;
+  }
+
+  .mobileResponseStage {
+    position: relative;
+    inset: auto;
+    display: grid;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .mobileResponsePanel {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .mobileResponseRail {
     display: none;
   }
 }
