@@ -49,7 +49,7 @@ const contactSource = readFileSync(
   "utf8",
 );
 const homeHeroSource = readFileSync(
-  new URL("../src/components/ui/cinematic-landing-hero.tsx", import.meta.url),
+  new URL("../src/components/conversion-home.tsx", import.meta.url),
   "utf8",
 );
 const routeCinematicSources = [
@@ -172,7 +172,7 @@ test("uses separate art-directed home hero images for desktop and mobile", () =>
   assert.match(homeHeroSource, /home-hero-desktop\.webp/);
 });
 
-test("keeps the pinned home hero inside the document width", () => {
+test("keeps the home hero inside the document width", () => {
   assert.doesNotMatch(homeHeroSource, /\bw-screen\b/);
 });
 

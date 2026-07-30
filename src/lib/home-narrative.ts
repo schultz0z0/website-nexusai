@@ -1,12 +1,10 @@
 export const HOME_CHAPTERS = [
-  { id: "metrics", motion: "reveal" },
-  { id: "principles", motion: "layers" },
-  { id: "stock", motion: "product" },
-  { id: "copilot", motion: "product" },
-  { id: "capabilities", motion: "map" },
-  { id: "stack", motion: "breathe" },
-  { id: "cta", motion: "horizon" },
-  { id: "faq", motion: "static" },
+  { id: "hero", purpose: "promise" },
+  { id: "value", purpose: "business-outcomes" },
+  { id: "proof", purpose: "credibility" },
+  { id: "cases", purpose: "application" },
+  { id: "trust", purpose: "risk-reversal" },
+  { id: "cta", purpose: "conversion" },
 ] as const;
 
 export function getHomeMotionMode({
@@ -16,5 +14,13 @@ export function getHomeMotionMode({
   reducedMotion: boolean;
   desktop: boolean;
 }) {
-  return desktop && !reducedMotion ? "scroll" : "static";
+  return desktop && !reducedMotion ? "cinematic" : "static";
+}
+
+export function getBlueStageScrollDistance({
+  desktop,
+}: {
+  desktop: boolean;
+}) {
+  return desktop ? 700 : 0;
 }

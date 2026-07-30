@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   HOME_CHAPTERS,
+  getBlueStageScrollDistance,
   getHomeMotionMode,
 } from "../src/lib/home-narrative.ts";
 
@@ -10,14 +11,12 @@ test("keeps the approved home chapter order", () => {
   assert.deepEqual(
     HOME_CHAPTERS.map((chapter) => chapter.id),
     [
-      "metrics",
-      "principles",
-      "stock",
-      "copilot",
-      "capabilities",
-      "stack",
+      "hero",
+      "value",
+      "proof",
+      "cases",
+      "trust",
       "cta",
-      "faq",
     ],
   );
 });
@@ -39,6 +38,14 @@ test("uses natural document flow on small screens", () => {
 test("enables local scroll chapters on motion-capable desktop screens", () => {
   assert.equal(
     getHomeMotionMode({ reducedMotion: false, desktop: true }),
-    "scroll",
+    "cinematic",
   );
+});
+
+test("bounds the blue stage scroll distance on desktop", () => {
+  assert.equal(getBlueStageScrollDistance({ desktop: true }), 700);
+});
+
+test("keeps the blue stage in natural flow on mobile", () => {
+  assert.equal(getBlueStageScrollDistance({ desktop: false }), 0);
 });
