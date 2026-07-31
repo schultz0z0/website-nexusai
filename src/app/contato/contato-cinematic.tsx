@@ -507,7 +507,11 @@ export function ContatoCinematic() {
 
           <div className={styles.mobileReceipt} data-contact-mobile-receipt>
             <span>Contexto recebido</span>
-            <strong>Você fala. A gente escuta.</strong>
+            <strong>
+              Você fala.
+              <br />
+              A gente escuta.
+            </strong>
             <p>
               Uma pessoa lê seu briefing, identifica o que falta e conduz a
               conversa seguinte.
@@ -540,9 +544,11 @@ export function ContatoCinematic() {
 
           <header className={styles.heroCopyBlock} data-contact-hero-copy>
             <p className={shell.eyebrow}>Conversa começa aqui</p>
-            <h1 id="contact-title">Contato</h1>
+            <h1 id="contact-title">
+              Vamos entender onde sua operação perde tempo.
+            </h1>
             <p>
-              Conte onde sua operação perde tempo. Em até 24h úteis, a equipe
+              Conte o contexto da sua operação. Em até 24h úteis, a equipe
               responde e organiza o próximo passo com você.
             </p>
           </header>
@@ -575,7 +581,7 @@ export function ContatoCinematic() {
             <div className={styles.briefingCopy} data-contact-briefing-copy>
               <p className={shell.eyebrow}>Seu contexto</p>
               <h2 id="briefing-title" className={shell.displayTitle}>
-                O suficiente pra chegar preparado.
+                O&nbsp;suficiente pra&nbsp;chegar preparado.
               </h2>
               <p className={shell.sectionDescription}>
                 Não precisa escrever um projeto. Diga onde trava, quem é

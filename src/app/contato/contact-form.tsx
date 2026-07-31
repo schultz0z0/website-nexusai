@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import { useActionState, useId } from "react";
+import { useActionState, useId, useState } from "react";
 
 import { enviarMensagem } from "./actions";
 import styles from "./contato-cinematic.module.css";
@@ -18,6 +18,8 @@ export function ContactForm() {
     null,
   );
   const formId = useId();
+  const [setorSelected, setSetorSelected] = useState("");
+  const [cargoSelected, setCargoSelected] = useState("");
 
   if (state?.ok === true) {
     return (
@@ -47,10 +49,11 @@ export function ContactForm() {
     <form action={formAction} className={styles.contactForm} noValidate>
       <input
         type="text"
-        name="website"
+        name="_gotcha_hp"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
+        style={{ display: "none" }}
         className="absolute opacity-0 pointer-events-none h-0 w-0"
       />
 
@@ -79,8 +82,30 @@ export function ContactForm() {
           label="Cargo"
           name="cargo"
           options={CARGOS}
+          value={cargoSelected}
+          onChange={(e) => setCargoSelected(e.target.value)}
         />
       </div>
+
+      <AnimatePresence>
+        {cargoSelected === "Outro" && (
+          <motion.div
+            key="cargo-outro"
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ opacity: 1, height: "auto", marginTop: 12 }}
+            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden mb-3"
+          >
+            <FormField
+              id={`${formId}-cargo-outro`}
+              label="Qual é o seu cargo?"
+              name="cargo_outro"
+              placeholder="Ex: Head de Inovação, PMO..."
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className={styles.fieldBlock}>
         <FormSelect
@@ -88,7 +113,29 @@ export function ContactForm() {
           label="Setor principal"
           name="setor"
           options={SETORES}
+          value={setorSelected}
+          onChange={(e) => setSetorSelected(e.target.value)}
         />
+        <AnimatePresence>
+          {setorSelected === "Outro" && (
+            <motion.div
+              key="setor-outro"
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: "auto", marginTop: 12 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <FormField
+                id={`${formId}-setor-outro`}
+                label="Qual é o seu setor?"
+                name="setor_outro"
+                placeholder="Ex: Logística, Saúde, Advocacia..."
+                required
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className={styles.fieldBlock}>
@@ -115,8 +162,8 @@ export function ContactForm() {
       ) : null}
 
       <div className={styles.formActions}>
-        <a href="mailto:contato@nexusai.com.br" className={styles.directLink}>
-          Ou escreva direto: contato@nexusai.com.br
+        <a href="mailto:raphaelschultz12@gmail.com" className={styles.directLink}>
+          Ou escreva direto: raphaelschultz12@gmail.com
         </a>
         <motion.button
           type="submit"
@@ -160,17 +207,25 @@ function FormField({
   name,
   type = "text",
   required,
+  placeholder,
 }: {
   id: string;
   label: string;
   name: string;
   type?: "text" | "email";
   required?: boolean;
+  placeholder?: string;
 }) {
   return (
     <div className={styles.field}>
       <FieldLabel id={id} label={label} required={required} />
-      <input id={id} name={name} type={type} required={required} />
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        placeholder={placeholder}
+      />
     </div>
   );
 }
@@ -180,16 +235,20 @@ function FormSelect({
   label,
   name,
   options,
+  value,
+  onChange,
 }: {
   id: string;
   label: string;
   name: string;
   options: readonly string[];
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) {
   return (
     <div className={styles.field}>
       <FieldLabel id={id} label={label} />
-      <select id={id} name={name} defaultValue="">
+      <select id={id} name={name} value={value} onChange={onChange}>
         <option value="" disabled>
           Selecione...
         </option>

@@ -121,15 +121,15 @@ export function ConversionHome() {
           <div className={styles.heroContent}>
             <p className={styles.kicker}>
               <Sparkles aria-hidden="true" />
-              Sua equipe multiplicada por IA
+              Automação inteligente para empresas
             </p>
             <h1>
-              Menos horas operacionais.
-              <span>Mais resultado por pessoa.</span>
+              Multiplique a capacidade
+              <span>da sua equipe com IA</span>
             </h1>
             <p className={styles.heroBody}>
               A Nexus AI encontra gargalos e entrega automações sob medida que
-              reduzem retrabalho, aceleram decisões e liberam sua equipe para
+              reduzem retrabalho, aceleram decisões e liberam seu negócio para
               crescer.
             </p>
 

@@ -140,13 +140,17 @@
   top: 9svh;
   display: grid;
   min-height: 82svh;
-  grid-template-columns: minmax(260px, 0.7fr) minmax(560px, 1.3fr);
+  grid-template-columns: minmax(380px, 0.95fr) minmax(480px, 1.05fr);
   align-items: center;
-  gap: clamp(2.5rem, 7vw, 7rem);
+  gap: clamp(2.5rem, 6vw, 6rem);
 }
 
 .briefingCopy h2 {
-  max-width: 500px;
+  max-width: 540px !important;
+  font-size: clamp(2.0rem, 3.2vw, 3.2rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.04em !important;
+  text-wrap: balance !important;
 }
 
 .briefingCopy p:last-of-type {
@@ -789,10 +793,11 @@
 .heroCopyBlock h1 {
   margin: 0;
   color: #f7f8fb;
-  font-size: clamp(5rem, 10vw, 10rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.5rem);
   font-weight: 590;
-  line-height: 0.82;
-  letter-spacing: -0.075em;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
 .heroCopyBlock > p:last-child {
@@ -923,9 +928,9 @@
 
 .briefingLayout {
   display: grid;
-  grid-template-columns: minmax(280px, 0.72fr) minmax(560px, 1.28fr);
+  grid-template-columns: minmax(380px, 0.95fr) minmax(480px, 1.05fr);
   align-items: center;
-  gap: clamp(3rem, 8vw, 8rem);
+  gap: clamp(3rem, 6vw, 6rem);
 }
 
 .briefingCopy {
@@ -1443,12 +1448,13 @@
 
 @media (min-width: 768px) {
   .briefingCopy h2 {
-    max-width: none;
+    max-width: 480px;
     padding-bottom: 0.12em;
     margin-bottom: -0.12em;
-    font-size: clamp(3.2rem, 4.35vw, 5rem);
-    line-height: 0.98;
-    letter-spacing: -0.055em;
+    font-size: clamp(2.0rem, 3.2vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
   }
 }
 
@@ -1464,7 +1470,7 @@
   }
 
   .briefingLayout {
-    grid-template-columns: minmax(240px, 0.62fr) minmax(500px, 1.38fr);
+    grid-template-columns: minmax(320px, 0.9fr) minmax(440px, 1.1fr);
     gap: 2.5rem;
   }
 

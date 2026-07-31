@@ -7,7 +7,6 @@ import { ArrowRight, Menu, X } from "lucide-react";
 const ITEMS = [
   { label: "Soluções", href: "/solucoes" },
   { label: "Processo", href: "/processo" },
-  { label: "Contato", href: "/contato" },
 ] as const;
 
 export function NexusNav() {
@@ -58,7 +57,7 @@ export function NexusNav() {
           href="/contato"
           className="ml-1 inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-b from-primary/90 to-primary px-4 text-xs font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_2px_4px_rgba(0,0,0,0.15)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
-          Falar
+          Falar com a equipe
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </nav>

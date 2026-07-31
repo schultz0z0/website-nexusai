@@ -313,7 +313,7 @@ export const COMPANY = {
   name: "Nexus AI",
   legalName: "Nexus AI",
   url: "https://nexusai.com.br",
-  email: "contato@nexusai.com.br",
+  email: "raphaelschultz12@gmail.com",
   description:
     "Plataformas e agentes de IA que assumem o trabalho repetitivo, do atendimento à análise. Sua equipe fica livre pro que só humano faz.",
 } as const;
