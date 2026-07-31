@@ -12,7 +12,7 @@ COPY package.json package-lock.json ./
 # package.json e package-lock.json em ambientes de produção. `npm ci` é estrito
 # e quebra o build sempre que alguém instala uma dependência nova e esquece de
 # commitar o lockfile atualizado.
-RUN npm install --omit=dev --no-audit --no-fund
+RUN npm install --no-audit --no-fund
 
 # 2. Rebuild the source code only when needed
 FROM base AS builder
