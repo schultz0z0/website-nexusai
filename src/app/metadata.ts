@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: COMPANY.url },
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon",
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,

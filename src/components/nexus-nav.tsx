@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
+import { NexusMark } from "@/components/nexus-mark";
 
 const ITEMS = [
   { label: "Soluções", href: "/solucoes" },
@@ -26,18 +27,7 @@ export function NexusNav() {
             aria-label="Nexus AI — voltar ao início"
             className="inline-flex items-center gap-2 rounded-lg pl-2 pr-4 py-1.5 text-foreground/90 hover:text-foreground transition-colors"
           >
-            {/* ponytail: placeholder mark — swap for official SVG when available. */}
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="6" className="fill-foreground" />
-              <path
-                d="M7 17 V7 L17 17 V7"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-background"
-              />
-            </svg>
+            <NexusMark className="h-6 w-6" />
             <span className="text-sm font-semibold tracking-tight">
               Nexus<span className="text-foreground/60 font-medium"> AI</span>
             </span>
@@ -68,18 +58,7 @@ export function NexusNav() {
         aria-label="Nexus AI — voltar ao início"
         className="fixed top-4 left-4 z-50 md:hidden inline-flex items-center gap-2 rounded-lg px-2 py-1 text-foreground/90 hover:text-foreground transition-colors"
       >
-        {/* ponytail: placeholder mark — swap for official SVG when available. */}
-        <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="6" className="fill-foreground" />
-          <path
-            d="M7 17 V7 L17 17 V7"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-background"
-          />
-        </svg>
+        <NexusMark className="h-7 w-7" />
         <span className="text-sm font-semibold tracking-tight">
           Nexus<span className="text-foreground/60 font-medium"> AI</span>
         </span>
