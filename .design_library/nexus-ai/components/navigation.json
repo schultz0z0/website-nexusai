@@ -1,0 +1,20 @@
+{
+  "schemaVersion":2,
+  "slug":"navigation",
+  "name":"Navegação",
+  "category":"Estrutura",
+  "sourceKind":"structured-spec",
+  "confidence":"high",
+  "semanticTypeCandidates":[{"type":"navigation","evidence":"Navegação global implementada com layouts desktop e mobile."}],
+  "variantDimensions":{"viewport":["desktop","mobile"],"state":["default","open"]},
+  "representativeVariants":[
+    {"id":"desktop-glass","whySelected":"Assinatura principal da marca","traits":{"background":"var(--color-card)","color":"var(--color-foreground)","radius":"var(--radius-lg)","shadow":"var(--shadow-2)"},"childrenDigest":"Marca, divisor, links e CTA"},
+    {"id":"mobile-drawer","whySelected":"Navegação responsiva existente","traits":{"background":"var(--color-card)","color":"var(--color-foreground)","radius":"var(--radius-xl)","shadow":"var(--shadow-4)"},"childrenDigest":"Marca fixa, acionador e lista vertical"}
+  ],
+  "anatomy":["brand","divider","link group","primary action","mobile trigger","mobile scrim","mobile drawer"],
+  "structurePatterns":["Desktop centralizado e flutuante.","Mobile separa marca e acionador nos cantos."],
+  "usageHints":{"priorityHint":"core","guidance":"Mantenha poucos destinos e uma única ação de conversão."},
+  "doNotInvent":["Não usar mega menu.","Não adicionar navegação lateral em páginas institucionais."],
+  "unknowns":[],
+  "keyInsightSeed":"Pílula de vidro no desktop e drawer cinematográfico no mobile."
+}

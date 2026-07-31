@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "library": "Nexus AI",
+  "language": "pt-BR",
+  "recommendedReadOrder": [
+    {
+      "order": 1,
+      "path": "SKILL.md",
+      "purpose": "Obter identidade, decisões essenciais e mapa rápido da biblioteca."
+    },
+    {
+      "order": 2,
+      "path": "css.json",
+      "purpose": "Compreender tokens estruturados antes de tomar decisões visuais."
+    },
+    {
+      "order": 3,
+      "path": "components/index.json",
+      "purpose": "Descobrir os seis componentes disponíveis, categorias e prioridades."
+    },
+    {
+      "order": 4,
+      "path": "components/{slug}.json",
+      "purpose": "Ler somente os contratos dos slugs necessários para intenção, variantes e estados.",
+      "slugs": [
+        "button",
+        "navigation",
+        "form-field",
+        "card",
+        "accordion",
+        "badge"
+      ]
+    },
+    {
+      "order": 5,
+      "path": "uikit-plan.json",
+      "purpose": "Aplicar whitelist, prioridade e blueprint sem tratá-lo como fonte de estilo."
+    },
+    {
+      "order": 6,
+      "path": "preview/component-{slug}.html",
+      "purpose": "Usar o HTML de preview como primeira fonte de fidelidade de DOM e CSS para cada slug."
+    },
+    {
+      "order": 7,
+      "path": "ui_kits/website/",
+      "purpose": "Consultar o UI Kit final como referência de composição, densidade e padrões de página quando disponível."
+    }
+  ],
+  "runtimeStyleSource": {
+    "path": "colors_and_type.css",
+    "instruction": "Vincular como fonte de variáveis em runtime; usar css.json para compreender tokens."
+  },
+  "componentResolution": {
+    "priority": [
+      "preview/component-{slug}.html",
+      "components/{slug}.json",
+      "components/_evidence/{slug}.json"
+    ],
+    "evidencePolicy": "Usar _evidence somente como fallback quando existir e o preview estiver ausente ou insuficiente."
+  }
+}

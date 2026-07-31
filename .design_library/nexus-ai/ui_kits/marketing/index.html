@@ -1,0 +1,1885 @@
+<!doctype html>
+<html lang="pt-BR" data-layout-guard="uikit-v1" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus AI — UI Kit do Design System</title>
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <style>
+    /* ===== Page-level classes (composition only) ===== */
+    .uikit-shell {
+      width: 100%;
+      max-width: 1184px;
+      margin: 0 auto;
+      padding: var(--space-9) var(--gutter-page-desktop) var(--space-12);
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: var(--space-9);
+      overflow: hidden;
+    }
+    .uikit-sidebar, .uikit-main, .uikit-toolbar { min-width: 0; }
+    .uikit-sidebar { overflow: hidden; max-width: 100%; }
+    .uikit-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .uikit-responsive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+    .uikit-table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+    }
+    .uikit-truncate {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .uikit-nowrap { white-space: nowrap; flex-shrink: 0; }
+    .uikit-action-cell {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      min-width: 0;
+      max-width: 160px;
+      overflow: hidden;
+    }
+    .uikit-action {
+      min-width: 0;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .uikit-shell {
+        grid-template-columns: minmax(0, 1fr);
+        padding: var(--space-7) var(--gutter-page-mobile) var(--space-10);
+        gap: var(--space-6);
+      }
+      .uikit-sidebar { position: relative; }
+      .uikit-responsive-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .uikit-toolbar { flex-direction: column; align-items: stretch; }
+    }
+
+    /* ===== Brand layout ===== */
+    body {
+      margin: 0;
+      background: var(--color-stage);
+      color: var(--color-foreground);
+      font-family: var(--font-sans);
+      font-size: var(--type-body);
+      line-height: var(--line-height-body);
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav-desktop);
+      background: var(--color-stage);
+      border-bottom: 1px solid var(--color-line);
+    }
+    .topbar-inner {
+      width: 100%;
+      max-width: 1184px;
+      margin: 0 auto;
+      padding: var(--space-3) var(--gutter-page-desktop);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-foreground);
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-md);
+      background: var(--color-foreground);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-background);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .brand-text {
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: -0.01em;
+    }
+    .brand-text .brand-ai {
+      opacity: 0.6;
+      font-weight: var(--font-weight-medium);
+    }
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      height: var(--size-nav-trigger);
+      padding: 0 var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-line);
+      background: var(--color-card);
+      color: var(--color-foreground);
+      font-family: var(--font-sans);
+      font-size: var(--type-caption);
+      cursor: pointer;
+      transition: var(--motion-cta-hover) background-color, var(--motion-cta-hover) border-color;
+    }
+    .theme-toggle:hover { background: var(--color-secondary); }
+    .theme-toggle:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+    .theme-toggle .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-full);
+      background: var(--color-signal);
+      box-shadow: 0 0 0 4px var(--color-signal-soft);
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative;
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-2xl);
+      background:
+        radial-gradient(120% 80% at 80% 0%, var(--hero-glow) 0%, transparent 55%),
+        var(--color-stage-raised);
+      padding: var(--space-11) var(--space-9) var(--space-9);
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      background: var(--color-signal-soft);
+      color: var(--color-signal);
+      font-size: var(--type-eyebrow);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      margin: var(--space-5) 0 var(--space-4);
+      font-family: var(--font-display);
+      font-size: clamp(40px, 6vw, var(--type-h1));
+      line-height: var(--line-height-h1);
+      letter-spacing: -0.03em;
+      font-weight: var(--font-weight-extrabold);
+      color: var(--nexus-foreground);
+      filter: var(--shadow-hero);
+      max-width: var(--max-display-title);
+    }
+    .hero h1 .accent { color: var(--color-signal); }
+    .hero p.lead {
+      max-width: var(--max-hero-copy);
+      margin: 0 0 var(--space-7);
+      font-size: var(--type-lead);
+      line-height: var(--line-height-lead);
+      color: var(--color-text-muted);
+    }
+    .hero .meta {
+      display: flex;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+      color: var(--color-text-muted);
+      font-size: var(--type-caption);
+    }
+    .hero .meta strong {
+      color: var(--nexus-foreground);
+      font-weight: var(--font-weight-semibold);
+      display: block;
+      font-size: var(--type-h4);
+      line-height: var(--line-height-h4);
+    }
+
+    /* ===== Index / nav ===== */
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+      padding: var(--space-5);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-xl);
+      background: var(--color-stage-raised);
+    }
+    .toc h2 {
+      margin: 0 0 var(--space-3);
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-weight: var(--font-weight-semibold);
+    }
+    .toc ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .toc a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      color: var(--color-foreground);
+      text-decoration: none;
+      font-size: var(--type-caption);
+      transition: var(--motion-cta-hover) background-color, var(--motion-cta-hover) color;
+    }
+    .toc a:hover { background: var(--color-secondary); color: var(--nexus-foreground); }
+    .toc a:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+    .toc .num {
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--color-text-muted);
+    }
+
+    /* ===== Section ===== */
+    .section {
+      margin: var(--space-11) 0 0;
+      scroll-margin-top: 96px;
+    }
+    .section + .section { margin-top: var(--space-12); }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-6);
+    }
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: var(--type-h2);
+      line-height: var(--line-height-h2);
+      letter-spacing: -0.02em;
+      font-weight: var(--font-weight-bold);
+      color: var(--nexus-foreground);
+    }
+    .section-head p {
+      margin: 0;
+      max-width: var(--max-section-description);
+      color: var(--color-text-muted);
+      font-size: var(--type-lead);
+      line-height: var(--line-height-lead);
+    }
+    .section-eyebrow {
+      display: inline-block;
+      margin-bottom: var(--space-3);
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      color: var(--color-signal);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* ===== Swatches ===== */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .swatch {
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--color-stage-raised);
+      display: flex;
+      flex-direction: column;
+    }
+    .swatch .chip {
+      height: 88px;
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--color-text-muted);
+    }
+    .swatch .meta {
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .swatch .meta .name {
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+      font-size: var(--type-body);
+    }
+    .swatch .meta .token {
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--color-text-muted);
+    }
+    .swatch .meta .hex {
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--color-text-muted);
+    }
+
+    /* ===== Typography showcase ===== */
+    .type-stack {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: var(--space-6);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-xl);
+      background: var(--color-stage-raised);
+      padding: var(--space-7);
+    }
+    .type-stack h3 {
+      margin: 0 0 var(--space-2);
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      line-height: var(--line-height-h1);
+      letter-spacing: -0.03em;
+      font-weight: var(--font-weight-extrabold);
+      color: var(--nexus-foreground);
+    }
+    .type-stack h4 {
+      margin: var(--space-6) 0 var(--space-2);
+      font-family: var(--font-heading);
+      font-size: var(--type-h3);
+      line-height: var(--line-height-h3);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+    }
+    .type-stack p {
+      margin: 0 0 var(--space-3);
+      color: var(--color-text-muted);
+      max-width: var(--max-section-description);
+    }
+    .type-stack .lead {
+      font-size: var(--type-lead);
+      line-height: var(--line-height-lead);
+    }
+    .type-stack .body {
+      font-size: var(--type-body);
+      line-height: var(--line-height-body);
+    }
+    .type-stack .caption {
+      font-size: var(--type-caption);
+      line-height: var(--line-height-caption);
+      color: var(--color-text-muted);
+    }
+    .type-stack .eyebrow {
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      color: var(--color-signal);
+      font-weight: var(--font-weight-semibold);
+    }
+    .type-stack .mono {
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--nexus-foreground);
+      background: var(--color-stage-mid);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-line);
+      word-break: break-word;
+    }
+    .type-stack aside {
+      border-left: 1px solid var(--color-line);
+      padding-left: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .type-stack aside dt {
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-weight: var(--font-weight-semibold);
+    }
+    .type-stack aside dd {
+      margin: var(--space-1) 0 0;
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--nexus-foreground);
+      word-break: break-word;
+    }
+    @media (max-width: 900px) {
+      .type-stack { grid-template-columns: minmax(0, 1fr); }
+      .type-stack aside { border-left: 0; padding-left: 0; border-top: 1px solid var(--color-line); padding-top: var(--space-5); }
+    }
+
+    /* ===== Motion showcase ===== */
+    .motion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .motion-card {
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-xl);
+      background: var(--color-stage-raised);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      min-height: 220px;
+    }
+    .motion-card h3 {
+      margin: 0;
+      font-size: var(--type-h4);
+      line-height: var(--line-height-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+    }
+    .motion-card p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: var(--type-caption);
+      line-height: var(--line-height-caption);
+    }
+    .motion-card .meta {
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--color-text-muted);
+      margin-top: auto;
+    }
+    .motion-stage {
+      position: relative;
+      height: 64px;
+      border-radius: var(--radius-md);
+      background: var(--color-stage-mid);
+      border: 1px solid var(--color-line);
+      overflow: hidden;
+    }
+    .motion-tahoe {
+      position: absolute;
+      inset: 0;
+      background: var(--tahoe-glass-stops);
+      background-size: 200% 200%;
+      animation: motion-tahoe var(--motion-tahoe-shimmer);
+    }
+    .motion-sheen {
+      position: absolute;
+      inset: 0;
+      background: var(--nav-sheen-stops);
+      background-size: 200% 100%;
+      animation: motion-sheen var(--motion-nav-sheen);
+    }
+    .motion-marquee {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-7);
+      padding: 0 var(--space-5);
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      animation: motion-marquee var(--motion-marquee);
+      white-space: nowrap;
+    }
+    .motion-press {
+      position: absolute;
+      left: var(--space-5);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 28px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      animation: motion-press 2.4s ease-out infinite;
+    }
+    .motion-pulse {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: var(--radius-full);
+      background: var(--color-signal);
+      box-shadow: 0 0 0 0 var(--color-signal-soft);
+      transform: translate(-50%, -50%);
+      animation: motion-pulse 2.6s ease-out infinite;
+    }
+    @keyframes motion-tahoe {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 200%; }
+    }
+    @keyframes motion-sheen {
+      0% { background-position: 200% 0%; }
+      100% { background-position: -200% 0%; }
+    }
+    @keyframes motion-marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes motion-press {
+      0%, 60%, 100% { transform: translateY(-50%) scale(1); }
+      30% { transform: translateY(-50%) scale(0.96); }
+    }
+    @keyframes motion-pulse {
+      0% { box-shadow: 0 0 0 0 var(--color-signal-soft); opacity: 0.9; }
+      80% { box-shadow: 0 0 0 14px transparent; opacity: 0.6; }
+      100% { box-shadow: 0 0 0 0 transparent; opacity: 0.9; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .motion-tahoe, .motion-sheen, .motion-marquee,
+      .motion-press, .motion-pulse { animation: none !important; }
+    }
+
+    /* ===== Buttons (button.json) ===== */
+    .buttons-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: var(--size-button-height);
+      padding: 0 var(--space-5);
+      border-radius: var(--radius-lg);
+      border: 1px solid transparent;
+      font-family: var(--font-sans);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-semibold);
+      line-height: 1;
+      cursor: pointer;
+      transition: var(--motion-cta-hover) transform, var(--motion-cta-hover) background-color, var(--motion-cta-hover) border-color;
+    }
+    .btn:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+    .btn.size-sm { min-height: 36px; padding: 0 var(--space-4); font-size: var(--type-caption); }
+    .btn.size-lg { min-height: var(--size-cta-min-height); padding: 0 var(--space-6); }
+    .btn.primary {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+      box-shadow: var(--shadow-8);
+    }
+    .btn.primary:hover { transform: translateY(-1px); }
+    .btn.primary:active { transform: translateY(0) scale(0.98); transition: var(--motion-cta-press) transform; }
+    .btn.secondary {
+      background: var(--color-card);
+      color: var(--color-foreground);
+      border-color: var(--color-line);
+      box-shadow: var(--shadow-9);
+    }
+    .btn.secondary:hover { background: var(--color-secondary); }
+    .btn.ghost {
+      background: transparent;
+      color: var(--color-foreground);
+    }
+    .btn.ghost:hover { background: var(--color-secondary); }
+    .btn.destructive {
+      background: var(--color-destructive);
+      color: var(--color-destructive-foreground);
+    }
+    .btn.destructive:hover { filter: brightness(1.06); }
+    .btn:disabled, .btn[aria-disabled="true"] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .btn .icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== Badge (badge.json) ===== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      font-weight: var(--font-weight-semibold);
+      border: 1px solid transparent;
+    }
+    .badge .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--color-signal);
+      box-shadow: 0 0 0 4px var(--color-signal-soft);
+    }
+    .badge.solid { background: var(--color-foreground); color: var(--color-background); }
+    .badge.signal {
+      background: var(--color-signal-soft);
+      color: var(--color-signal);
+    }
+    .badge.destructive {
+      background: var(--color-destructive);
+      color: var(--color-destructive-foreground);
+      border-radius: var(--radius-full);
+    }
+    .badge.neutral {
+      background: var(--color-secondary);
+      color: var(--color-foreground);
+      border-color: var(--color-line);
+    }
+
+    /* ===== Card (card.json) ===== */
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-6);
+      border-radius: var(--radius-xl);
+      background: var(--color-card);
+      border: 1px solid var(--color-line);
+      box-shadow: var(--shadow-1);
+      min-width: 0;
+    }
+    .card .eyebrow {
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      color: var(--color-signal);
+      font-weight: var(--font-weight-semibold);
+    }
+    .card .title {
+      font-family: var(--font-heading);
+      font-size: var(--type-h4);
+      line-height: var(--line-height-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+      margin: 0;
+    }
+    .card .body {
+      color: var(--color-text-muted);
+      font-size: var(--type-caption);
+      line-height: var(--line-height-caption);
+      margin: 0;
+    }
+    .card .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+    .card.metric {
+      background: transparent;
+      border-color: var(--color-line);
+      border-radius: 0;
+      box-shadow: none;
+      padding: var(--space-5) 0;
+    }
+    .card.metric .metric-value {
+      font-family: var(--font-display);
+      font-size: var(--type-h1);
+      line-height: var(--line-height-h1);
+      letter-spacing: -0.03em;
+      font-weight: var(--font-weight-extrabold);
+      color: var(--nexus-foreground);
+    }
+    .card.metric .metric-label {
+      font-size: var(--type-caption);
+      color: var(--color-text-muted);
+    }
+    .card.glass {
+      background: var(--color-card);
+      border-color: var(--color-line);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-5);
+    }
+
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+
+    /* ===== Navigation (navigation.json) ===== */
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      background: var(--color-card);
+      border: 1px solid var(--color-line);
+      box-shadow: var(--shadow-2);
+      backdrop-filter: blur(12px);
+      min-width: 0;
+    }
+    .nav-pill .divider {
+      width: 1px;
+      height: var(--size-nav-cta);
+      background: var(--color-line);
+    }
+    .nav-pill ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-2);
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+    }
+    .nav-pill a {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      color: var(--color-foreground);
+      text-decoration: none;
+      font-size: var(--type-caption);
+      transition: var(--motion-cta-hover) background-color;
+    }
+    .nav-pill a:hover { background: var(--color-secondary); }
+    .nav-pill a:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+    .nav-pill a[aria-current="page"] {
+      background: var(--color-secondary);
+      color: var(--nexus-foreground);
+    }
+    .nav-pill .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      height: var(--size-nav-cta);
+      padding: 0 var(--space-4);
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+      font-size: var(--type-caption);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+    }
+    .nav-pill .cta:hover { filter: brightness(1.05); }
+    .nav-pill .cta:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+
+    .nav-drawer {
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-2xl);
+      background: var(--color-card);
+      box-shadow: var(--shadow-3);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+    .nav-drawer .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+    .nav-drawer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-drawer a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-3);
+      border-radius: var(--radius-md);
+      color: var(--color-foreground);
+      text-decoration: none;
+      font-size: var(--type-body);
+      border-bottom: 1px solid var(--color-line);
+    }
+    .nav-drawer a:last-child { border-bottom: 0; }
+    .nav-drawer a:hover { background: var(--color-secondary); }
+    .nav-drawer a:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+
+    /* ===== Form field (form-field.json) ===== */
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      min-width: 0;
+    }
+    .field label {
+      font-size: var(--type-caption);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+    }
+    .field .required {
+      color: var(--color-signal);
+      margin-left: var(--space-1);
+    }
+    .field .help {
+      font-size: var(--type-caption);
+      color: var(--color-text-muted);
+    }
+    .field .error {
+      font-size: var(--type-caption);
+      color: var(--color-destructive);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .input, .select, .textarea {
+      width: 100%;
+      min-height: var(--size-input-height);
+      padding: 0 var(--space-3);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      border: 1px solid var(--color-input);
+      color: var(--color-foreground);
+      font-family: var(--font-sans);
+      font-size: var(--type-body);
+      transition: var(--motion-cta-hover) border-color, var(--motion-cta-hover) box-shadow;
+    }
+    .textarea {
+      min-height: 120px;
+      padding: var(--space-3);
+      line-height: var(--line-height-body);
+      resize: vertical;
+    }
+    .input:hover, .select:hover, .textarea:hover { border-color: var(--color-ring); }
+    .input:focus-visible, .select:focus-visible, .textarea:focus-visible {
+      outline: none;
+      border-color: var(--color-cta-focus);
+      box-shadow: 0 0 0 3px var(--color-signal-soft);
+    }
+    .input.is-invalid, .textarea.is-invalid, .select.is-invalid { border-color: var(--color-destructive); }
+    .input:disabled, .textarea:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+
+    /* ===== Accordion (accordion.json) ===== */
+    .accordion {
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-xl);
+      background: var(--color-stage-raised);
+      overflow: hidden;
+    }
+    .accordion details {
+      border-bottom: 1px solid var(--color-line);
+    }
+    .accordion details:last-child { border-bottom: 0; }
+    .accordion summary {
+      list-style: none;
+      cursor: pointer;
+      padding: var(--space-5) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      font-family: var(--font-sans);
+      font-size: var(--type-body);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+      transition: var(--motion-cta-hover) background-color;
+    }
+    .accordion summary::-webkit-details-marker { display: none; }
+    .accordion summary:hover { background: var(--color-secondary); }
+    .accordion summary:focus-visible {
+      outline: 2px solid var(--color-cta-focus);
+      outline-offset: var(--size-outline-offset);
+    }
+    .accordion summary .marker {
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-line);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-foreground);
+      transition: var(--motion-cta-hover) transform;
+      flex-shrink: 0;
+    }
+    .accordion summary .marker::before {
+      content: "+";
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      line-height: 1;
+    }
+    .accordion details[open] summary .marker {
+      transform: rotate(45deg);
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+    }
+    .accordion .answer {
+      padding: 0 var(--space-6) var(--space-6);
+      color: var(--color-text-muted);
+      font-size: var(--type-body);
+      line-height: var(--line-height-body);
+    }
+
+    /* ===== Governance ===== */
+    .governance {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+    .gov-card {
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-xl);
+      background: var(--color-stage-raised);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+    .gov-card h3 {
+      margin: 0;
+      font-size: var(--type-h4);
+      line-height: var(--line-height-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+    }
+    .gov-card p {
+      margin: 0;
+      color: var(--color-text-muted);
+      font-size: var(--type-caption);
+      line-height: var(--line-height-caption);
+    }
+    .gov-card ul {
+      margin: 0;
+      padding-left: var(--space-5);
+      color: var(--color-text-muted);
+      font-size: var(--type-caption);
+      line-height: var(--line-height-caption);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .gov-card strong {
+      color: var(--nexus-foreground);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* ===== Composed table ===== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--type-caption);
+      min-width: 640px;
+    }
+    .data-table thead th {
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-line);
+      font-size: var(--type-eyebrow);
+      letter-spacing: var(--letter-spacing-marquee-label);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-weight: var(--font-weight-semibold);
+      white-space: nowrap;
+    }
+    .data-table tbody td {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-line);
+      color: var(--color-foreground);
+      vertical-align: middle;
+    }
+    .data-table tbody tr:last-child td { border-bottom: 0; }
+    .data-table tbody tr:hover { background: var(--color-secondary); }
+    .data-table .num {
+      font-family: var(--font-mono);
+      color: var(--nexus-foreground);
+    }
+
+    /* ===== Chart preview ===== */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      gap: var(--space-5);
+    }
+    .chart {
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-xl);
+      background: var(--color-stage-raised);
+      padding: var(--space-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      min-width: 0;
+    }
+    .chart h3 {
+      margin: 0;
+      font-size: var(--type-h4);
+      line-height: var(--line-height-h4);
+      font-weight: var(--font-weight-semibold);
+      color: var(--nexus-foreground);
+    }
+    .chart .trend {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-2);
+      height: 140px;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+    .chart .bar {
+      flex: 1 1 0;
+      min-width: 0;
+      background: var(--chart-1);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      position: relative;
+    }
+    .chart .bar.signal { background: var(--color-signal); }
+    .chart .bar.deep { background: var(--chart-5); }
+    .chart .axis {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: var(--type-mono);
+      color: var(--color-text-muted);
+    }
+
+    /* ===== Footer ===== */
+    .uikit-footer {
+      margin-top: var(--space-12);
+      padding-top: var(--space-7);
+      border-top: 1px solid var(--color-line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+      justify-content: space-between;
+      color: var(--color-text-muted);
+      font-size: var(--type-caption);
+    }
+    .uikit-footer .actions {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+    }
+
+    /* ===== Light theme adjustments ===== */
+    html:not(.dark) body {
+      background: var(--color-background);
+      color: var(--color-foreground);
+    }
+    html:not(.dark) .topbar {
+      background: var(--color-background);
+      border-bottom-color: var(--color-border);
+    }
+    html:not(.dark) .hero,
+    html:not(.dark) .toc,
+    html:not(.dark) .swatch,
+    html:not(.dark) .type-stack,
+    html:not(.dark) .motion-card,
+    html:not(.dark) .accordion,
+    html:not(.dark) .gov-card,
+    html:not(.dark) .chart {
+      background: var(--color-card);
+      border-color: var(--color-border);
+    }
+    html:not(.dark) .nav-pill,
+    html:not(.dark) .nav-drawer {
+      background: var(--color-card);
+      border-color: var(--color-border);
+    }
+    html:not(.dark) .toc a:hover,
+    html:not(.dark) .nav-pill a:hover,
+    html:not(.dark) .nav-drawer a:hover,
+    html:not(.dark) .accordion summary:hover,
+    html:not(.dark) .data-table tbody tr:hover {
+      background: var(--color-accent);
+    }
+    html:not(.dark) .nav-pill .cta {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+    }
+
+    /* ===== Smooth scroll ===== */
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#uikit-main" class="uikit-nowrap" style="position:absolute;left:-9999px;top:0;background:var(--color-primary);color:var(--color-primary-foreground);padding:8px 12px;border-radius:0 0 8px 0;">Pular para o conteúdo</a>
+
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <a class="brand" href="#topo" aria-label="Nexus AI — voltar ao topo">
+        <span class="brand-mark" aria-hidden="true">N</span>
+        <span class="brand-text">Nexus<span class="brand-ai"> AI</span></span>
+      </a>
+      <nav aria-label="Referências rápidas" class="uikit-toolbar">
+        <a class="badge signal" href="#tipografia">Tokens</a>
+        <a class="badge neutral" href="#componentes">Componentes</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true" aria-label="Alternar entre tema claro e escuro">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="theme-label">Tema escuro</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="uikit-shell" id="uikit-main">
+    <aside class="uikit-sidebar" aria-label="Índice da UI Kit">
+      <nav class="toc" id="topo">
+        <h2>Índice</h2>
+        <ol>
+          <li><a href="#visao-geral"><span class="num">01</span><span class="uikit-truncate">Visão geral</span></a></li>
+          <li><a href="#swatches"><span class="num">02</span><span class="uikit-truncate">Swatches</span></a></li>
+          <li><a href="#tipografia"><span class="num">03</span><span class="uikit-truncate">Tipografia</span></a></li>
+          <li><a href="#motion"><span class="num">04</span><span class="uikit-truncate">Motion</span></a></li>
+          <li><a href="#componentes"><span class="num">05</span><span class="uikit-truncate">Componentes</span></a></li>
+          <li><a href="#governanca"><span class="num">06</span><span class="uikit-truncate">Governança</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+    <section class="uikit-main">
+      <article class="hero" id="visao-geral" aria-labelledby="hero-title">
+        <span class="hero-eyebrow">Nexus AI — Stack 2026, agentes em produção</span>
+        <h1 id="hero-title">Sua equipe <span class="accent">multiplicada</span></h1>
+        <p class="lead">Plataformas e agentes da Nexus AI assumem o trabalho repetitivo, do atendimento à análise. Sua equipe fica livre pro que só humano faz: decidir, criar, crescer.</p>
+        <div class="uikit-toolbar" aria-label="Ações principais do showcase">
+          <button class="btn primary size-lg" type="button">Solicitar Proposta</button>
+          <button class="btn secondary size-lg" type="button">Ver no GitHub</button>
+          <span class="badge solid" aria-label="Status do sistema">v0.4 estável</span>
+        </div>
+        <div class="meta" style="margin-top:var(--space-7);">
+          <div><strong>12+</strong>Plataformas operando</div>
+          <div><strong>~38%</strong>Tempo devolvido ao time</div>
+          <div><strong>0</strong>Lock-in contratual</div>
+        </div>
+      </article>
+
+      <section class="section" id="swatches" aria-labelledby="swatches-title">
+        <header class="section-head">
+          <div>
+            <span class="section-eyebrow">02 — Swatches</span>
+            <h2 id="swatches-title">Paleta do palco escuro</h2>
+          </div>
+          <p>Cada chip é um token semântico de <code>colors_and_type.css</code>. Use o alias <code>--color-*</code> em produto e o token base em runtime.</p>
+        </header>
+
+        <div class="swatch-grid" data-component="palette">
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-stage);">#050609</div>
+            <div class="meta">
+              <span class="name">Surface — Stage</span>
+              <span class="token">--color-stage</span>
+              <span class="hex">Palco principal</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-card);">--color-card</div>
+            <div class="meta">
+              <span class="name">Surface — Card</span>
+              <span class="token">--color-card</span>
+              <span class="hex">Elevação de conteúdo</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-signal);color:var(--color-background);">#3778ff</div>
+            <div class="meta">
+              <span class="name">Accent — Signal</span>
+              <span class="token">--color-signal</span>
+              <span class="hex">Ações primárias e foco</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-signal-soft);">rgba(55,120,255,.18)</div>
+            <div class="meta">
+              <span class="name">Accent — Signal Soft</span>
+              <span class="token">--color-signal-soft</span>
+              <span class="hex">Halos e baixa energia</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-destructive);">#db1d1d</div>
+            <div class="meta">
+              <span class="name">Status — Destructive</span>
+              <span class="token">--color-destructive</span>
+              <span class="hex">Alerta destrutivo</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-destructive);">#f53d3d</div>
+            <div class="meta">
+              <span class="name">Status — Destructive (dark)</span>
+              <span class="token">--color-destructive (dark)</span>
+              <span class="hex">Alerta destrutivo em dark</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--color-destructive);">#f53d3d</div>
+            <div class="meta">
+              <span class="name">Status — Destructive</span>
+              <span class="token">--color-destructive</span>
+              <span class="hex">Erro destrutivo</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:var(--chart-3);">--chart-3</div>
+            <div class="meta">
+              <span class="name">Chart — Cinza médio</span>
+              <span class="token">--chart-3</span>
+              <span class="hex">Dashboards neutros</span>
+            </div>
+          </article>
+          <article class="swatch">
+            <div class="chip" style="background:linear-gradient(135deg,var(--color-signal),var(--color-signal-soft));">signal → soft</div>
+            <div class="meta">
+              <span class="name">Cinematic — Hero Glow</span>
+              <span class="token">--hero-glow</span>
+              <span class="hex">Halo do herói</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="tipografia" aria-labelledby="tipografia-title">
+        <header class="section-head">
+          <div>
+            <span class="section-eyebrow">03 — Tipografia</span>
+            <h2 id="tipografia-title">Space Grotesk + Geist Mono</h2>
+          </div>
+          <p>Space Grotesk conduz a narrativa; Geist Mono segura tokens, IDs e fragmentos de código. A escala combina display generoso com corpo compacto.</p>
+        </header>
+
+        <div class="type-stack" data-component="typography">
+          <div>
+            <h3>Sua operação com agentes</h3>
+            <p class="lead">A frase de herói combina peso extra-bold no eixo de 96px com a voz operacional do lead. Use o accent azul para sinalizar a promessa única por bloco.</p>
+            <h4>Heading H3 — 32px</h4>
+            <p class="body">O corpo padrão mantém 16px em line-height 1.5 para longos parágrafos. Em listas densas, a caption 14px sustenta metadados e timestamps.</p>
+            <p class="caption">Caption 14px · útil para timestamps, autor, fonte de dado.</p>
+            <span class="eyebrow">Eyebrow 11px · tracking técnico</span>
+            <p class="mono" style="margin-top:var(--space-5);">--token: nexus-platform/v0.4 · agente: atendimento · status: ativo</p>
+          </div>
+          <aside aria-label="Especificações tipográficas">
+            <div>
+              <dt>Família sans</dt>
+              <dd>var(--font-sans)</dd>
+            </div>
+            <div>
+              <dt>Família mono</dt>
+              <dd>var(--font-mono)</dd>
+            </div>
+            <div>
+              <dt>Display</dt>
+              <dd>96px / 0.95</dd>
+            </div>
+            <div>
+              <dt>H1</dt>
+              <dd>72px / 1.05</dd>
+            </div>
+            <div>
+              <dt>H2</dt>
+              <dd>56px / 1.15</dd>
+            </div>
+            <div>
+              <dt>H3</dt>
+              <dd>32px / 1.25</dd>
+            </div>
+            <div>
+              <dt>Body</dt>
+              <dd>16px / 1.5</dd>
+            </div>
+            <div>
+              <dt>Caption</dt>
+              <dd>14px / 1.4</dd>
+            </div>
+            <div>
+              <dt>Eyebrow</dt>
+              <dd>11px / 0.18em</dd>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="motion" aria-labelledby="motion-title">
+        <header class="section-head">
+          <div>
+            <span class="section-eyebrow">04 — Motion</span>
+            <h2 id="motion-title">Loops longos, feedback curto</h2>
+          </div>
+          <p>Loops longos ambientam; feedback de toque é rápido. <code>prefers-reduced-motion</code> interrompe tudo.</p>
+        </header>
+
+        <div class="motion-grid" data-component="motion">
+          <article class="motion-card">
+            <h3>Tahoe shimmer</h3>
+            <p>Animação contínua do gradiente de vidro do título hero.</p>
+            <div class="motion-stage" aria-hidden="true">
+              <div class="motion-tahoe"></div>
+            </div>
+            <span class="meta">--motion-tahoe-shimmer · 8s linear infinite</span>
+          </article>
+          <article class="motion-card">
+            <h3>Nav sheen</h3>
+            <p>Sheen deslizante na pílula da navegação desktop.</p>
+            <div class="motion-stage" aria-hidden="true">
+              <div class="motion-sheen"></div>
+            </div>
+            <span class="meta">--motion-nav-sheen · 12s linear infinite</span>
+          </article>
+          <article class="motion-card">
+            <h3>Marquee</h3>
+            <p>Faixa de logos operacionais deslocando em loop contínuo.</p>
+            <div class="motion-stage" aria-hidden="true">
+              <div class="motion-marquee">
+                <span>Atendimento</span><span>·</span>
+                <span>Integração</span><span>·</span>
+                <span>Análise</span><span>·</span>
+                <span>Observabilidade</span><span>·</span>
+                <span>RAG</span><span>·</span>
+                <span>Webhooks</span><span>·</span>
+              </div>
+            </div>
+            <span class="meta">--motion-marquee · 25s linear infinite</span>
+          </article>
+          <article class="motion-card">
+            <h3>CTA press</h3>
+            <p>Feedback rápido de toque e clique no botão primário.</p>
+            <div class="motion-stage" aria-hidden="true">
+              <span class="motion-press">CTA</span>
+            </div>
+            <span class="meta">--motion-cta-press · 200ms ease-out</span>
+          </article>
+          <article class="motion-card">
+            <h3>Pulse do canvas</h3>
+            <p>Pulso respiratório dos pixels do palco cinematográfico.</p>
+            <div class="motion-stage" aria-hidden="true">
+              <span class="motion-pulse"></span>
+            </div>
+            <span class="meta">--motion-cta-hover · 180ms ease</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="componentes" aria-labelledby="componentes-title">
+        <header class="section-head">
+          <div>
+            <span class="section-eyebrow">05 — Componentes</span>
+            <h2 id="componentes-title">Seis blocos do showcase</h2>
+          </div>
+          <p>Cada bloco usa os tokens do <code>colors_and_type.css</code> e as classes prontas Btn, Nav, Card, Badge, Field e Accordion.</p>
+        </header>
+
+        <article class="section" aria-labelledby="btn-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.1 — Botão</span>
+              <h3 id="btn-title">Ações com brilho controlado</h3>
+            </div>
+            <p>Use um único primário por bloco de decisão. Reserve o azul para o CTA principal.</p>
+          </header>
+          <div class="buttons-toolbar" data-component="button">
+            <button class="btn primary size-lg" type="button">Solicitar Proposta</button>
+            <button class="btn secondary size-lg" type="button">Ver no GitHub</button>
+            <button class="btn ghost size-lg" type="button">Ler processo</button>
+            <button class="btn destructive size-lg" type="button">Encerrar agente</button>
+            <button class="btn primary size-md" type="button">Salvar rascunho</button>
+            <button class="btn primary size-sm" type="button" aria-disabled="true">Em fila</button>
+            <button class="btn primary size-sm" type="button" disabled>Desabilitado</button>
+          </div>
+        </article>
+
+        <article class="section" aria-labelledby="nav-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.2 — Navegação</span>
+              <h3 id="nav-title">Pílula desktop e drawer mobile</h3>
+            </div>
+            <p>Marca à esquerda, divisor, links, CTA "Falar". No mobile, drawer com cabeçalho e lista vertical.</p>
+          </header>
+          <div class="uikit-responsive-grid" data-component="navigation">
+            <nav class="nav-pill" aria-label="Navegação primária desktop">
+              <a class="brand" href="#topo" aria-label="Nexus AI">
+                <span class="brand-mark" aria-hidden="true">N</span>
+                <span class="brand-text">Nexus<span class="brand-ai"> AI</span></span>
+              </a>
+              <span class="divider" aria-hidden="true"></span>
+              <ul>
+                <li><a href="#visao-geral">Soluções</a></li>
+                <li><a href="#componentes" aria-current="page">Componentes</a></li>
+                <li><a href="#governanca">Processo</a></li>
+                <li><a href="#componentes">Cases</a></li>
+                <li><a href="#componentes">Contato</a></li>
+              </ul>
+              <span class="divider" aria-hidden="true"></span>
+              <a class="cta" href="#componentes">Falar</a>
+            </nav>
+            <nav class="nav-drawer" aria-label="Navegação primária mobile">
+              <div class="head">
+                <a class="brand" href="#topo">
+                  <span class="brand-mark" aria-hidden="true">N</span>
+                  <span class="brand-text">Nexus<span class="brand-ai"> AI</span></span>
+                </a>
+                <span class="badge signal">Stack 2026</span>
+              </div>
+              <ul>
+                <li><a href="#visao-geral"><span>Soluções</span><span class="uikit-nowrap" aria-hidden="true">→</span></a></li>
+                <li><a href="#componentes"><span>Componentes</span><span class="uikit-nowrap" aria-hidden="true">→</span></a></li>
+                <li><a href="#governanca"><span>Processo</span><span class="uikit-nowrap" aria-hidden="true">→</span></a></li>
+                <li><a href="#componentes"><span>Cases</span><span class="uikit-nowrap" aria-hidden="true">→</span></a></li>
+                <li><a href="#componentes"><span>Contato</span><span class="uikit-nowrap" aria-hidden="true">→</span></a></li>
+              </ul>
+              <a class="btn primary size-md" href="#componentes" style="margin-top:var(--space-3);">Falar com a equipe</a>
+            </nav>
+          </div>
+        </article>
+
+        <article class="section" aria-labelledby="badge-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.3 — Badge</span>
+              <h3 id="badge-title">Sinalização compacta</h3>
+            </div>
+            <p>Caixa alta com tracking técnico. Limite a uma badge por título.</p>
+          </header>
+          <div class="uikit-toolbar" data-component="badge">
+            <span class="badge signal">Beta</span>
+            <span class="badge solid">Em produção</span>
+            <span class="badge neutral">Documentação</span>
+            <span class="badge success"><span class="status-dot" aria-hidden="true"></span>Operação ativa</span>
+            <span class="badge warning"><span class="status-dot" aria-hidden="true" style="background:#1f1404"></span>Atenção</span>
+          </div>
+        </article>
+
+        <article class="section" aria-labelledby="card-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.4 — Card</span>
+              <h3 id="card-title">Superfícies profundas</h3>
+            </div>
+            <p>Quatro variantes: feature, métrica, glass e prova editorial. Bordas substituem sombras pesadas.</p>
+          </header>
+
+          <div class="card-row" data-component="card">
+            <article class="card">
+              <span class="eyebrow">Atendimento</span>
+              <h3 class="title">Agente de fila única</h3>
+              <p class="body">Encaminha, classifica e responde em pt-BR; transborda para humano quando a confiança cai abaixo do limiar.</p>
+              <div class="footer">
+                <span class="badge signal">Em produção</span>
+                <a href="#componentes" class="btn ghost size-sm">Ver agentes</a>
+              </div>
+            </article>
+            <article class="card metric">
+              <span class="eyebrow">Tempo devolvido</span>
+              <p class="metric-value">~38%</p>
+              <span class="metric-label">Horas operacionais por semana, após 90 dias.</span>
+            </article>
+            <article class="card glass">
+              <span class="eyebrow">Workflow</span>
+              <h3 class="title">Integração por webhook</h3>
+              <p class="body">Recebe evento, normaliza payload, despacha para o agente responsável. Logs estruturados em pt-BR.</p>
+              <div class="footer">
+                <span class="badge neutral">v0.4 · estável</span>
+                <span class="badge success"><span class="status-dot" aria-hidden="true"></span>Operação ativa</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="uikit-table-wrap" style="margin-top:var(--space-7);">
+            <table class="data-table" aria-label="Tabela de agentes em operação">
+              <thead>
+                <tr>
+                  <th>Agente</th>
+                  <th>Vertical</th>
+                  <th>Latência p95</th>
+                  <th>Status</th>
+                  <th class="uikit-nowrap">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="uikit-truncate">Atendimento</td>
+                  <td>Suporte</td>
+                  <td class="num">1.2s</td>
+                  <td><span class="badge success"><span class="status-dot" aria-hidden="true"></span>Ativo</span></td>
+                  <td>
+                    <div class="uikit-action-cell">
+                      <a class="btn ghost size-sm uikit-action" href="#componentes">Ver</a>
+                      <button class="btn ghost size-sm" type="button" aria-label="Logs do agente Atendimento">Logs</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="uikit-truncate">Integração</td>
+                  <td>Operações</td>
+                  <td class="num">0.8s</td>
+                  <td><span class="badge success"><span class="status-dot" aria-hidden="true"></span>Ativo</span></td>
+                  <td>
+                    <div class="uikit-action-cell">
+                      <a class="btn ghost size-sm uikit-action" href="#componentes">Ver</a>
+                      <button class="btn ghost size-sm" type="button" aria-label="Logs do agente Integração">Logs</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="uikit-truncate">Análise</td>
+                  <td>Finanças</td>
+                  <td class="num">2.4s</td>
+                  <td><span class="badge warning"><span class="status-dot" aria-hidden="true" style="background:#1f1404"></span>Atenção</span></td>
+                  <td>
+                    <div class="uikit-action-cell">
+                      <a class="btn ghost size-sm uikit-action" href="#componentes">Ver</a>
+                      <button class="btn ghost size-sm" type="button" aria-label="Logs do agente Análise">Logs</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="uikit-truncate">Observabilidade</td>
+                  <td>Plataforma</td>
+                  <td class="num">0.5s</td>
+                  <td><span class="badge success"><span class="status-dot" aria-hidden="true"></span>Ativo</span></td>
+                  <td>
+                    <div class="uikit-action-cell">
+                      <a class="btn ghost size-sm uikit-action" href="#componentes">Ver</a>
+                      <button class="btn ghost size-sm" type="button" aria-label="Logs do agente Observabilidade">Logs</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="uikit-truncate">RAG Interno</td>
+                  <td>Conhecimento</td>
+                  <td class="num">1.9s</td>
+                  <td><span class="badge signal">Beta</span></td>
+                  <td>
+                    <div class="uikit-action-cell">
+                      <a class="btn ghost size-sm uikit-action" href="#componentes">Ver</a>
+                      <button class="btn ghost size-sm" type="button" aria-label="Logs do agente RAG Interno">Logs</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="uikit-truncate">Webhooks</td>
+                  <td>Plataforma</td>
+                  <td class="num">0.3s</td>
+                  <td><span class="badge success"><span class="status-dot" aria-hidden="true"></span>Ativo</span></td>
+                  <td>
+                    <div class="uikit-action-cell">
+                      <a class="btn ghost size-sm uikit-action" href="#componentes">Ver</a>
+                      <button class="btn ghost size-sm" type="button" aria-label="Logs do agente Webhooks">Logs</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="section" aria-labelledby="form-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.5 — Campo de formulário</span>
+              <h3 id="form-title">Entradas escuras e diretas</h3>
+            </div>
+            <p>Estados cobrem default, foco, inválido e desabilitado. Texto auxiliar nunca depende só de cor.</p>
+          </header>
+
+          <form class="form-grid" data-component="form-field" novalidate>
+            <div class="field">
+              <label for="f-nome">Nome do time <span class="required" aria-hidden="true">*</span></label>
+              <input class="input" id="f-nome" name="nome" type="text" placeholder="Operações, Plataforma, Atendimento" required>
+              <span class="help">Como o seu time é chamado internamente.</span>
+            </div>
+            <div class="field">
+              <label for="f-email">E-mail operacional <span class="required" aria-hidden="true">*</span></label>
+              <input class="input is-invalid" id="f-email" name="email" type="email" value="atendimento@" aria-invalid="true" aria-describedby="f-email-err">
+              <span id="f-email-err" class="error" role="alert">E-mail incompleto · revise o domínio.</span>
+            </div>
+            <div class="field">
+              <label for="f-agente">Agente de interesse</label>
+              <select class="select" id="f-agente" name="agente">
+                <option>Atendimento</option>
+                <option>Integração</option>
+                <option>Análise</option>
+                <option>Observabilidade</option>
+                <option>RAG Interno</option>
+              </select>
+              <span class="help">Você pode combinar agentes depois, no diagnóstico.</span>
+            </div>
+            <div class="field">
+              <label for="f-contexto">Contexto operacional</label>
+              <textarea class="textarea" id="f-contexto" name="contexto" placeholder="Onde sua operação perde tempo hoje?"></textarea>
+              <span class="help">Duas a três frases bastam. Quanto mais concreto, melhor o diagnóstico.</span>
+            </div>
+            <div class="field">
+              <label for="f-prazo">Prazo desejado</label>
+              <input class="input" id="f-prazo" name="prazo" type="text" value="90 dias" disabled>
+              <span class="help">Bloqueado: definido pelo time de operações.</span>
+            </div>
+            <div class="field">
+              <label for="f-stack">Stack observada</label>
+              <input class="input" id="f-stack" name="stack" type="text" placeholder="Node, Postgres, OpenTelemetry">
+              <span class="help">Opcional. Usamos isso para preparar o kick-off.</span>
+            </div>
+            <div class="field" style="grid-column: 1 / -1; flex-direction:row; align-items:center; gap:var(--space-3);">
+              <button class="btn primary size-lg" type="button">Enviar diagnóstico</button>
+              <button class="btn ghost size-md" type="button">Salvar rascunho</button>
+              <span class="badge neutral">Diagnóstico antes de proposta</span>
+            </div>
+          </form>
+        </article>
+
+        <article class="section" aria-labelledby="accordion-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.6 — Accordion</span>
+              <h3 id="accordion-title">FAQ sem caixa pesada</h3>
+            </div>
+            <p>Cada item é um <code>details</code> nativo, separado por hairlines. Respostas curtas, sem jargão.</p>
+          </header>
+
+          <div class="accordion" data-component="accordion">
+            <details>
+              <summary>
+                <span>Onde sua operação perde tempo hoje?</span>
+                <span class="marker" aria-hidden="true"></span>
+              </summary>
+              <div class="answer">Em três lugares recorrentes: atendimento de primeiro nível, consolidação de dados entre sistemas e geração de relatórios para liderança. O diagnóstico gratuito da Nexus AI mapeia o seu fluxo em uma sessão.</div>
+            </details>
+            <details>
+              <summary>
+                <span>Em quanto tempo vejo resultado?</span>
+                <span class="marker" aria-hidden="true"></span>
+              </summary>
+              <div class="answer">Em 30 dias o primeiro agente entra em produção assistida. Em 90 dias medimos o tempo devolvido ao time. Trabalhamos com janelas curtas e metas verificáveis.</div>
+            </details>
+            <details>
+              <summary>
+                <span>A stack é aberta ou exige lock-in?</span>
+                <span class="marker" aria-hidden="true"></span>
+              </summary>
+              <div class="answer">Stack aberta, sem lock-in. Os agentes rodam em contêineres seus, com logs e webhooks abertos. Se você quiser desligar, basta parar o contêiner.</div>
+            </details>
+            <details>
+              <summary>
+                <span>Como funciona o diagnóstico antes da proposta?</span>
+                <span class="marker" aria-hidden="true"></span>
+              </summary>
+              <div class="answer">Uma sessão de 60 minutos com seu time, leitura de três fluxos críticos e um relatório curto indicando gargalos, ganhos esperados e ordem de ataque. Não há compromisso comercial no fim.</div>
+            </details>
+            <details>
+              <summary>
+                <span>Vocês atendem em quais idiomas?</span>
+                <span class="marker" aria-hidden="true"></span>
+              </summary>
+              <div class="answer">Operamos em pt-BR por padrão. Inglês e espanhol entram como segunda língua em operadores regionalizados. Logs e respostas preservam o idioma do cliente.</div>
+            </details>
+          </div>
+        </article>
+
+        <article class="section" aria-labelledby="chart-title" style="margin-top:var(--space-9);">
+          <header class="section-head">
+            <div>
+              <span class="section-eyebrow">5.7 — Chart (cinemático)</span>
+              <h3 id="chart-title">Volume de tickets por vertical</h3>
+            </div>
+            <p>Escala de cinzas neutros para dashboards; azul de sinal reservado para o indicador-chave.</p>
+          </header>
+
+          <div class="chart-grid">
+            <article class="chart">
+              <h3>Atendimento — jan/24 a dez/24</h3>
+              <div class="trend" aria-hidden="true">
+                <span class="bar" style="height:48%"></span>
+                <span class="bar" style="height:56%"></span>
+                <span class="bar" style="height:62%"></span>
+                <span class="bar" style="height:70%"></span>
+                <span class="bar" style="height:78%"></span>
+                <span class="bar" style="height:84%"></span>
+                <span class="bar" style="height:88%"></span>
+                <span class="bar" style="height:94%"></span>
+                <span class="bar" style="height:100%"></span>
+                <span class="bar" style="height:96%"></span>
+                <span class="bar" style="height:84%"></span>
+                <span class="bar" style="height:72%"></span>
+              </div>
+              <div class="axis">
+                <span>Jan</span><span>Abr</span><span>Jul</span><span>Out</span><span>Dez</span>
+              </div>
+            </article>
+            <article class="chart">
+              <h3>Integração — jan/24 a dez/24</h3>
+              <div class="trend" aria-hidden="true">
+                <span class="bar deep" style="height:30%"></span>
+                <span class="bar deep" style="height:34%"></span>
+                <span class="bar deep" style="height:38%"></span>
+                <span class="bar deep" style="height:42%"></span>
+                <span class="bar deep" style="height:48%"></span>
+                <span class="bar deep" style="height:54%"></span>
+                <span class="bar deep" style="height:58%"></span>
+                <span class="bar deep" style="height:62%"></span>
+                <span class="bar deep" style="height:66%"></span>
+                <span class="bar deep" style="height:60%"></span>
+                <span class="bar deep" style="height:52%"></span>
+                <span class="bar deep" style="height:46%"></span>
+              </div>
+              <div class="axis">
+                <span>Jan</span><span>Abr</span><span>Jul</span><span>Out</span><span>Dez</span>
+              </div>
+            </article>
+          </div>
+        </article>
+      </section>
+
+      <section class="section" id="governanca" aria-labelledby="governanca-title">
+        <header class="section-head">
+          <div>
+            <span class="section-eyebrow">06 — Governança</span>
+            <h2 id="governanca-title">Regras de manutenção</h2>
+          </div>
+          <p>Como novos tokens, variantes e componentes entram na biblioteca sem quebrar a UI Kit.</p>
+        </header>
+
+        <div class="governance">
+          <article class="gov-card">
+            <h3>Fonte de verdade</h3>
+            <p>O CSS em <code>colors_and_type.css</code> é o contrato runtime. A wiki apenas descreve.</p>
+            <ul>
+              <li><strong>CSS vence</strong> quando diverge da documentação.</li>
+              <li>Toda proposta começa como PR no CSS, nunca em isolamento.</li>
+            </ul>
+          </article>
+          <article class="gov-card">
+            <h3>Definição de pronto</h3>
+            <p>Um token entra com nome semântico, valor extraído e comentário de uso.</p>
+            <ul>
+              <li>Componente: preview, contrato, índice, README e teste de foco.</li>
+              <li>Alias <code>--color-*</code> sempre apontando para o token base.</li>
+            </ul>
+          </article>
+          <article class="gov-card">
+            <h3>Versionamento</h3>
+            <p>SemVer com escopo de design system.</p>
+            <ul>
+              <li><strong>Patch</strong> para ajuste de valor dentro do token.</li>
+              <li><strong>Minor</strong> para novo token, componente ou variante.</li>
+              <li><strong>Major</strong> para quebras de API de tokens.</li>
+            </ul>
+          </article>
+          <article class="gov-card">
+            <h3>Controle de consistência</h3>
+            <p>Revisão de PR não aprova mudança de design sem diff de tokens.</p>
+            <ul>
+              <li>Componentes: atualizar preview, contrato e README no mesmo PR.</li>
+              <li>Tokens: propagar para previews que dependem do token.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <footer class="uikit-footer" role="contentinfo">
+        <div class="uikit-truncate">
+          Nexus AI — UI Kit do Design System · revisão interna v0.4
+        </div>
+        <div class="actions">
+          <a class="badge neutral" href="#componentes">Componentes</a>
+          <a class="badge signal" href="#visao-geral">Voltar ao topo</a>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var toggle = document.getElementById('theme-toggle');
+      var label = document.getElementById('theme-label');
+      if (!toggle || !label) return;
+
+      function syncLabel() {
+        var isDark = root.classList.contains('dark');
+        label.textContent = isDark ? 'Tema escuro' : 'Tema claro';
+        toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      }
+
+      toggle.addEventListener('click', function () {
+        root.classList.toggle('dark');
+        try {
+          localStorage.setItem('nexus-ui-theme', root.classList.contains('dark') ? 'dark' : 'light');
+        } catch (e) {
+          /* storage indisponível: mantém a preferência por sessão */
+        }
+        syncLabel();
+      });
+
+      try {
+        var saved = localStorage.getItem('nexus-ui-theme');
+        if (saved === 'light') root.classList.remove('dark');
+        if (saved === 'dark') root.classList.add('dark');
+      } catch (e) {
+        /* storage indisponível: mantém o dark-first padrão */
+      }
+      syncLabel();
+
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) {
+        document.documentElement.style.scrollBehavior = 'auto';
+      }
+
+      var detailsList = document.querySelectorAll('.accordion details');
+      detailsList.forEach(function (details) {
+        var summary = details.querySelector('summary');
+        if (!summary) return;
+        summary.addEventListener('click', function () {
+          window.setTimeout(function () {
+            var open = details.open;
+            summary.setAttribute('aria-expanded', open ? 'true' : 'false');
+          }, 0);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "schemaVersion":2,
+  "slug":"accordion",
+  "name":"Accordion",
+  "category":"Conteúdo",
+  "sourceKind":"structured-spec",
+  "confidence":"high",
+  "semanticTypeCandidates":[{"type":"accordion","evidence":"FAQs usam details/summary com divisores e indicador rotativo."}],
+  "variantDimensions":{"state":["closed","open"]},
+  "representativeVariants":[
+    {"id":"closed","whySelected":"Estado de varredura","traits":{"background":"transparent","color":"var(--color-foreground)","border":"var(--color-border)","radius":"var(--radius-none)"},"childrenDigest":"Pergunta + ícone de expansão"},
+    {"id":"open","whySelected":"Conteúdo revelado","traits":{"background":"transparent","color":"var(--color-foreground)","border":"var(--color-border)","radius":"var(--radius-none)"},"childrenDigest":"Pergunta + resposta + ícone rotacionado"}
+  ],
+  "anatomy":["group divider","summary","question","expansion indicator","answer region"],
+  "structurePatterns":["Use semântica nativa details/summary.","Indicador gira 45 graus em abertura."],
+  "usageHints":{"priorityHint":"support","guidance":"Respostas diretas, sem jargão e em blocos curtos."},
+  "doNotInvent":["Não envolver cada item em card elevado.","Não ocultar o foco do summary."],
+  "unknowns":[],
+  "keyInsightSeed":"FAQ sem caixa pesada, separado por hairlines e movimento curto."
+}

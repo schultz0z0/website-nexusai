@@ -1,0 +1,21 @@
+{
+  "schemaVersion":2,
+  "slug":"form-field",
+  "name":"Campo de formulário",
+  "category":"Formulários",
+  "sourceKind":"structured-spec",
+  "confidence":"high",
+  "semanticTypeCandidates":[{"type":"input","evidence":"Formulário de contato contém input, select e textarea com estados reais."}],
+  "variantDimensions":{"control":["input","select","textarea"],"state":["default","focus","invalid","disabled"]},
+  "representativeVariants":[
+    {"id":"input-default","whySelected":"Entrada mais frequente","traits":{"background":"var(--color-card)","color":"var(--color-foreground)","border":"var(--color-border)","height":"var(--size-input)","radius":"var(--radius-md)"},"childrenDigest":"Rótulo + campo + indicação opcional"},
+    {"id":"input-focus","whySelected":"Acessibilidade e feedback","traits":{"background":"var(--color-card)","color":"var(--color-foreground)","border":"var(--color-ring)","height":"var(--size-input)","radius":"var(--radius-md)"},"childrenDigest":"Rótulo + campo focado"},
+    {"id":"textarea","whySelected":"Coleta de contexto operacional","traits":{"background":"var(--color-card)","color":"var(--color-foreground)","border":"var(--color-border)","radius":"var(--radius-md)"},"childrenDigest":"Rótulo + área multilinha"}
+  ],
+  "anatomy":["label","required indicator","control","support text","error message"],
+  "structurePatterns":["Rótulo sempre visível.","Erro anunciado próximo ao campo e por aria-live no formulário."],
+  "usageHints":{"priorityHint":"core","guidance":"Pergunte apenas o necessário e use linguagem operacional."},
+  "doNotInvent":["Não usar placeholder como rótulo.","Não esconder estados de erro apenas por cor."],
+  "unknowns":[],
+  "keyInsightSeed":"Campos escuros, diretos e com foco azul inequívoco."
+}

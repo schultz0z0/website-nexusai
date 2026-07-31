@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "library": "Nexus AI",
+  "kit": "marketing",
+  "checkedAt": "2026-07-31",
+  "screensGenerated": 9,
+  "inventedComponents": [],
+  "interactiveStatesRendered": [
+    "default",
+    "hover",
+    "focus",
+    "focus-visible",
+    "active",
+    "selected",
+    "disabled",
+    "open",
+    "closed"
+  ],
+  "sourceOfTruth": "docs/design-system.md + docs/design-system.json + src/app/globals.css + src/components/route-cinematic-shell.module.css",
+  "layoutGuards": {
+    "dataLayoutGuard": "uikit-v1",
+    "shellMaxWidth": "1184px",
+    "responsiveBreakpoint": "900px",
+    "truncateClass": ".uikit-truncate",
+    "nowrapClass": ".uikit-nowrap",
+    "tableWrapClass": ".uikit-table-wrap",
+    "responsiveGridClass": ".uikit-responsive-grid",
+    "actionClass": ".uikit-action",
+    "actionCellClass": ".uikit-action-cell"
+  },
+  "sections": [
+    "topbar",
+    "hero",
+    "toc",
+    "palette",
+    "typography",
+    "motion",
+    "components",
+    "governance",
+    "footer"
+  ],
+  "componentsUsed": [
+    "button",
+    "navigation",
+    "form-field",
+    "card",
+    "accordion",
+    "badge"
+  ],
+  "tokensSource": "colors_and_type.css",
+  "tokensByGroup": {
+    "surface": ["--background","--foreground","--card","--secondary","--muted","--accent","--border","--input","--ring"],
+    "accent": ["--primary","--primary-foreground"],
+    "signal": ["--signal","--signal-soft","--cta-focus-ring","--hero-glow","--tahoe-glass-stroke"],
+    "status": ["--destructive","--destructive-foreground"],
+    "chart": ["--chart-1","--chart-2","--chart-3","--chart-4","--chart-5"],
+    "cinematic": ["--stage","--stage-raised","--stage-mid","--stage-deep","--line","--text-muted","--nexus-foreground","--tahoe-glass-stops","--nav-sheen-stops"]
+  },
+  "warnings": [
+    "Tokens are an exact mirror of docs/design-system.* and the production CSS; site source files were not modified."
+  ]
+}

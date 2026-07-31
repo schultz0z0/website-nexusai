@@ -1,0 +1,359 @@
+/* Source: structured-spec */
+/* @group-priority: surface, accent, signal, status, chart, cinematic */
+/* Nexus AI Design Library — single source of truth: docs/design-system.md + docs/design-system.json */
+/* Theme mode: light-dark, dark-first preference preserved (dark theme mirrors the production <html class="dark">) */
+/* Tokens: preserve source-defined naming and values; no invented scales. */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* surface — from globals.css :root/.dark */
+  --background: #ffffff;
+  --foreground: #252525;
+  --card: #ffffff;
+  --card-foreground: #252525;
+  --popover: #ffffff;
+  --popover-foreground: #252525;
+  --secondary: #f6f6f6;
+  --secondary-foreground: #343434;
+  --muted: #f6f6f6;
+  --muted-foreground: #8e8e8e;
+  --accent: #f6f6f6;
+  --accent-foreground: #343434;
+  --border: #ebebeb;
+  --input: #ebebeb;
+  --ring: #b5b5b5;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #252525;
+  --sidebar-accent: #f6f6f6;
+  --sidebar-accent-foreground: #343434;
+  --sidebar-border: #ebebeb;
+  --sidebar-ring: #b5b5b5;
+
+  /* accent — primary flip: near-white on dark, near-black on light */
+  --primary: #252525; /* @primary */
+  --primary-foreground: #fafafa;
+  --sidebar-primary: #252525;
+  --sidebar-primary-foreground: #fafafa;
+
+  /* signal — single electric-blue accent from cinematic shell */
+  --signal: #3778ff; /* @primary */
+  --signal-soft: rgba(55, 120, 255, 0.18);
+  --cta-focus-ring: #8aaeff;
+  --hero-glow: rgba(28, 91, 209, 0.24);
+  --tahoe-glass-stroke: rgba(255, 255, 255, 0.30);
+
+  /* status — only destructive is declared in source */
+  --destructive: #db1d1d; /* @primary */
+  --destructive-foreground: #fafafa;
+
+  /* chart */
+  --chart-1: #dddddd;
+  --chart-2: #8e8e8e; /* @primary */
+  --chart-3: #707070;
+  --chart-4: #5e5e5e;
+  --chart-5: #454545;
+
+  /* cinematic — dark stage palette + hairlines + brand foreground */
+  --stage: #050609; /* @primary */
+  --stage-raised: #090b10;
+  --stage-mid: #07080c;
+  --stage-deep: #040507;
+  --line: rgba(255, 255, 255, 0.10);
+  --text-muted: rgba(225, 228, 236, 0.66);
+  --nexus-foreground: #f7f8fb;
+  --tahoe-glass-stops: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.40) 25%, rgba(255,255,255,0.10) 45%, rgba(255,255,255,0.90) 55%, rgba(255,255,255,0.20) 75%, #ffffff 100%);
+  --nav-sheen-stops: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 25%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.12) 75%, rgba(255,255,255,0) 100%);
+
+  /* typography — Space Grotesk + Geist Mono, matches layout.tsx */
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: serif;
+  --font-heading: var(--font-sans);
+  --font-display: var(--font-sans);
+
+  --font-size-display: 96px;        /* lg hero: clamp(2.65rem, 4.8vw, 6rem) */
+  --font-size-h1: 72px;             /* md hero: clamp(2.8rem, 4.8vw, 4.5rem) */
+  --font-size-h2: 56px;             /* value title: clamp(2.8rem, 4.5vw, 5rem) */
+  --font-size-h3: 32px;             /* case copy: clamp(2.3rem, 4vw, 4rem) */
+  --font-size-h4: 24px;
+  --font-size-lead: 18px;           /* desktop body: clamp(1.06rem, 1.45vw, 1.3rem) */
+  --font-size-body: 16px;
+  --font-size-caption: 14px;        /* mobile body / CTA */
+  --font-size-eyebrow: 11px;        /* uppercase tracking 0.18em */
+  --font-size-mono: 13px;
+
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --line-height-display: 0.95;
+  --line-height-h1: 1.05;
+  --line-height-h2: 0.95;
+  --line-height-h3: 0.98;
+  --line-height-h4: 1.35;
+  --line-height-lead: 1.6;
+  --line-height-body: 1.5;
+  --line-height-caption: 1.4;
+  --line-height-eyebrow: 1.4;
+  --line-height-mono: 1.5;
+
+  --letter-spacing-tahoe-stroke: 1.5px;
+  --letter-spacing-marquee-label: 0.18em;
+
+  /* spacing — 4px rhythm, dedup, ascending */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 96px;
+  --space-13: 128px;
+  --space-14: 160px;
+
+  /* size — component dimensions from site */
+  --size-icon-sm: 16px;
+  --size-icon-md: 20px;
+  --size-icon-lg: 24px;
+  --size-nav-trigger: 44px;
+  --size-nav-cta: 36px;
+  --size-button-height: 48px;       /* h-12 from CTAs */
+  --size-cta-min-height: 50px;      /* cinematic CTA */
+  --size-input-height: 36px;
+  --size-outline-offset: 5px;
+  --size-text-stroke: 1.5px;
+
+  /* layout — from production pages */
+  --max-section-shell: 1180px;
+  --max-hero-inner: 1080px;
+  --max-cta-content: 820px;
+  --max-hero-copy: 720px;
+  --max-section-description: 700px;
+  --max-display-title: 900px;
+  --gutter-page-mobile: 16px;
+  --gutter-page-desktop: 24px;
+  --nav-height-desktop: 36px;
+
+  /* contain */
+  --contain-intrinsic-mobile: 720px;
+  --contain-intrinsic-desktop: 900px;
+
+  /* radius — shadcn base 10px, xl=14, 2xl=18, 3xl=22, 4xl=26 */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 22px;
+  --radius-4xl: 26px;
+  --radius-full: 9999px;
+
+  /* shadow — production tokens */
+  --shadow-1: inset 0 1px 1px rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.30); /* Nav pill */
+  --shadow-2: 0 8px 32px rgba(0,0,0,0.40); /* Drawer mobile */
+  --shadow-3: inset 0 1px 1px rgba(255,255,255,0.30), 0 2px 4px rgba(0,0,0,0.15), 0 12px 24px rgba(0,0,0,0.15); /* CTA primary */
+  --shadow-4: inset 0 1px 1px rgba(255,255,255,0.10), 0 2px 4px rgba(0,0,0,0.05), 0 12px 24px rgba(0,0,0,0.05); /* CTA secondary */
+  --shadow-5: inset 0 1px rgba(255,255,255,0.90), 0 14px 40px rgba(0,0,0,0.42), 0 0 0 1px rgba(55,120,255,0.14); /* Cinematic CTA */
+  --shadow-6: inset 0 1px rgba(255,255,255,0.90), 0 20px 48px rgba(0,0,0,0.50), 0 0 32px rgba(55,120,255,0.16); /* Cinematic CTA hover */
+  --shadow-7: drop-shadow(0 22px 60px rgba(0,0,0,0.65)); /* Hero title cinematic */
+  --shadow-8: drop-shadow(0 15px 35px rgba(0,0,0,0.40)) drop-shadow(0 5px 10px rgba(0,0,0,0.20)); /* Tahoe glass text */
+  --shadow-9: 0 0 0 1px oklch(0.922 0 0 / 20%); /* Primary CTA hairline ring */
+
+  /* motion — ambient 8-25s loops, 180-300ms feedback */
+  --motion-tahoe-shimmer: 8s linear infinite;
+  --motion-nav-sheen: 12s linear infinite;
+  --motion-marquee: 25s linear infinite;
+  --motion-cta-press: 200ms ease-out;
+  --motion-drawer-open: 300ms ease-out;
+  --motion-hero-enter: 1000ms ease-out;
+  --motion-cta-hover: 180ms ease;
+
+  /* breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+
+  /* z-index */
+  --z-canvas: 0;
+  --z-marquee-desktop: 10;
+  --z-nav-mobile-drawer: 40;
+  --z-nav-mobile-button: 50;
+  --z-nav-desktop: 50;
+
+  /* === SEMANTIC ALIAS LAYER (consumer-facing) === */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+  --color-cta-focus: var(--cta-focus-ring);
+  --color-stage: var(--stage);
+  --color-stage-raised: var(--stage-raised);
+  --color-stage-mid: var(--stage-mid);
+  --color-stage-deep: var(--stage-deep);
+  --color-line: var(--line);
+  --color-text-muted: var(--text-muted);
+  --nexus-signal: var(--signal);
+  --nexus-signal-soft: var(--signal-soft);
+  --nexus-stage: var(--stage);
+  --nexus-stage-raised: var(--stage-raised);
+  --nexus-foreground-token: var(--nexus-foreground);
+
+  --type-display: var(--font-size-display);
+  --type-h1: var(--font-size-h1);
+  --type-h2: var(--font-size-h2);
+  --type-h3: var(--font-size-h3);
+  --type-h4: var(--font-size-h4);
+  --type-body: var(--font-size-body);
+  --type-lead: var(--font-size-lead);
+  --type-caption: var(--font-size-caption);
+  --type-eyebrow: var(--font-size-eyebrow);
+  --type-mono: var(--font-size-mono);
+
+  --radius-nexus-sm: var(--radius-sm);
+  --radius-nexus-md: var(--radius-md);
+  --radius-nexus-lg: var(--radius-lg);
+  --radius-nexus-xl: var(--radius-xl);
+  --radius-nexus-2xl: var(--radius-2xl);
+  --radius-nexus-full: var(--radius-full);
+
+  --shadow-card: var(--shadow-2);
+  --shadow-nav: var(--shadow-1);
+  --shadow-drawer: var(--shadow-2);
+  --shadow-cta: var(--shadow-3);
+  --shadow-overlay: var(--shadow-5);
+  --shadow-hero: var(--shadow-7);
+  --shadow-tahoe: var(--shadow-8);
+}
+
+.dark {
+  --background: #0a0d14;
+  --foreground: #f6f8fb;
+  --card: #0f1219;
+  --card-foreground: #f6f8fb;
+  --popover: #0f1219;
+  --popover-foreground: #f6f8fb;
+  --secondary: #161a23;
+  --secondary-foreground: #e7edf7;
+  --muted: #161a23;
+  --muted-foreground: rgba(225, 228, 236, 0.66);
+  --accent: #161a23;
+  --accent-foreground: #f6f8fb;
+  --border: rgba(255, 255, 255, 0.10);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #8e8e8e;
+  --sidebar: #0f1219;
+  --sidebar-foreground: #f6f8fb;
+  --sidebar-primary: #3778ff;
+  --sidebar-primary-foreground: #f6f8fb;
+  --sidebar-accent: #161a23;
+  --sidebar-accent-foreground: #f6f8fb;
+  --sidebar-border: rgba(255, 255, 255, 0.10);
+  --sidebar-ring: #8e8e8e;
+
+  --primary: #ebebeb;
+  --primary-foreground: #252525;
+
+  --chart-1: #dddddd;
+  --chart-2: #8e8e8e;
+  --chart-3: #707070;
+  --chart-4: #5e5e5e;
+  --chart-5: #454545;
+
+  --destructive: #f53d3d;
+  --destructive-foreground: #fafafa;
+}
+
+/* === Typography Classes (brand prefix: nexus) === */
+.nexus-display {
+  font-family: var(--font-display);
+  font-size: 6rem;
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--line-height-display);
+  letter-spacing: -0.02em;
+}
+.nexus-h1 {
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  font-weight: var(--font-weight-extrabold);
+  line-height: var(--line-height-h1);
+  letter-spacing: -0.03em;
+}
+.nexus-h2 {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h2);
+  letter-spacing: -0.02em;
+}
+.nexus-h3 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-h3);
+}
+.nexus-h4 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-h4);
+}
+.nexus-body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+}
+.nexus-lead {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-lead);
+}
+.nexus-caption {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-caption);
+}
+.nexus-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-eyebrow);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.nexus-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-mono);
+}

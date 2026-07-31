@@ -1,0 +1,22 @@
+{
+  "schemaVersion":2,
+  "slug":"button",
+  "name":"Botão",
+  "category":"Ações",
+  "sourceKind":"structured-spec",
+  "confidence":"high",
+  "semanticTypeCandidates":[{"type":"button","evidence":"CTAs primário, secundário e textual recorrentes no site, com shadow e motion idênticos à globals.css."}],
+  "variantDimensions":{"variant":["primary","secondary","ghost","destructive"],"size":["sm","md","lg"],"state":["default","hover","focus","disabled"]},
+  "representativeVariants":[
+    {"id":"primary-lg","whySelected":"CTA principal de conversão","traits":{"background":"var(--color-primary)","color":"var(--color-primary-foreground)","height":"var(--size-button-height)","radius":"var(--radius-xl)","shadow":"var(--shadow-3)"},"childrenDigest":"Rótulo curto + ícone direcional"},
+    {"id":"secondary-lg","whySelected":"Ação alternativa","traits":{"background":"var(--color-card)","color":"var(--color-card-foreground)","height":"var(--size-button-height)","radius":"var(--radius-xl)","shadow":"var(--shadow-4)"},"childrenDigest":"Rótulo curto"},
+    {"id":"ghost-md","whySelected":"Ação discreta em navegação","traits":{"background":"transparent","color":"var(--color-foreground)","height":"var(--size-button-height)","radius":"var(--radius-md)"},"childrenDigest":"Rótulo"},
+    {"id":"destructive-sm","whySelected":"Estado destrutivo opcional","traits":{"background":"var(--color-destructive)","color":"var(--color-destructive-foreground)","height":"var(--size-button-height)","radius":"var(--radius-lg)"},"childrenDigest":"Rótulo"}
+  ],
+  "anatomy":["container","label","optional leading icon","optional trailing icon"],
+  "structurePatterns":["Press scale 200ms ease-out.","Hover/active comprimem levemente o botão."],
+  "usageHints":{"priorityHint":"core","guidance":"Use um único botão primário por bloco de decisão."},
+  "doNotInvent":["Não usar gradientes coloridos saturados fora da paleta.","Não usar rótulos longos."],
+  "unknowns":[],
+  "keyInsightSeed":"Ações claras com brilho controlado e deslocamento mínimo."
+}

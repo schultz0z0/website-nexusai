@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "library": "Nexus AI",
+  "components": [
+    {"slug":"button","name":"Botão","category":"Ações","sourceKind":"structured-spec","confidence":"high","variantCount":4,"priorityHint":"core","keyInsightSeed":"Ações claras com brilho controlado e deslocamento mínimo."},
+    {"slug":"navigation","name":"Navegação","category":"Estrutura","sourceKind":"structured-spec","confidence":"high","variantCount":2,"priorityHint":"core","keyInsightSeed":"Pílula de vidro no desktop e drawer cinematográfico no mobile."},
+    {"slug":"form-field","name":"Campo de formulário","category":"Formulários","sourceKind":"structured-spec","confidence":"high","variantCount":4,"priorityHint":"core","keyInsightSeed":"Campos escuros, diretos e com foco azul inequívoco."},
+    {"slug":"card","name":"Card","category":"Conteúdo","sourceKind":"structured-spec","confidence":"high","variantCount":4,"priorityHint":"core","keyInsightSeed":"Superfícies profundas com borda luminosa e hierarquia editorial."},
+    {"slug":"accordion","name":"Accordion","category":"Conteúdo","sourceKind":"structured-spec","confidence":"high","variantCount":2,"priorityHint":"support","keyInsightSeed":"FAQ sem caixa pesada, separado por hairlines e movimento curto."},
+    {"slug":"badge","name":"Badge","category":"Indicadores","sourceKind":"structured-spec","confidence":"high","variantCount":3,"priorityHint":"support","keyInsightSeed":"Sinalização compacta em caixa alta com tracking técnico."}
+  ]
+}

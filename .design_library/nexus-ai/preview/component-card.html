@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body{margin:0;padding:var(--space-7);background:var(--nexus-stage);color:var(--nexus-foreground);font-family:var(--font-sans)}
+.row{display:grid;grid-template-columns:140px minmax(0,1fr);gap:var(--space-7);align-items:center;margin-bottom:var(--space-4)}
+.label{color:var(--text-muted);font-size:var(--type-eyebrow);font-weight:var(--font-weight-semibold);letter-spacing:var(--letter-spacing-marquee-label);text-transform:uppercase;white-space:nowrap}
+/* @component-css-start */
+.card{width:100%;min-width:0;overflow:hidden;border:var(--space-1) solid var(--color-border);padding:var(--space-12);box-sizing:border-box}
+.card-eyebrow{margin:0 0 var(--space-5);color:var(--color-muted-foreground);font-size:var(--type-eyebrow);font-weight:var(--font-weight-semibold);letter-spacing:var(--letter-spacing-marquee-label);text-transform:uppercase}
+.card-title{margin:0;color:inherit;font-size:var(--type-h4);font-weight:var(--font-weight-semibold);line-height:var(--line-height-h4);word-break:keep-all;overflow-wrap:break-word}
+.card-body{margin:var(--space-4) 0 0;color:var(--color-muted-foreground);font-size:var(--type-caption);line-height:var(--line-height-caption);overflow-wrap:break-word}
+.feature-dark{background:var(--color-card);color:var(--color-card-foreground);border-radius:var(--radius-xl);box-shadow:var(--shadow-3)}
+.metric-flat{background:transparent;color:var(--color-foreground);padding-block:var(--space-9);border-inline:0}
+.metric-flat .card-title{font-size:var(--type-h3);line-height:var(--line-height-h3)}
+.metric-flat .metric-label{margin-left:var(--space-3);font-size:var(--type-body);font-weight:var(--font-weight-medium)}
+.glass-signal{background:var(--color-card);color:var(--color-card-foreground);border-radius:var(--radius-2xl);box-shadow:var(--shadow-5);border-left-color:var(--nexus-signal)}
+.card-tech{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-9);color:var(--color-muted-foreground);font-family:var(--font-mono);font-size:var(--type-mono)}
+.card-status{display:inline-flex;align-items:center;gap:var(--space-3);white-space:nowrap}
+.card-status::before{content:"";width:var(--space-3);height:var(--space-3);border-radius:var(--radius-full);background:var(--nexus-signal);flex-shrink:0}
+/* @component-css-end */
+</style>
+</head>
+<body class="dark">
+<div class="row"><span class="label">Feature dark</span><article class="card feature-dark" data-evidence-sample="feature-dark"><p class="card-eyebrow">Método Nexus AI</p><h2 class="card-title">Diagnóstico antes de proposta</h2><p class="card-body">Mapeamos operação, dados e gargalos antes de definir a arquitetura de automação.</p></article></div>
+<div class="row"><span class="label">Metric flat</span><article class="card metric-flat" data-evidence-sample="metric-flat"><p class="card-eyebrow">Ecossistema em produção</p><h2 class="card-title">12+<span class="metric-label">plataformas operando</span></h2><p class="card-body">Integrações monitoradas em fluxos críticos de negócio.</p></article></div>
+<div class="row"><span class="label">Glass signal</span><article class="card glass-signal" data-evidence-sample="glass-signal"><div class="card-tech"><span>ARQUITETURA / NEXUS</span><span class="card-status">Operacional</span></div><h2 class="card-title">Stack aberta sem lock-in</h2><p class="card-body">Componentes interoperáveis preservam autonomia técnica e evolução contínua.</p></article></div>
+</body>
+</html>

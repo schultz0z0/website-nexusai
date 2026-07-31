@@ -1,0 +1,110 @@
+/* ═══════════════════════════════════════════════════════════════
+   components.css — Design System Component Definitions
+   Auto-extracted from preview/component-*.html
+   DO NOT EDIT MANUALLY — regenerate via extract-components-css.mjs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Accordion ─────────────────────────────────────────────── */
+/* @anatomy
+   <span class="label">FAQ</span>
+*/
+.accordion { display: flex; flex-direction: column; }
+.accordion-item { border-bottom: 1px solid var(--color-border); }
+.accordion-item:first-child { border-top: 1px solid var(--color-border); }
+.accordion-summary { display: flex; align-items: center; justify-content: space-between; gap: var(--space-9); padding: var(--space-11) var(--space-12); cursor: pointer; font-size: var(--font-size-lead); font-weight: var(--font-weight-semibold); color: var(--color-foreground); list-style: none; transition: background .15s; }
+.accordion-summary::-webkit-details-marker { display: none; }
+.accordion-summary:hover { background: var(--color-secondary); }
+.accordion-summary:focus-visible { outline: 2px solid var(--color-ring); outline-offset: -2px; }
+.accordion-icon { width: var(--size-icon-sm); height: var(--size-icon-sm); flex-shrink: 0; transition: transform .2s ease; color: var(--color-muted-foreground); }
+.accordion-item[open] .accordion-icon { transform: rotate(45deg); }
+.accordion-content { padding: 0 var(--space-12) var(--space-12); color: var(--color-muted-foreground); font-size: var(--font-size-body); line-height: var(--line-height-lead); }
+
+/* ── Badge ─────────────────────────────────────────────────── */
+/* @anatomy
+   <span class="label">Variantes</span> <span class="badge badge-neutral-solid">NEXUS AI</span> <span class="badge badge-signal-subtle">DIAGNÓSTICO</span>
+*/
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; min-height: 24px; min-width: 24px; font-family: var(--font-sans); font-size: var(--font-size-eyebrow); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: var(--letter-spacing-marquee-label); white-space: nowrap; border: 1px solid transparent; flex-shrink: 0; }
+.badge-neutral-solid { background: var(--color-foreground); color: var(--color-background); border-color: var(--color-foreground); border-radius: var(--radius-md); }
+.badge-signal-subtle { background: var(--nexus-signal-soft); color: var(--nexus-signal); border-color: var(--nexus-signal-soft); border-radius: var(--radius-md); }
+.badge-status-on { background: var(--nexus-signal); color: var(--color-background); border-color: var(--nexus-signal); border-radius: var(--radius-full); }
+.badge-status-soft { background: var(--color-accent); color: var(--nexus-signal); border-color: var(--color-border); border-radius: var(--radius-full); }
+.dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--color-background); flex-shrink: 0; display: inline-block; }
+
+/* ── Button ────────────────────────────────────────────────── */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; height:var(--size-button-height); min-width:var(--size-button-height); padding:0 24px; border:1px solid transparent; border-radius:var(--radius-lg); font-family:var(--font-sans); font-size:var(--type-body); font-weight:var(--font-weight-semibold); line-height:1; white-space:nowrap; cursor:pointer; transition:background .15s,border-color .15s,box-shadow .15s; }
+.btn-primary { background:var(--color-primary); color:var(--color-primary-foreground); box-shadow:var(--shadow-3); }
+.btn-primary:hover { filter:brightness(1.08); }
+.btn-secondary { background:var(--color-card); color:var(--color-card-foreground); border-color:var(--color-border); box-shadow:var(--shadow-2); }
+.btn-secondary:hover { background:var(--color-accent); }
+.btn-ghost { background:transparent; color:var(--color-foreground); height:var(--size-nav-cta); padding:0 16px; border-radius:var(--radius-md); }
+.btn-ghost:hover { background:var(--color-accent); }
+.btn-destructive { background:var(--color-destructive); color:var(--color-primary-foreground); }
+.btn-destructive:hover { filter:brightness(1.08); }
+.btn:focus-visible { outline:2px solid var(--nexus-signal); outline-offset:var(--size-outline-offset); }
+.btn[disabled], .btn.is-disabled { opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+/* ── Card ──────────────────────────────────────────────────── */
+/* @anatomy
+   <span class="label">Feature dark</span><article class="card feature-dark" data-evidence-sample="feature-dark"><p class="card-eyebrow">Método Nexus AI</p><h2 class="card-title">Diagnóstico antes de proposta</h2><p class="card-body">Mapeamos operação, dados e gargalos antes de definir a arquitetura de automação.</p></article>
+*/
+.card{width:100%;min-width:0;overflow:hidden;border:var(--space-1) solid var(--color-border);padding:var(--space-12);box-sizing:border-box}
+.card-eyebrow{margin:0 0 var(--space-5);color:var(--color-muted-foreground);font-size:var(--type-eyebrow);font-weight:var(--font-weight-semibold);letter-spacing:var(--letter-spacing-marquee-label);text-transform:uppercase}
+.card-title{margin:0;color:inherit;font-size:var(--type-h4);font-weight:var(--font-weight-semibold);line-height:var(--line-height-h4);word-break:keep-all;overflow-wrap:break-word}
+.card-body{margin:var(--space-4) 0 0;color:var(--color-muted-foreground);font-size:var(--type-caption);line-height:var(--line-height-caption);overflow-wrap:break-word}
+.feature-dark{background:var(--color-card);color:var(--color-card-foreground);border-radius:var(--radius-xl);box-shadow:var(--shadow-3)}
+.metric-flat{background:transparent;color:var(--color-foreground);padding-block:var(--space-9);border-inline:0}
+.metric-flat .card-title{font-size:var(--type-h3);line-height:var(--line-height-h3)}
+.metric-flat .metric-label{margin-left:var(--space-3);font-size:var(--type-body);font-weight:var(--font-weight-medium)}
+.glass-signal{background:var(--color-card);color:var(--color-card-foreground);border-radius:var(--radius-2xl);box-shadow:var(--shadow-5);border-left-color:var(--nexus-signal)}
+.card-tech{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);margin-bottom:var(--space-9);color:var(--color-muted-foreground);font-family:var(--font-mono);font-size:var(--type-mono)}
+.card-status{display:inline-flex;align-items:center;gap:var(--space-3);white-space:nowrap}
+.card-status::before{content:"";width:var(--space-3);height:var(--space-3);border-radius:var(--radius-full);background:var(--nexus-signal);flex-shrink:0}
+
+/* ── Form Field ────────────────────────────────────────────── */
+/* @anatomy
+   <span class="label">Entradas</span> <div class="grid"> <div class="col"> <div class="field"> <label class="field-label" for="nome">Nome <span class="req" aria-hidden="true">*</span></label> <input class="input" id="nome" type="text" placeholder="Como devemos te chamar?" value="Raphael Oliveira"> <span class="field-hint">Use seu nome completo.</span>
+*/
+.field { display: flex; flex-direction: column; gap: var(--space-4); min-width: 120px; }
+.field-label { font-size: var(--type-caption); font-weight: var(--font-weight-medium); color: var(--color-foreground); display: inline-flex; align-items: center; gap: var(--space-3); }
+.field-label .req { color: var(--color-destructive); font-weight: var(--font-weight-semibold); }
+.field-hint { font-size: var(--type-caption); color: var(--color-muted-foreground); line-height: var(--line-height-caption); }
+.field-error { font-size: var(--type-caption); color: var(--color-destructive); line-height: var(--line-height-caption); display: inline-flex; align-items: center; gap: var(--space-3); }
+.input, .select, .textarea {
+  width: 100%; box-sizing: border-box; font: inherit; color: var(--color-foreground);
+  background: var(--color-card); border: var(--space-1) solid var(--color-border);
+  border-radius: var(--radius-md); padding: var(--space-7) var(--space-9);
+  transition: border-color .15s, box-shadow .15s; min-width: 0;
+}
+.input { height: var(--size-input-height); }
+.select { height: var(--size-input-height); appearance: none; padding-right: var(--space-14); }
+.textarea { min-height: 96px; resize: vertical; line-height: var(--line-height-body); }
+.input::placeholder, .textarea::placeholder { color: var(--color-muted-foreground); }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--color-ring); }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--color-ring); box-shadow: 0 0 0 3px var(--nexus-signal-soft); }
+.input.is-invalid, .select.is-invalid, .textarea.is-invalid { border-color: var(--color-destructive); }
+.input.is-invalid:focus, .select.is-invalid:focus, .textarea.is-invalid:focus { box-shadow: 0 0 0 3px rgba(219, 29, 29, 0.18); }
+.input[aria-invalid="true"] { border-color: var(--color-destructive); }
+.input[disabled], .select[disabled], .textarea[disabled] { background: var(--color-muted); color: var(--color-muted-foreground); cursor: not-allowed; }
+
+/* ── Navigation ────────────────────────────────────────────── */
+/* @anatomy
+   <span class="label">Desktop</span> <div class="stage"> <nav class="nav-glass" data-evidence-sample="desktop-glass"> <a class="nav-brand" href="#"><span class="nav-dot"></span>Nexus AI</a> <span class="nav-divider"></span> <ul class="nav-links"> <li><a href="#">Soluções</a></li> <li><a href="#">Processo</a></li> </ul> <a class="nav-cta" href="#">Falar com a equipe</a> </nav>
+*/
+.nav-glass { display:flex; align-items:center; gap:var(--space-12); padding:var(--space-4) var(--space-9); background:var(--color-card); color:var(--color-foreground); border-radius:var(--radius-lg); box-shadow:var(--shadow-2); min-height:var(--nav-height-desktop); }
+  .nav-brand { display:inline-flex; align-items:center; gap:var(--space-4); font-family:var(--font-heading); font-size:var(--font-size-lead); font-weight:var(--font-weight-bold); letter-spacing:-0.02em; color:var(--color-foreground); text-decoration:none; white-space:nowrap; }
+  .nav-dot { width:var(--size-icon-sm); height:var(--size-icon-sm); border-radius:var(--radius-full); background:var(--nexus-signal); box-shadow:0 0 0 4px var(--signal-soft); }
+  .nav-divider { width:1px; height:18px; background:var(--line); }
+  .nav-links { display:flex; align-items:center; gap:var(--space-9); list-style:none; padding:0; margin:0; }
+  .nav-links a { font-family:var(--font-sans); font-size:var(--font-size-caption); font-weight:var(--font-weight-medium); color:var(--color-foreground); text-decoration:none; padding:var(--space-4) var(--space-7); border-radius:var(--radius-full); transition:background .15s, color .15s; }
+  .nav-links a:hover { background:var(--accent); }
+  .nav-cta { display:inline-flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-9); min-height:var(--size-nav-cta); background:var(--color-primary); color:var(--color-primary-foreground); font-family:var(--font-sans); font-size:var(--font-size-caption); font-weight:var(--font-weight-semibold); border-radius:var(--radius-full); text-decoration:none; white-space:nowrap; transition:background .15s; }
+  .nav-cta:hover { background:var(--primary); }
+  .nav-mobile { display:flex; align-items:center; justify-content:space-between; gap:var(--space-9); padding:var(--space-9) var(--gutter-page-mobile); background:var(--color-card); color:var(--color-foreground); border-radius:var(--radius-xl); box-shadow:var(--shadow-4); width:100%; }
+  .nav-trigger { display:inline-flex; align-items:center; justify-content:center; width:var(--size-nav-trigger); height:var(--size-nav-trigger); border-radius:var(--radius-full); background:var(--accent); color:var(--color-foreground); border:1px solid var(--color-border); cursor:pointer; }
+  .nav-scrim { position:absolute; inset:0; background:var(--stage-deep); opacity:0.6; }
+  .nav-drawer { position:relative; margin-top:var(--space-12); width:100%; max-width:280px; padding:var(--space-12); background:var(--color-card); color:var(--color-foreground); border-radius:var(--radius-xl); box-shadow:var(--shadow-4); display:flex; flex-direction:column; gap:var(--space-9); }
+  .nav-drawer-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-4); }
+  .nav-drawer-list a { display:block; padding:var(--space-9); font-family:var(--font-sans); font-size:var(--font-size-body); font-weight:var(--font-weight-medium); color:var(--color-foreground); text-decoration:none; border-radius:var(--radius-nexus-md); transition:background .15s; }
+  .nav-drawer-list a:hover { background:var(--accent); }
+  .nav-drawer-cta { display:flex; align-items:center; justify-content:center; min-height:var(--size-button-height); padding:var(--space-9); background:var(--color-primary); color:var(--color-primary-foreground); font-family:var(--font-sans); font-size:var(--font-size-caption); font-weight:var(--font-weight-semibold); border-radius:var(--radius-full); text-decoration:none; transition:background .15s; }
+  .nav-drawer-cta:hover { background:var(--primary); }

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Navegação</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; padding:12px; background:var(--nexus-stage); font-family:var(--font-sans); color:var(--nexus-foreground); }
+  .row { display:flex; gap:8px; align-items:center; margin-bottom:8px; flex-wrap:wrap; }
+  .label { font-family:var(--font-sans); font-size:var(--font-size-eyebrow); font-weight:var(--font-weight-semibold); letter-spacing:var(--letter-spacing-marquee-label); text-transform:uppercase; color:var(--text-muted); width:92px; flex-shrink:0; }
+  .stage { position:relative; flex:1; min-height:120px; padding:24px; border-radius:var(--radius-nexus-lg); background:var(--stage-raised); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .divider { border:none; border-top:1px solid var(--line); margin:8px 0; }
+  /* @component-css-start */
+  .nav-glass { display:flex; align-items:center; gap:var(--space-12); padding:var(--space-4) var(--space-9); background:var(--color-card); color:var(--color-foreground); border-radius:var(--radius-lg); box-shadow:var(--shadow-2); min-height:var(--nav-height-desktop); }
+  .nav-brand { display:inline-flex; align-items:center; gap:var(--space-4); font-family:var(--font-heading); font-size:var(--font-size-lead); font-weight:var(--font-weight-bold); letter-spacing:-0.02em; color:var(--color-foreground); text-decoration:none; white-space:nowrap; }
+  .nav-dot { width:var(--size-icon-sm); height:var(--size-icon-sm); border-radius:var(--radius-full); background:var(--nexus-signal); box-shadow:0 0 0 4px var(--signal-soft); }
+  .nav-divider { width:1px; height:18px; background:var(--line); }
+  .nav-links { display:flex; align-items:center; gap:var(--space-9); list-style:none; padding:0; margin:0; }
+  .nav-links a { font-family:var(--font-sans); font-size:var(--font-size-caption); font-weight:var(--font-weight-medium); color:var(--color-foreground); text-decoration:none; padding:var(--space-4) var(--space-7); border-radius:var(--radius-full); transition:background .15s, color .15s; }
+  .nav-links a:hover { background:var(--accent); }
+  .nav-cta { display:inline-flex; align-items:center; gap:var(--space-4); padding:var(--space-4) var(--space-9); min-height:var(--size-nav-cta); background:var(--color-primary); color:var(--color-primary-foreground); font-family:var(--font-sans); font-size:var(--font-size-caption); font-weight:var(--font-weight-semibold); border-radius:var(--radius-full); text-decoration:none; white-space:nowrap; transition:background .15s; }
+  .nav-cta:hover { background:var(--primary); }
+  .nav-mobile { display:flex; align-items:center; justify-content:space-between; gap:var(--space-9); padding:var(--space-9) var(--gutter-page-mobile); background:var(--color-card); color:var(--color-foreground); border-radius:var(--radius-xl); box-shadow:var(--shadow-4); width:100%; }
+  .nav-trigger { display:inline-flex; align-items:center; justify-content:center; width:var(--size-nav-trigger); height:var(--size-nav-trigger); border-radius:var(--radius-full); background:var(--accent); color:var(--color-foreground); border:1px solid var(--color-border); cursor:pointer; }
+  .nav-scrim { position:absolute; inset:0; background:var(--stage-deep); opacity:0.6; }
+  .nav-drawer { position:relative; margin-top:var(--space-12); width:100%; max-width:280px; padding:var(--space-12); background:var(--color-card); color:var(--color-foreground); border-radius:var(--radius-xl); box-shadow:var(--shadow-4); display:flex; flex-direction:column; gap:var(--space-9); }
+  .nav-drawer-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-4); }
+  .nav-drawer-list a { display:block; padding:var(--space-9); font-family:var(--font-sans); font-size:var(--font-size-body); font-weight:var(--font-weight-medium); color:var(--color-foreground); text-decoration:none; border-radius:var(--radius-nexus-md); transition:background .15s; }
+  .nav-drawer-list a:hover { background:var(--accent); }
+  .nav-drawer-cta { display:flex; align-items:center; justify-content:center; min-height:var(--size-button-height); padding:var(--space-9); background:var(--color-primary); color:var(--color-primary-foreground); font-family:var(--font-sans); font-size:var(--font-size-caption); font-weight:var(--font-weight-semibold); border-radius:var(--radius-full); text-decoration:none; transition:background .15s; }
+  .nav-drawer-cta:hover { background:var(--primary); }
+  /* @component-css-end */
+</style>
+</head>
+<body>
+  <div class="row">
+    <span class="label">Desktop</span>
+    <div class="stage">
+      <nav class="nav-glass" data-evidence-sample="desktop-glass">
+        <a class="nav-brand" href="#"><span class="nav-dot"></span>Nexus AI</a>
+        <span class="nav-divider"></span>
+        <ul class="nav-links">
+          <li><a href="#">Soluções</a></li>
+          <li><a href="#">Processo</a></li>
+        </ul>
+        <a class="nav-cta" href="#">Falar com a equipe</a>
+      </nav>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="row">
+    <span class="label">Mobile</span>
+    <div class="stage">
+      <div class="nav-scrim"></div>
+      <div style="position:relative;display:flex;flex-direction:column;width:100%;max-width:320px;">
+        <header class="nav-mobile" data-evidence-sample="mobile-drawer">
+          <a class="nav-brand" href="#"><span class="nav-dot"></span>Nexus AI</a>
+          <button class="nav-trigger" type="button" aria-label="Abrir menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </header>
+        <aside class="nav-drawer">
+          <ul class="nav-drawer-list">
+            <li><a href="#">Soluções</a></li>
+            <li><a href="#">Processo</a></li>
+          </ul>
+          <a class="nav-drawer-cta" href="#">Falar com a equipe</a>
+        </aside>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

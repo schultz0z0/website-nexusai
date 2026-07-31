@@ -1,0 +1,21 @@
+{
+  "schemaVersion":2,
+  "slug":"badge",
+  "name":"Badge",
+  "category":"Indicadores",
+  "sourceKind":"structured-spec",
+  "confidence":"high",
+  "semanticTypeCandidates":[{"type":"badge","evidence":"Eyebrows em uppercase com tracking 0.18em e pílulas de status no flow-panel."}],
+  "variantDimensions":{"variant":["neutral","signal","destructive"],"emphasis":["subtle","solid"]},
+  "representativeVariants":[
+    {"id":"signal-subtle","whySelected":"Eyebrow técnico recorrente","traits":{"background":"var(--signal-soft)","color":"var(--color-signal)","radius":"var(--radius-md)"},"childrenDigest":"Ícone opcional + rótulo em caixa alta"},
+    {"id":"neutral-solid","whySelected":"Destaque compacto no hero","traits":{"background":"var(--color-foreground)","color":"var(--color-background)","radius":"var(--radius-md)"},"childrenDigest":"Rótulo curto"},
+    {"id":"destructive-subtle","whySelected":"Status destrutivo pontual","traits":{"background":"var(--color-destructive)","color":"var(--color-destructive-foreground)","radius":"var(--radius-full)"},"childrenDigest":"Ponto de status + rótulo"}
+  ],
+  "anatomy":["container","optional status dot","optional icon","label"],
+  "structurePatterns":["Texto curto em caixa alta.","Tracking amplo para leitura técnica."],
+  "usageHints":{"priorityHint":"support","guidance":"Use para contexto, categoria ou estado; nunca como ação principal."},
+  "doNotInvent":["Não usar mais de um badge por título.","Não usar cores sem significado."],
+  "unknowns":[],
+  "keyInsightSeed":"Sinalização compacta em caixa alta com tracking técnico."
+}

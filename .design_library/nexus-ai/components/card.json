@@ -1,0 +1,21 @@
+{
+  "schemaVersion":2,
+  "slug":"card",
+  "name":"Card",
+  "category":"Conteúdo",
+  "sourceKind":"structured-spec",
+  "confidence":"high",
+  "semanticTypeCandidates":[{"type":"card","evidence":"Cards de prova, confiança, casos e fluxo aparecem em múltiplas páginas; metric-flat usa bordas em hairline sem fundo."}],
+  "variantDimensions":{"variant":["metric","feature","case","glass"],"theme":["dark","light","signal"]},
+  "representativeVariants":[
+    {"id":"feature-dark","whySelected":"Padrão institucional principal","traits":{"background":"var(--color-card)","color":"var(--color-card-foreground)","border":"var(--color-border)","radius":"var(--radius-2xl)","shadow":"var(--shadow-2)"},"childrenDigest":"Ícone, eyebrow, título e descrição"},
+    {"id":"metric-flat","whySelected":"Prova quantitativa editorial","traits":{"background":"transparent","color":"var(--color-foreground)","border":"var(--color-line)","radius":"var(--radius-none)"},"childrenDigest":"Eyebrow, número, rótulo e nota"},
+    {"id":"glass-signal","whySelected":"Demonstração de produto sobre azul","traits":{"background":"var(--color-card)","color":"var(--color-foreground)","border":"var(--color-line)","radius":"var(--radius-2xl)","shadow":"var(--shadow-5)"},"childrenDigest":"Cabeçalho técnico, conteúdo e status"}
+  ],
+  "anatomy":["container","optional icon","eyebrow","title","body","optional action","optional status"],
+  "structurePatterns":["Contraste alto entre título e texto secundário.","Bordas finas substituem sombras pesadas na maior parte dos casos."],
+  "usageHints":{"priorityHint":"core","guidance":"Escolha a variante pelo papel narrativo, não apenas pela decoração."},
+  "doNotInvent":["Não transformar toda seção em grade de cards.","Não misturar múltiplos acentos cromáticos."],
+  "unknowns":[],
+  "keyInsightSeed":"Superfícies profundas com borda luminosa e hierarquia editorial."
+}
