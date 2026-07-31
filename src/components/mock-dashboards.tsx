@@ -193,20 +193,20 @@ export function CopilotMockDashboard() {
   }, [inView, reducedMotion]);
 
   return (
-    <div ref={rootRef} className="bg-card/40 p-4 sm:p-6 md:p-8">
+    <div ref={rootRef} className="bg-card/40 p-3.5 sm:p-5 md:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/40">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-foreground/10 flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-foreground/85" />
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/40">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-foreground/10 flex items-center justify-center">
+            <Sparkles className="w-3.5 h-3.5 text-foreground/85" />
           </div>
           <div>
-            <div className="text-sm font-semibold text-foreground">Nexus Copilot</div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Campanha · Black Friday</div>
+            <div className="text-xs sm:text-sm font-semibold text-foreground">Nexus Copilot</div>
+            <div className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-wider">Campanha · Black Friday</div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-foreground/60 uppercase tracking-wider">
+          <span className="text-[9px] sm:text-[10px] text-foreground/60 uppercase tracking-wider">
             {displayProgress < 100 ? "Gerando…" : "Pronto"}
           </span>
         </div>
@@ -214,9 +214,9 @@ export function CopilotMockDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {/* Prompt + image preview */}
-        <div className="md:col-span-2 space-y-3">
+        <div className="md:col-span-2 space-y-2.5">
           {/* Image preview area */}
-          <div className="relative aspect-[16/9] rounded-lg overflow-hidden ring-1 ring-border/30 bg-gradient-to-br from-foreground/10 via-foreground/5 to-background">
+          <div className="relative aspect-[2/1] rounded-lg overflow-hidden ring-1 ring-border/30 bg-gradient-to-br from-foreground/10 via-foreground/5 to-background">
             <CopilotImageMock progress={displayProgress} />
             <div className="absolute bottom-2 left-2 right-2 flex items-center gap-2">
               <div className="flex-1 h-1 rounded-full bg-foreground/10 overflow-hidden">
@@ -232,16 +232,15 @@ export function CopilotMockDashboard() {
           </div>
 
           {/* Prompt input */}
-          <div className="rounded-lg bg-background/40 p-3 ring-1 ring-border/30">
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1.5">
+          <div className="rounded-lg bg-background/40 p-2.5 ring-1 ring-border/30">
+            <div className="text-[9px] text-muted-foreground uppercase tracking-wider mb-1">
               Prompt
             </div>
-            <div className="text-xs text-foreground/85 leading-relaxed">
-              Banner Black Friday para público 25-34, São Paulo. Foco em desconto agressivo, fundo escuro com elemento dourado, headline curta e CTA visível.
+            <div className="text-xs text-foreground/85 leading-snug">
+              Banner Black Friday para público 25-34. Foco em desconto agressivo e CTA visível.
             </div>
-            <div className="flex flex-wrap items-center gap-2 mt-2.5">
+            <div className="flex flex-wrap items-center gap-1.5 mt-2">
               <Tag>Público: SP, 25-34</Tag>
-              <Tag>Estilo: Editorial</Tag>
               <Tag>Formato: 1080×1080</Tag>
             </div>
           </div>
@@ -260,19 +259,9 @@ export function CopilotMockDashboard() {
             state="done"
           />
           <AgentStep
-            label="Insights gerados"
-            detail="Padrão: público responde a contraste"
-            state="active"
-          />
-          <AgentStep
-            label="Briefing criativo"
-            detail="Aguardando aprovação"
-            state="pending"
-          />
-          <AgentStep
             label="Push para Meta Ads"
             detail="Agendado para 18h"
-            state="pending"
+            state="active"
           />
         </div>
       </div>

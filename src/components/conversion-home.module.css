@@ -626,6 +626,10 @@
   margin-top: 1.4rem;
 }
 
+.caseCardReverse {
+  grid-template-columns: minmax(0, 1.32fr) minmax(320px, 0.68fr);
+}
+
 .caseCardReverse .caseCopy {
   order: 2;
 }
@@ -1153,7 +1157,8 @@
   }
 
   .productFrame {
-    height: 360px;
+    height: auto;
+    min-height: 320px;
     border-radius: 0.9rem;
   }
 
