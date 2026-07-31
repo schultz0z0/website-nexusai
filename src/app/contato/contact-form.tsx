@@ -162,8 +162,11 @@ export function ContactForm() {
       ) : null}
 
       <div className={styles.formActions}>
-        <a href="mailto:raphaelschultz12@gmail.com" className={styles.directLink}>
-          Ou escreva direto: raphaelschultz12@gmail.com
+        <a
+          href="mailto:raphaelschultz12@gmail.com,esttevao.henrique@hotmail.com"
+          className={styles.directLink}
+        >
+          Ou escreva direto: raphaelschultz12@gmail.com ou esttevao.henrique@hotmail.com
         </a>
         <motion.button
           type="submit"

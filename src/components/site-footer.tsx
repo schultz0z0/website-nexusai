@@ -47,10 +47,10 @@ export function SiteFooter() {
               </Link>
             ))}
             <a
-              href="mailto:raphaelschultz12@gmail.com"
+              href="mailto:raphaelschultz12@gmail.com,esttevao.henrique@hotmail.com"
               className="hover:text-foreground transition-colors"
             >
-              raphaelschultz12@gmail.com
+              raphaelschultz12@gmail.com · esttevao.henrique@hotmail.com
             </a>
           </nav>
 
