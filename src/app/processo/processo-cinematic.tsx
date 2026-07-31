@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import shell from "@/components/route-cinematic-shell.module.css";
-import { ETAPAS, FAQ_ITEMS } from "@/lib/content";
+import { ETAPAS, FAQ_PROCESSO } from "@/lib/content";
 import {
   PROCESS_CHAPTERS,
   PROCESS_SCENE,
@@ -475,7 +475,7 @@ export function ProcessoCinematic() {
 
           <header className={styles.sceneIntro} data-process-intro>
             <p className={shell.eyebrow}>Quatro checkpoints verificáveis</p>
-            <h1 id="process-title">Processo</h1>
+            <h1 id="process-title">Clareza antes do código.</h1>
             <p>
               Você vê, aprova e mede cada avanço. Quatro etapas para reduzir
               risco antes do código e manter resultado depois da entrega.
@@ -556,7 +556,7 @@ export function ProcessoCinematic() {
           </header>
 
           <div className={styles.faqList}>
-            {FAQ_ITEMS.map((item) => (
+            {FAQ_PROCESSO.map((item) => (
               <details key={item.q} data-process-faq-item>
                 <summary>
                   <span>{item.q}</span>

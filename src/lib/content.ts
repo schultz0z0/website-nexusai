@@ -116,32 +116,61 @@ export const ETAPAS: readonly Etapa[] = [
 
 export type FaqItem = { q: string; a: string };
 
-export const FAQ_ITEMS: readonly FaqItem[] = [
+export const FAQ_PROCESSO: readonly FaqItem[] = [
   {
-    q: "Quanto custa?",
-    a: "Depende do escopo. O diagnóstico inicial é gratuito e a proposta vem com valores claros por etapa. Sem surpresa no final.",
+    q: "O que recebo exatamente ao final do Diagnóstico Inicial?",
+    a: "Você recebe um documento escrito de diagnóstico com o mapeamento dos processos atuais, a lista priorizada de gargalos por impacto e a estimativa de ROI.",
   },
   {
-    q: "Quanto tempo até ver resultado?",
-    a: "Primeiros ganhos operacionais entre 4 e 8 semanas após a implementação começar. O diagnóstico já entrega valor por si só.",
+    q: "Quanto tempo leva da proposta à entrega em produção?",
+    a: "A implementação completa leva entre 4 e 12 semanas. A primeira versão funcional já entra em testes operacionais entre 2 e 3 semanas.",
   },
   {
-    q: "Vocês integram com [ferramenta X]?",
-    a: "Provavelmente sim. Integramos com a stack que sua empresa já usa — listamos as integrações cobertas na proposta.",
+    q: "O que acontece se a entrega não atingir o objetivo combinado?",
+    a: "Cada etapa tem critérios de aceite objetivos definidos previamente na proposta. Ajustes necessários para atingir o critério combinado são feitos sem custo adicional.",
   },
   {
-    q: "E se não funcionar?",
-    a: "Cada entrega tem critério de aceite combinado com você. Se não atender, ajustamos sem custo extra antes de seguir.",
+    q: "Como funciona a etapa de Suporte Contínuo pós-entrega?",
+    a: "Oferecemos acompanhamento mensal com monitoramento de saúde do sistema, relatórios de uso e pequenos ajustes inclusos no contrato para garantir que a solução evolua com o seu negócio.",
   },
   {
-    q: "Vocês atendem [setor X]?",
-    a: "Atendemos qualquer empresa com processo repetitivo ou dado subutilizado. Setor não é barreira — já atuamos em indústria, serviços, e-commerce e tech.",
+    q: "Existe algum compromisso financeiro antes de aprovar a proposta?",
+    a: "Nenhum. A conversa de contexto e o diagnóstico inicial são gratuitos e sem compromisso. Você só investe se aprovar a proposta técnica.",
   },
   {
-    q: "Preciso ter equipe técnica?",
-    a: "Não. A gente opera. Você acompanha resultado. Se sua equipe quiser aprender a manter internamente depois, a gente transfere.",
+    q: "Como minha equipe é treinada para usar as novas ferramentas?",
+    a: "Realizamos treinamento prático com a equipe responsável e entregamos documentação técnica clara e guias de operação simples.",
   },
 ] as const;
+
+export const FAQ_SOLUCOES: readonly FaqItem[] = [
+  {
+    q: "Quais tipos de sistemas vocês conseguem integrar?",
+    a: "Integramos com praticamente qualquer sistema moderno (ERP, CRM, WhatsApp, e-commerce, planilhas, Postgres, APIs REST/GraphQL). Conectamos a stack que você já usa.",
+  },
+  {
+    q: "A minha empresa fica presa a algum fornecedor (lock-in)?",
+    a: "Não. Trabalhamos com stack aberta (OpenAI, Anthropic, Postgres, Next.js, n8n). Código, dados e documentação são 100% da sua empresa.",
+  },
+  {
+    q: "Vocês atendem qualquer setor de mercado?",
+    a: "Atendemos qualquer empresa com processo repetitivo ou dado subutilizado. Já atuamos em indústria, serviços, advocacia, estoque, finanças e tecnologia.",
+  },
+  {
+    q: "Preciso ter equipe técnica interna para manter a solução?",
+    a: "Não. A gente opera e sustenta o sistema. Sua equipe acompanha os indicadores no dashboard e foca na tomada de decisão.",
+  },
+  {
+    q: "Quanto custa um projeto de automação com IA?",
+    a: "Depende do escopo do diagnóstico. O diagnóstico inicial é gratuito e a proposta traz valores transparentes por etapa, sem surpresas.",
+  },
+  {
+    q: "Em quanto tempo a solução começa a dar resultado?",
+    a: "Primeiros ganhos operacionais ocorrem entre 4 e 8 semanas após o início da implementação.",
+  },
+] as const;
+
+export const FAQ_ITEMS = FAQ_PROCESSO;
 
 export const PRA_QUEM_E = [
   "Empresa com processo repetitivo tomando tempo de equipe qualificada",

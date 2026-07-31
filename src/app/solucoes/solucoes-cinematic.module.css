@@ -44,7 +44,7 @@
 
 .heroHeading {
   position: absolute;
-  top: 15svh;
+  top: clamp(6.5rem, 12svh, 8.5rem);
   right: 24px;
   left: 24px;
   z-index: 4;
@@ -53,9 +53,14 @@
 }
 
 .heroHeading h1 {
-  font-size: clamp(5.4rem, 10.8vw, 9.6rem);
-  padding-bottom: 0.16em;
-  margin-bottom: -0.16em;
+  max-width: 900px;
+  margin-inline: auto;
+  font-size: clamp(3.6rem, 7vw, 6.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  padding-bottom: 0.1em;
+  margin-bottom: 0;
+  text-wrap: balance;
 }
 
 .sceneIntro {

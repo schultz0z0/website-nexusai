@@ -89,10 +89,11 @@
 .sceneIntro h1 {
   margin: 0;
   color: #f7f8fb;
-  font-size: clamp(5rem, 12vw, 11rem);
+  font-size: clamp(3.2rem, 6.4vw, 5.8rem);
   font-weight: 590;
-  line-height: 0.82;
-  letter-spacing: -0.075em;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
 }
 
 .sceneIntro > p:last-child {

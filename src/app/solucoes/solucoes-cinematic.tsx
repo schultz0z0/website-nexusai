@@ -526,15 +526,14 @@ export function SolucoesCinematic() {
               className={shell.heroTitle}
               data-solutions-title
             >
-              Soluções
+              Tire o peso da operação.
             </h1>
             <p
               className={shell.heroCopy}
               data-solutions-hero-copy
             >
-              A IA entra onde sua equipe perde tempo: atendimento, vendas,
-              estoque, dados, integrações e rotinas internas. Tudo sob medida
-              pro contexto real.
+              A IA entra onde sua equipe perde tempo. Do atendimento ao
+              estoque, cada solução nasce do contexto real.
             </p>
           </header>
 
