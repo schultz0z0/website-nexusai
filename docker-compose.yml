@@ -1,0 +1,17 @@
+services:
+  website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solucoes-nexus-website
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.solucoes-nexus.rule=Host(`solucoes-nexus.tech`) || Host(`www.solucoes-nexus.tech`)"
+      - "traefik.http.routers.solucoes-nexus.entrypoints=websecure"
+      - "traefik.http.routers.solucoes-nexus.tls=true"
+      - "traefik.http.routers.solucoes-nexus.tls.certresolver=letsencrypt"
+      - "traefik.http.services.solucoes-nexus.loadbalancer.server.port=3000"
