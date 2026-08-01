@@ -84,7 +84,7 @@ export function SolucoesCinematic() {
           root.dataset.motionMode = mode;
           const clearMotionMode = () => delete root.dataset.motionMode;
 
-          if (mode === "static") return clearMotionMode;
+          if (mode === "static") return;
 
           if (mode === "mobile") {
             const scene = root.querySelector<HTMLElement>(
@@ -303,6 +303,11 @@ export function SolucoesCinematic() {
             },
           });
 
+          const introStart =
+            mode === "compact"
+              ? SCENE_WINDOWS[0].focus
+              : SCENE_WINDOWS[1].start;
+
           timeline
              .to(
                "[data-solutions-title]",
@@ -360,13 +365,26 @@ export function SolucoesCinematic() {
             .to(
               intro,
               { autoAlpha: 1, x: 0, duration: 0.1 },
-              SCENE_WINDOWS[1].start,
+              introStart,
             )
             .to(
               "[data-solutions-progress]",
               { scaleX: 1, duration: 0.72, ease: "none" },
               SCENE_WINDOWS[1].start,
             );
+
+          if (mode === "compact") {
+            timeline.to(
+              intro,
+              {
+                autoAlpha: 0,
+                x: -18,
+                filter: "blur(6px)",
+                duration: 0.025,
+              },
+              SCENE_WINDOWS[1].start - 0.035,
+            );
+          }
 
           layers.forEach((layer, index) => {
             const window = SCENE_WINDOWS[index + 1];

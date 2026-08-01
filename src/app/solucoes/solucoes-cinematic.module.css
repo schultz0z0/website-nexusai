@@ -1081,8 +1081,8 @@
   .root[data-motion-mode="static"] .sceneIntro,
   .root[data-motion-mode="static"] .overviewStage,
   .root[data-motion-mode="static"] .layerStack { position: relative; inset: auto; width: min(100%, 180svh); margin-inline: auto; transform: none; opacity: 1; }
-  .root[data-motion-mode="static"] .layerStack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-  .root[data-motion-mode="static"] .layerFrame { position: relative; inset: auto; display: grid; gap: 0.75rem; min-height: 0; visibility: visible !important; opacity: 1; transform: none; }
+  .root[data-motion-mode="static"] .layerStack { display: grid; height: auto; grid-template-columns: 1fr; gap: 1rem; }
+  .root[data-motion-mode="static"] .layerFrame { position: relative; inset: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; min-height: 0; visibility: visible !important; opacity: 1; transform: none; }
   .root[data-motion-mode="static"] .fieldCenter,
   .root[data-motion-mode="static"] .sceneProgress { display: none; }
 }

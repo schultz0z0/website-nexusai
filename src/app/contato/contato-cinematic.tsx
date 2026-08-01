@@ -329,7 +329,7 @@ export function ContatoCinematic() {
                .to(
                  heroCopy,
                 {
-                  autoAlpha: 0.16,
+                  autoAlpha: mode === "compact" ? 0 : 0.16,
                   y: -36,
                   filter: "blur(8px)",
                   duration: 0.18,

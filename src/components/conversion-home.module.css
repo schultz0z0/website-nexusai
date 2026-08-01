@@ -1232,6 +1232,62 @@
   }
 }
 
+@media (min-width: 768px) and (max-height: 639px) {
+  .hero,
+  .valueStage {
+    min-height: 100svh;
+  }
+
+  .hero {
+    height: 100svh;
+    padding-block: 0;
+  }
+
+  .heroContent {
+    padding: 2.4rem 0 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 4vw, 3.75rem);
+  }
+
+  .heroBody {
+    margin-top: 1.15rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .heroActions {
+    margin-top: 1.35rem;
+  }
+
+  .heroProof {
+    margin-top: 1.2rem;
+  }
+
+  .valueGrid {
+    padding-block: 3rem;
+  }
+
+  .valueCopy h2 {
+    font-size: clamp(2.5rem, 4vw, 3.75rem);
+  }
+
+  .valueLead {
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  .outcomeList {
+    gap: 0.35rem;
+    margin-top: 1.15rem;
+  }
+
+  .outcome {
+    padding-block: 0.45rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scrollLine::after {
     animation: none;

@@ -841,14 +841,15 @@
   .root[data-motion-mode="static"] .sceneHeader,
   .root[data-motion-mode="static"] .sceneIntro,
   .root[data-motion-mode="static"] .panelStage { position: relative; inset: auto; width: min(100%, 180svh); margin-inline: auto; transform: none; opacity: 1; }
-  .root[data-motion-mode="static"] .panelStage { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.85rem; }
+  .root[data-motion-mode="static"] .panelStage { display: grid; height: auto; grid-template-columns: 1fr; gap: 0.85rem; }
   .root[data-motion-mode="static"] .panelStage > * { position: relative; inset: auto; min-height: 0; opacity: 1; transform: none; }
   .root[data-motion-mode="static"] .progressRail { display: none; }
 }
 
 @media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
-  .root[data-motion-mode="compact"] .sceneSticky { min-height: 0; }
+  .root[data-motion-mode="compact"] .sceneSticky { height: 100svh; min-height: 0; }
   .root[data-motion-mode="compact"] .panelStage { width: min(860px, calc(100vw - (var(--cinematic-safe-inline) * 2)), 132svh); }
+  .root[data-motion-mode="compact"] .panelCopy h2 { font-size: clamp(1.8rem, min(3vw, 4svh), 3.2rem); }
 }
 
 @media (max-width: 767px) and (max-height: 740px) {
