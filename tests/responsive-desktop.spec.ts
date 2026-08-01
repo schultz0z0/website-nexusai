@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 import {
   assertContentWithinViewport,
@@ -26,6 +26,19 @@ const viewportProfiles = [
   { name: "cinematic", width: 1920, height: 1080, expected: "cinematic" },
   { name: "mobile", width: 390, height: 844, expected: "mobile" },
 ] as const;
+
+async function waitForAnimationFrames(page: Page): Promise<void> {
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }),
+  );
+}
+
+function isOpenClipPath(clipPath: string): boolean {
+  return ["none", "inset(0%)", "inset(0% 0% 0% 0%)"].includes(clipPath);
+}
 
 test.describe("desktop responsiveness smoke tests", () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
@@ -140,11 +153,7 @@ test.describe("static desktop fallbacks", () => {
       "static",
     );
 
-    await page.evaluate(() =>
-      new Promise<void>((resolve) => {
-        requestAnimationFrame(() => requestAnimationFrame(resolve));
-      }),
-    );
+    await waitForAnimationFrames(page);
 
     const layout = await page.evaluate(() => {
       const toLayout = (selector: string) =>
@@ -180,6 +189,7 @@ test.describe("static desktop fallbacks", () => {
     expect(layout.hero[0].position).toBe("relative");
     expect(layout.intro[0].position).toBe("relative");
     expect(layout.intro[0].top).toBeGreaterThanOrEqual(layout.hero[0].bottom - 1);
+    expect(layout.layers[0].top).toBeGreaterThanOrEqual(layout.intro[0].bottom - 1);
     expect(layout.layers.every((layer) => layer.position === "relative")).toBe(
       true,
     );
@@ -199,11 +209,7 @@ test.describe("static desktop fallbacks", () => {
     ).toBe(true);
 
     await page.evaluate(() => window.scrollTo({ top: 520, behavior: "instant" }));
-    await page.evaluate(() =>
-      new Promise<void>((resolve) => {
-        requestAnimationFrame(() => requestAnimationFrame(resolve));
-      }),
-    );
+    await waitForAnimationFrames(page);
 
     const scrolledCards = await page.evaluate(() =>
       Array.from(document.querySelectorAll<HTMLElement>("[data-field-card]")).map(
@@ -277,11 +283,7 @@ test("ends the compact Solutions intro before the first solution layer enters", 
       behavior: "instant",
     });
   });
-  await page.evaluate(() =>
-    new Promise<void>((resolve) => {
-      requestAnimationFrame(() => requestAnimationFrame(resolve));
-    }),
-  );
+  await waitForAnimationFrames(page);
 
   const checkpoint = await page.evaluate(() => {
     const effectiveVisibility = (element: HTMLElement) => {
@@ -334,11 +336,7 @@ test("keeps static Process checkpoints in a vertical unclipped list", async ({
     "static",
   );
 
-  await page.evaluate(() =>
-    new Promise<void>((resolve) => {
-      requestAnimationFrame(() => requestAnimationFrame(resolve));
-    }),
-  );
+  await waitForAnimationFrames(page);
   await page.evaluate(() => window.scrollTo({ top: 360, behavior: "instant" }));
 
   const panels = await page.evaluate(() =>
@@ -400,9 +398,25 @@ test("keeps compact Process titles contained while checkpoints 03 and 04 show th
         behavior: "instant",
       });
     }, progress);
+    await waitForAnimationFrames(page);
 
     const panel = page.locator(`[data-process-stage="${stage}"]`);
-    await expect(panel).toHaveCSS("opacity", "1");
+    await expect.poll(async () =>
+      panel.evaluate((element) => {
+        const rect = element.getBoundingClientRect();
+        const style = window.getComputedStyle(element);
+        const opacity = Number.parseFloat(style.opacity);
+
+        return (
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          opacity >= 0.95 &&
+          rect.width > 8 &&
+          rect.height > 8 &&
+          ["none", "inset(0%)", "inset(0% 0% 0% 0%)"].includes(style.clipPath)
+        );
+      }),
+    ).toBe(true);
 
     return panel.evaluate((element) => {
       const title = element.querySelector<HTMLElement>("h2");
@@ -412,22 +426,47 @@ test("keeps compact Process titles contained while checkpoints 03 and 04 show th
       const panelRect = element.getBoundingClientRect();
       const titleRect = title.getBoundingClientRect();
       const descriptionRect = paragraph.getBoundingClientRect();
+      let effectiveOpacity = 1;
+      let effectivelyVisible = true;
+
+      for (let current: HTMLElement | null = element; current; current = current.parentElement) {
+        const style = window.getComputedStyle(current);
+        const opacity = Number.parseFloat(style.opacity);
+
+        if (style.display === "none" || style.visibility === "hidden") {
+          effectivelyVisible = false;
+          break;
+        }
+
+        effectiveOpacity *= Number.isNaN(opacity) ? 1 : opacity;
+      }
+
+      const panelStyle = window.getComputedStyle(element);
 
       return {
+        clipPath: panelStyle.clipPath,
         descriptionBottom: descriptionRect.bottom,
         descriptionText: paragraph.innerText,
+        effectiveOpacity,
+        effectivelyVisible,
         panelBottom: panelRect.bottom,
         panelHeight: panelRect.height,
+        panelWidth: panelRect.width,
         titleBottom: titleRect.bottom,
         titleHeight: titleRect.height,
       };
     });
   };
 
-  const implementation = await inspectCheckpoint(0.55, "03");
-  const support = await inspectCheckpoint(0.75, "04");
+  const implementation = await inspectCheckpoint(0.68, "03");
+  const support = await inspectCheckpoint(0.87, "04");
 
   for (const checkpoint of [implementation, support]) {
+    expect(checkpoint.effectivelyVisible).toBe(true);
+    expect(checkpoint.effectiveOpacity).toBeGreaterThanOrEqual(0.95);
+    expect(checkpoint.panelWidth).toBeGreaterThan(8);
+    expect(checkpoint.panelHeight).toBeGreaterThan(8);
+    expect(isOpenClipPath(checkpoint.clipPath)).toBe(true);
     expect(checkpoint.titleHeight).toBeLessThan(checkpoint.panelHeight * 0.28);
     expect(checkpoint.titleBottom).toBeLessThan(checkpoint.descriptionBottom);
     expect(checkpoint.descriptionBottom).toBeLessThanOrEqual(checkpoint.panelBottom - 8);
@@ -450,11 +489,7 @@ test("keeps the static Contact briefing and form in ordinary document flow", asy
     if (!briefing) throw new Error("Contact briefing was not rendered.");
     window.scrollTo({ top: briefing.offsetTop + 180, behavior: "instant" });
   });
-  await page.evaluate(() =>
-    new Promise<void>((resolve) => {
-      requestAnimationFrame(() => requestAnimationFrame(resolve));
-    }),
-  );
+  await waitForAnimationFrames(page);
 
   const layout = await page.evaluate(() => {
     const copy = document.querySelector<HTMLElement>("[data-contact-briefing-copy]");
@@ -495,11 +530,7 @@ test("fully clears the compact Contact hero before the briefing begins", async (
     if (!briefing) throw new Error("Contact briefing was not rendered.");
     window.scrollTo({ top: Math.max(0, briefing.offsetTop - 24), behavior: "instant" });
   });
-  await page.evaluate(() =>
-    new Promise<void>((resolve) => {
-      requestAnimationFrame(() => requestAnimationFrame(resolve));
-    }),
-  );
+  await waitForAnimationFrames(page);
 
   const checkpoint = await page.evaluate(() => {
     const hero = document.querySelector<HTMLElement>("[data-contact-hero-copy]");
