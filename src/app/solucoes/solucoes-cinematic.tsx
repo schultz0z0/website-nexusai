@@ -17,9 +17,9 @@ import {
   SOLUTIONS_CHAPTERS,
   SOLUTIONS_SCENE,
   createSceneWindows,
-  getRouteMotionMode,
   getSceneScrollVh,
 } from "@/lib/route-cinematics";
+import { getViewportMotionMode } from "@/lib/viewport-motion";
 
 import styles from "./solucoes-cinematic.module.css";
 
@@ -72,17 +72,19 @@ export function SolucoesCinematic() {
     const context = gsap.context(() => {
       media.add(
         {
-          desktop: "(min-width: 768px)",
           mobile: "(max-width: 767px)",
+          static: "(min-width: 768px) and (max-height: 639px)",
+          compact:
+            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
+          cinematic: "(min-width: 768px) and (min-height: 820px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
-        ({ conditions }) => {
-          const mode = getRouteMotionMode({
-            desktop: Boolean(conditions?.desktop),
-            reducedMotion: Boolean(conditions?.reduced),
-          });
+        () => {
+          const mode = getViewportMotionMode();
+          root.dataset.motionMode = mode;
+          const clearMotionMode = () => delete root.dataset.motionMode;
 
-          if (mode === "static") return;
+          if (mode === "static") return clearMotionMode;
 
           if (mode === "mobile") {
             const scene = root.querySelector<HTMLElement>(
@@ -113,7 +115,7 @@ export function SolucoesCinematic() {
               !panels.length ||
               !progressFill
             ) {
-              return;
+              return clearMotionMode;
             }
 
             const windows = createSceneWindows(panels.length + 1);
@@ -221,6 +223,7 @@ export function SolucoesCinematic() {
                     start: "top 78%",
                     end: "top 28%",
                     scrub: 0.55,
+                    invalidateOnRefresh: true,
                   },
                 },
               );
@@ -238,11 +241,12 @@ export function SolucoesCinematic() {
                   start: "top 82%",
                   end: "center 62%",
                   scrub: 0.55,
+                  invalidateOnRefresh: true,
                 },
               },
             );
 
-            return;
+            return clearMotionMode;
           }
 
           const scene = root.querySelector<HTMLElement>("[data-solutions-scene]");
@@ -267,7 +271,7 @@ export function SolucoesCinematic() {
             "[data-solutions-desktop-media]",
           );
 
-          if (!scene || !heading || !intro || !overview) return;
+          if (!scene || !heading || !intro || !overview) return clearMotionMode;
 
           gsap.set(layers, { autoAlpha: 0, y: 48, scale: 0.96 });
           gsap.set(intro, { autoAlpha: 0, x: -28 });
@@ -295,6 +299,7 @@ export function SolucoesCinematic() {
               start: "top top",
               end: "bottom bottom",
               scrub: 0.72,
+              invalidateOnRefresh: true,
             },
           });
 
@@ -425,6 +430,8 @@ export function SolucoesCinematic() {
             { scale: 0.98, y: -10, duration: 0.08 },
             0.92,
           );
+
+          return clearMotionMode;
         },
       );
     }, root);
@@ -432,6 +439,7 @@ export function SolucoesCinematic() {
     return () => {
       media.revert();
       context.revert();
+      delete root.dataset.motionMode;
     };
   }, []);
 

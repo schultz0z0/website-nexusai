@@ -13,9 +13,9 @@ import {
   CONTACT_RESPONSE_SCENE,
   CONTACT_SIGNAL_SCENE,
   createSceneWindows,
-  getRouteMotionMode,
   getSceneScrollVh,
 } from "@/lib/route-cinematics";
+import { getViewportMotionMode } from "@/lib/viewport-motion";
 
 import { ContactForm } from "./contact-form";
 import styles from "./contato-cinematic.module.css";
@@ -37,17 +37,19 @@ export function ContatoCinematic() {
     const context = gsap.context(() => {
       media.add(
         {
-          desktop: "(min-width: 768px)",
           mobile: "(max-width: 767px)",
+          static: "(min-width: 768px) and (max-height: 639px)",
+          compact:
+            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
+          cinematic: "(min-width: 768px) and (min-height: 820px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
-        ({ conditions }) => {
-          const mode = getRouteMotionMode({
-            desktop: Boolean(conditions?.desktop),
-            reducedMotion: Boolean(conditions?.reduced),
-          });
+        () => {
+          const mode = getViewportMotionMode();
+          root.dataset.motionMode = mode;
+          const clearMotionMode = () => delete root.dataset.motionMode;
 
-          if (mode === "static") return;
+          if (mode === "static") return clearMotionMode;
 
           if (mode === "mobile") {
             const signalScene = root.querySelector<HTMLElement>(
@@ -236,6 +238,7 @@ export function ContatoCinematic() {
                   start: "top 82%",
                   end: "center 58%",
                   scrub: 0.6,
+                  invalidateOnRefresh: true,
                 },
               })
               .fromTo(
@@ -262,11 +265,12 @@ export function ContatoCinematic() {
                   start: "top 84%",
                   end: "center 70%",
                   scrub: 0.5,
+                  invalidateOnRefresh: true,
                 },
               },
             );
 
-            return;
+            return clearMotionMode;
           }
 
           const signalScene =
@@ -437,6 +441,8 @@ export function ContatoCinematic() {
                 );
             });
           }
+
+          return clearMotionMode;
         },
       );
     }, root);
@@ -444,6 +450,7 @@ export function ContatoCinematic() {
     return () => {
       media.revert();
       context.revert();
+      delete root.dataset.motionMode;
     };
   }, []);
 

@@ -5,6 +5,9 @@
   --stage-raised: #090b10;
   --line: rgb(255 255 255 / 10%);
   --text-muted: rgb(225 228 236 / 66%);
+  --cinematic-safe-inline: clamp(1rem, min(4vw, 4svh), 3rem);
+  --cinematic-safe-block: clamp(1rem, min(7vw, 7svh), 7rem);
+  --cinematic-shell: min(1180px, calc(100vw - (var(--cinematic-safe-inline) * 2)), 180svh);
   position: relative;
   min-height: 100dvh;
   overflow: clip;
@@ -60,8 +63,28 @@
 }
 
 .sectionShell {
-  width: min(1180px, calc(100% - 48px));
+  width: var(--cinematic-shell);
   margin-inline: auto;
+}
+
+@media (min-width: 768px) and (max-height: 639px) {
+  .root {
+    overflow: visible;
+  }
+
+  .hero,
+  .ctaChapter {
+    min-height: 0;
+    padding-block: var(--cinematic-safe-block);
+  }
+}
+
+@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
+  .hero,
+  .ctaChapter {
+    min-height: 100svh;
+    padding-block: var(--cinematic-safe-block);
+  }
 }
 
 .hero {

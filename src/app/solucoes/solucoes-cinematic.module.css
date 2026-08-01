@@ -2,6 +2,85 @@
   --field-blue: #3778ff;
 }
 
+@media (min-width: 768px) and (max-height: 639px) {
+  .sceneTrack {
+    min-height: 0;
+  }
+
+  .sceneSticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    padding: var(--cinematic-safe-block) var(--cinematic-safe-inline);
+    overflow: visible;
+  }
+
+  .heroHeading,
+  .sceneIntro,
+  .overviewStage,
+  .layerStack {
+    position: relative;
+    inset: auto;
+    width: min(100%, 180svh);
+    margin-inline: auto;
+    transform: none;
+  }
+
+  .heroHeading,
+  .sceneIntro {
+    margin-block: 0 1.5rem;
+    opacity: 1;
+  }
+
+  .overviewStage {
+    height: min(34svh, 220px);
+    margin-block: 1rem 2rem;
+  }
+
+  .layerStack {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .layerFrame {
+    position: relative;
+    inset: auto;
+    display: grid;
+    gap: 0.75rem;
+    min-height: 0;
+    opacity: 1;
+    transform: none;
+  }
+
+  .fieldCenter,
+  .sceneProgress {
+    display: none;
+  }
+
+  .fieldCard {
+    min-height: 0;
+  }
+}
+
+@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
+  .sceneSticky {
+    height: 100svh;
+    min-height: 0;
+    padding: clamp(4rem, 10svh, 5.5rem) var(--cinematic-safe-inline) var(--cinematic-safe-inline);
+  }
+
+  .overviewStage {
+    width: min(720px, calc(100vw - (var(--cinematic-safe-inline) * 2)), 112svh);
+    height: min(38svh, 280px);
+  }
+
+  .fieldCard {
+    min-height: min(310px, 46svh);
+    padding: clamp(1rem, min(2vw, 2svh), 1.5rem);
+  }
+}
+
 .sceneTrack {
   position: relative;
   min-height: var(--scene-scroll);
@@ -993,6 +1072,25 @@
   .fitColumn li {
     min-height: 76px;
   }
+}
+
+@media (min-width: 768px) and (max-height: 639px) {
+  .root[data-motion-mode="static"] .sceneTrack { min-height: 0; }
+  .root[data-motion-mode="static"] .sceneSticky { position: relative; height: auto; min-height: 0; padding: var(--cinematic-safe-block) var(--cinematic-safe-inline); overflow: visible; }
+  .root[data-motion-mode="static"] .heroHeading,
+  .root[data-motion-mode="static"] .sceneIntro,
+  .root[data-motion-mode="static"] .overviewStage,
+  .root[data-motion-mode="static"] .layerStack { position: relative; inset: auto; width: min(100%, 180svh); margin-inline: auto; transform: none; opacity: 1; }
+  .root[data-motion-mode="static"] .layerStack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+  .root[data-motion-mode="static"] .layerFrame { position: relative; inset: auto; display: grid; gap: 0.75rem; min-height: 0; opacity: 1; transform: none; }
+  .root[data-motion-mode="static"] .fieldCenter,
+  .root[data-motion-mode="static"] .sceneProgress { display: none; }
+}
+
+@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
+  .root[data-motion-mode="compact"] .sceneSticky { height: 100svh; min-height: 0; }
+  .root[data-motion-mode="compact"] .overviewStage { width: min(720px, calc(100vw - (var(--cinematic-safe-inline) * 2)), 112svh); height: min(38svh, 280px); }
+  .root[data-motion-mode="compact"] .fieldCard { min-height: min(310px, 46svh); }
 }
 
 @media (max-width: 767px) and (max-height: 740px) {

@@ -12,9 +12,9 @@ import {
   PROCESS_CHAPTERS,
   PROCESS_SCENE,
   createSceneWindows,
-  getRouteMotionMode,
   getSceneScrollVh,
 } from "@/lib/route-cinematics";
+import { getViewportMotionMode } from "@/lib/viewport-motion";
 
 import styles from "./processo-cinematic.module.css";
 
@@ -35,17 +35,19 @@ export function ProcessoCinematic() {
     const context = gsap.context(() => {
       media.add(
         {
-          desktop: "(min-width: 768px)",
           mobile: "(max-width: 767px)",
+          static: "(min-width: 768px) and (max-height: 639px)",
+          compact:
+            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
+          cinematic: "(min-width: 768px) and (min-height: 820px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
-        ({ conditions }) => {
-          const mode = getRouteMotionMode({
-            desktop: Boolean(conditions?.desktop),
-            reducedMotion: Boolean(conditions?.reduced),
-          });
+        () => {
+          const mode = getViewportMotionMode();
+          root.dataset.motionMode = mode;
+          const clearMotionMode = () => delete root.dataset.motionMode;
 
-          if (mode === "static") return;
+          if (mode === "static") return clearMotionMode;
 
           if (mode === "mobile") {
             const scene = root.querySelector<HTMLElement>(
@@ -84,7 +86,7 @@ export function ProcessoCinematic() {
               !panels.length ||
               !progressFill
             ) {
-              return;
+              return clearMotionMode;
             }
 
             const windows = createSceneWindows(panels.length + 1);
@@ -214,6 +216,7 @@ export function ProcessoCinematic() {
                     start: "top 82%",
                     end: "center 68%",
                     scrub: 0.5,
+                    invalidateOnRefresh: true,
                   },
                 },
               );
@@ -231,11 +234,12 @@ export function ProcessoCinematic() {
                   start: "top 82%",
                   end: "center 62%",
                   scrub: 0.55,
+                  invalidateOnRefresh: true,
                 },
               },
             );
 
-            return;
+            return clearMotionMode;
           }
 
           const scene = root.querySelector<HTMLElement>("[data-process-scene]");
@@ -257,7 +261,9 @@ export function ProcessoCinematic() {
             "[data-process-desktop-media]",
           );
 
-          if (!scene || !intro || !gateStack || !floor || !railFill) return;
+          if (!scene || !intro || !gateStack || !floor || !railFill) {
+            return clearMotionMode;
+          }
 
           const windows = createSceneWindows(PROCESS_SCENE.steps.length);
           gsap.set(panels, {
@@ -359,6 +365,8 @@ export function ProcessoCinematic() {
                 enterAt,
               );
           });
+
+          return clearMotionMode;
         },
       );
     }, root);
@@ -366,6 +374,7 @@ export function ProcessoCinematic() {
     return () => {
       media.revert();
       context.revert();
+      delete root.dataset.motionMode;
     };
   }, []);
 

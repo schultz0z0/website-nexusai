@@ -6,8 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import {
   getBlueStageScrollDistance,
-  getHomeMotionMode,
 } from "@/lib/home-narrative";
+import { getViewportMotionMode } from "@/lib/viewport-motion";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -30,17 +30,21 @@ export function CinematicValueStage({
     const context = gsap.context(() => {
       media.add(
         {
-          desktop: "(min-width: 768px)",
+          mobile: "(max-width: 767px)",
+          static: "(min-width: 768px) and (max-height: 639px)",
+          compact:
+            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
+          cinematic: "(min-width: 768px) and (min-height: 820px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
-        ({ conditions }) => {
-          const desktop = Boolean(conditions?.desktop);
-          const mode = getHomeMotionMode({
-            desktop,
-            reducedMotion: Boolean(conditions?.reduced),
-          });
+        () => {
+          const mode = getViewportMotionMode();
+          stage.dataset.motionMode = mode;
+          const clearMotionMode = () => delete stage.dataset.motionMode;
 
-          if (mode !== "cinematic") return;
+          if (mode !== "compact" && mode !== "cinematic") {
+            return clearMotionMode;
+          }
 
           const steps = gsap.utils.toArray<HTMLElement>(
             "[data-value-step]",
@@ -51,10 +55,17 @@ export function CinematicValueStage({
             scrollTrigger: {
               trigger: stage,
               start: "top top",
-              end: `+=${getBlueStageScrollDistance({ desktop })}`,
+              end: `+=${getBlueStageScrollDistance({
+                reducedMotion: window.matchMedia(
+                  "(prefers-reduced-motion: reduce)",
+                ).matches,
+                width: window.innerWidth,
+                height: window.innerHeight,
+              })}`,
               pin: true,
               scrub: 0.65,
               anticipatePin: 1,
+              invalidateOnRefresh: true,
             },
           });
 
@@ -110,6 +121,8 @@ export function CinematicValueStage({
               );
             }
           });
+
+          return clearMotionMode;
         },
       );
     }, stage);
@@ -117,6 +130,7 @@ export function CinematicValueStage({
     return () => {
       media.revert();
       context.revert();
+      delete stage.dataset.motionMode;
     };
   }, []);
 

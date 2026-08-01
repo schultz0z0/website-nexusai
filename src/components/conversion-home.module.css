@@ -1,8 +1,24 @@
 .page {
-  --home-shell: min(1180px, calc(100vw - 48px));
+  --home-safe-area: clamp(1rem, min(5vw, 5svh), 3rem);
+  --home-shell: min(1180px, calc(100vw - (var(--home-safe-area) * 2)), 180svh);
   background: #06080d;
   color: #f6f8fb;
   overflow: clip;
+}
+
+@media (min-width: 768px) and (max-height: 639px) {
+  .hero,
+  .valueStage {
+    min-height: 0;
+    padding-block: var(--home-safe-area);
+  }
+}
+
+@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
+  .hero,
+  .valueStage {
+    min-height: 100svh;
+  }
 }
 
 .shell {
