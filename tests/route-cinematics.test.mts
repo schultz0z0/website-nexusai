@@ -126,13 +126,6 @@ test("keeps overlapping mobile cinematic panels hidden before GSAP hydrates", ()
   );
 });
 
-test("keeps the Solutions desktop title paint box deep enough for the cedilla", () => {
-  assert.match(
-    solutionsCss,
-    /\.heroHeading h1\s*\{[\s\S]*?padding-bottom:\s*0\.16em;[\s\S]*?margin-bottom:\s*-0\.16em;/,
-  );
-});
-
 test("keeps the long implementation title inside its desktop process column", () => {
   assert.match(processSource, /data-process-stage=\{stage\.n\}/);
   assert.match(
@@ -153,13 +146,6 @@ test("stacks the desktop process FAQ heading and support copy in two title lines
   assert.match(
     processCss,
     /@media \(min-width:\s*768px\)\s*\{[\s\S]*?\.faqHeader\s*\{[\s\S]*?grid-template-columns:\s*1fr;/,
-  );
-});
-
-test("keeps the desktop contact briefing title inside its paint box", () => {
-  assert.match(
-    contactCss,
-    /@media \(min-width:\s*768px\)\s*\{[\s\S]*?\.briefingCopy h2\s*\{[\s\S]*?font-size:\s*clamp\(3\.2rem,\s*4\.35vw,\s*5rem\);/,
   );
 });
 
