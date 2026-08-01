@@ -1,3 +1,8 @@
+import {
+  getViewportMotionModeForSize,
+  type ViewportMotionConditions,
+} from "./viewport-motion.ts";
+
 export const SOLUTIONS_CHAPTERS = [
   { id: "hero", motion: "converge" },
   { id: "market", motion: "field" },
@@ -73,15 +78,29 @@ export function getSceneScrollVh(stepCount: number) {
   return 96 + stepCount * 68;
 }
 
-export function getRouteMotionMode({
-  reducedMotion,
-  desktop,
-}: {
+export function getRouteMotionMode(
+  conditions: ViewportMotionConditions | LegacyMotionConditions,
+) {
+  const mode = getViewportMotionModeForSize(toViewportMotionConditions(conditions));
+
+  return mode === "cinematic" ? "scroll" : mode;
+}
+
+type LegacyMotionConditions = {
   reducedMotion: boolean;
   desktop: boolean;
-}) {
-  if (reducedMotion) return "static";
-  return desktop ? "scroll" : "mobile";
+};
+
+function toViewportMotionConditions(
+  conditions: ViewportMotionConditions | LegacyMotionConditions,
+): ViewportMotionConditions {
+  if ("width" in conditions) return conditions;
+
+  return {
+    reducedMotion: conditions.reducedMotion,
+    width: conditions.desktop ? 768 : 767,
+    height: 820,
+  };
 }
 
 function assertValidStepCount(stepCount: number) {

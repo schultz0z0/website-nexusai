@@ -14,6 +14,10 @@ import {
   getSceneScrollVh,
   getRouteMotionMode,
 } from "../src/lib/route-cinematics.ts";
+import {
+  getViewportMotionModeForSize,
+  type ViewportMotionConditions,
+} from "../src/lib/viewport-motion.ts";
 
 const solutionsCss = readFileSync(
   new URL(
@@ -57,6 +61,50 @@ const routeCinematicSources = [
   processSource,
   contactSource,
 ];
+
+test("classifies viewport motion profiles at their size boundaries", () => {
+  const cases: Array<ViewportMotionConditions & { expected: string }> = [
+    { reducedMotion: false, width: 767, height: 900, expected: "mobile" },
+    { reducedMotion: false, width: 768, height: 639, expected: "static" },
+    { reducedMotion: false, width: 768, height: 640, expected: "compact" },
+    { reducedMotion: false, width: 1440, height: 819, expected: "compact" },
+    { reducedMotion: false, width: 1440, height: 820, expected: "cinematic" },
+  ];
+
+  cases.forEach(({ expected, ...conditions }) => {
+    assert.equal(getViewportMotionModeForSize(conditions), expected);
+  });
+});
+
+test("gives reduced motion precedence over every viewport profile", () => {
+  assert.equal(
+    getViewportMotionModeForSize({
+      reducedMotion: true,
+      width: 767,
+      height: 900,
+    }),
+    "static",
+  );
+  assert.equal(
+    getViewportMotionModeForSize({
+      reducedMotion: true,
+      width: 1440,
+      height: 900,
+    }),
+    "static",
+  );
+});
+
+test("maps only cinematic shared profiles to route scroll choreography", () => {
+  assert.equal(
+    getRouteMotionMode({ reducedMotion: false, width: 768, height: 820 }),
+    "scroll",
+  );
+  assert.equal(
+    getRouteMotionMode({ reducedMotion: false, width: 768, height: 640 }),
+    "compact",
+  );
+});
 
 test("keeps the approved Solutions chapter order", () => {
   assert.deepEqual(

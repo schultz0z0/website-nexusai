@@ -49,3 +49,44 @@ test("bounds the blue stage scroll distance on desktop", () => {
 test("keeps the blue stage in natural flow on mobile", () => {
   assert.equal(getBlueStageScrollDistance({ desktop: false }), 0);
 });
+
+test("maps compact desktop profiles to a bounded blue-stage distance", () => {
+  assert.equal(
+    getBlueStageScrollDistance({
+      reducedMotion: false,
+      width: 768,
+      height: 640,
+    }),
+    520,
+  );
+});
+
+test("keeps the compact home profile distinct from cinematic motion", () => {
+  assert.equal(
+    getHomeMotionMode({
+      reducedMotion: false,
+      width: 768,
+      height: 640,
+    }),
+    "compact",
+  );
+});
+
+test("keeps blue-stage scroll disabled for static and mobile profiles", () => {
+  assert.equal(
+    getBlueStageScrollDistance({
+      reducedMotion: false,
+      width: 768,
+      height: 639,
+    }),
+    0,
+  );
+  assert.equal(
+    getBlueStageScrollDistance({
+      reducedMotion: false,
+      width: 767,
+      height: 900,
+    }),
+    0,
+  );
+});

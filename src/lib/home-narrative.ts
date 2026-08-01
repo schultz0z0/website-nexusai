@@ -1,3 +1,8 @@
+import {
+  getViewportMotionModeForSize,
+  type ViewportMotionConditions,
+} from "./viewport-motion.ts";
+
 export const HOME_CHAPTERS = [
   { id: "hero", purpose: "promise" },
   { id: "value", purpose: "business-outcomes" },
@@ -7,20 +12,45 @@ export const HOME_CHAPTERS = [
   { id: "cta", purpose: "conversion" },
 ] as const;
 
-export function getHomeMotionMode({
-  reducedMotion,
-  desktop,
-}: {
-  reducedMotion: boolean;
-  desktop: boolean;
-}) {
-  return desktop && !reducedMotion ? "cinematic" : "static";
+export function getHomeMotionMode(
+  conditions: ViewportMotionConditions | LegacyMotionConditions,
+) {
+  const mode = getViewportMotionModeForSize(toViewportMotionConditions(conditions));
+
+  return mode === "mobile" ? "static" : mode;
 }
 
-export function getBlueStageScrollDistance({
-  desktop,
-}: {
+export function getBlueStageScrollDistance(
+  conditions: ViewportMotionConditions | LegacyBlueStageConditions,
+) {
+  const mode = getViewportMotionModeForSize(toViewportMotionConditions(conditions));
+
+  if (mode === "cinematic") return 700;
+  if (mode === "compact") return 520;
+  return 0;
+}
+
+type LegacyMotionConditions = {
+  reducedMotion: boolean;
   desktop: boolean;
-}) {
-  return desktop ? 700 : 0;
+};
+
+type LegacyBlueStageConditions = {
+  desktop: boolean;
+};
+
+function toViewportMotionConditions(
+  conditions:
+    | ViewportMotionConditions
+    | LegacyMotionConditions
+    | LegacyBlueStageConditions,
+): ViewportMotionConditions {
+  if ("width" in conditions) return conditions;
+
+  return {
+    reducedMotion:
+      "reducedMotion" in conditions ? conditions.reducedMotion : false,
+    width: conditions.desktop ? 768 : 767,
+    height: 820,
+  };
 }
