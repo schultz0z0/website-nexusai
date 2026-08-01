@@ -792,7 +792,9 @@
   .root[data-motion-mode="static"] .briefingSticky { position: relative; min-height: 0; padding: var(--cinematic-safe-block) var(--cinematic-safe-inline); overflow: visible; }
   .root[data-motion-mode="static"] .heroCopyBlock,
   .root[data-motion-mode="static"] .responseHeader,
-  .root[data-motion-mode="static"] .responseStage { position: relative; inset: auto; width: min(100%, 180svh); margin-inline: auto; transform: none; opacity: 1; }
+  .root[data-motion-mode="static"] .responseStage,
+  .root[data-motion-mode="static"] .receipt { position: relative; inset: auto; width: min(100%, 180svh); margin-inline: auto; transform: none; opacity: 1; }
+  .root[data-motion-mode="static"] .receipt { margin-top: 1.5rem; }
   .root[data-motion-mode="static"] .transmission,
   .root[data-motion-mode="static"] .signalGrid,
   .root[data-motion-mode="static"] .responseRail { display: none; }

@@ -88,3 +88,73 @@ test.describe("viewport motion profiles", () => {
     await expect(root).toHaveAttribute("data-motion-mode", "static");
   });
 });
+
+test.describe("static desktop fallbacks", () => {
+  test.use({ viewport: { width: 1920, height: 600 } });
+
+  test("keeps every Solutions layer visibly rendered in static flow", async ({
+    page,
+  }) => {
+    await page.goto("/solucoes");
+    await expect(page.locator("main")).toHaveAttribute(
+      "data-motion-mode",
+      "static",
+    );
+
+    const layers = page.locator("[data-solutions-layer]");
+    await expect(layers).toHaveCount(3);
+
+    const renderedLayers = await layers.evaluateAll((elements) =>
+      elements.map((element) => {
+        const style = window.getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+
+        return {
+          height: rect.height,
+          opacity: Number.parseFloat(style.opacity),
+          visibility: style.visibility,
+          width: rect.width,
+        };
+      }),
+    );
+
+    expect(renderedLayers).toEqual(
+      Array.from({ length: 3 }, () => ({
+        height: expect.any(Number),
+        opacity: 1,
+        visibility: "visible",
+        width: expect.any(Number),
+      })),
+    );
+    expect(renderedLayers.every((layer) => layer.width > 0 && layer.height > 0)).toBe(
+      true,
+    );
+  });
+
+  test("keeps the Contact receipt in flow below the static hero", async ({ page }) => {
+    await page.goto("/contato");
+    await expect(page.locator("main")).toHaveAttribute(
+      "data-motion-mode",
+      "static",
+    );
+
+    const receipt = page.locator("[data-contact-receipt]");
+    const layout = await receipt.evaluate((receiptElement, heroSelector) => {
+      const heroElement = document.querySelector(heroSelector);
+      if (!heroElement) throw new Error("Contact hero was not rendered.");
+
+      const receiptStyle = window.getComputedStyle(receiptElement);
+      const receiptRect = receiptElement.getBoundingClientRect();
+      const heroRect = heroElement.getBoundingClientRect();
+
+      return {
+        position: receiptStyle.position,
+        receiptTop: receiptRect.top,
+        heroBottom: heroRect.bottom,
+      };
+    }, "[data-contact-hero-copy]");
+
+    expect(layout.position).not.toBe("absolute");
+    expect(layout.receiptTop).toBeGreaterThanOrEqual(layout.heroBottom);
+  });
+});
