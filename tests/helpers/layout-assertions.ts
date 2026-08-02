@@ -11,6 +11,21 @@ type VisibleRect = Rect & {
   selector: string;
 };
 
+export type LayoutCheckpoint = {
+  checkpoint: string;
+  route: string;
+  viewport: {
+    height: number;
+    width: number;
+  };
+};
+
+type RelevantRect = Rect & {
+  height: number;
+  selector: string;
+  width: number;
+};
+
 const DEFAULT_TOLERANCE_PX = 1;
 
 async function visibleRects(page: Page, selector: string): Promise<VisibleRect[]> {
@@ -114,5 +129,150 @@ export async function assertNoIntersectingRects(
     throw new Error(
       `Expected ${firstSelector} not to overlap ${secondSelector}, but ${intersections.length} DOMRect intersection(s) were found.`,
     );
+  }
+}
+
+export async function assertLayoutCheckpoint(
+  page: Page,
+  checkpoint: LayoutCheckpoint,
+  tolerancePx = DEFAULT_TOLERANCE_PX,
+): Promise<void> {
+  const inspection = await page.evaluate((tolerance) => {
+    const relevantSelector =
+      'main, main :is(h1, h2, h3, p, a, button, input, textarea, select, [role="heading"])';
+    const overlaySelector =
+      "nextjs-portal, nextjs-portal *, [data-nextjs-dialog], [data-nextjs-toast], #nextjs-dev-overlay";
+    const effectiveVisibility = (element: Element) => {
+      let opacity = 1;
+
+      for (let current: Element | null = element; current; current = current.parentElement) {
+        const style = window.getComputedStyle(current);
+
+        if (style.display === "none" || style.visibility === "hidden") return false;
+
+        const currentOpacity = Number.parseFloat(style.opacity);
+        opacity *= Number.isNaN(currentOpacity) ? 1 : currentOpacity;
+      }
+
+      return opacity >= 0.05;
+    };
+    const isVisuallyClipped = (element: Element) => {
+      const rect = element.getBoundingClientRect();
+
+      if (rect.width > tolerance || rect.height > tolerance) return false;
+
+      for (let current: Element | null = element; current; current = current.parentElement) {
+        const style = window.getComputedStyle(current);
+
+        if (style.clip !== "auto" || style.clipPath !== "none") return true;
+      }
+
+      return false;
+    };
+    const describe = (element: Element) => {
+      const id = element.getAttribute("id");
+      const dataAttribute = Array.from(element.attributes).find((attribute) =>
+        attribute.name.startsWith("data-"),
+      );
+
+      return `${element.tagName.toLowerCase()}${id ? `#${id}` : ""}${
+        dataAttribute ? `[${dataAttribute.name}]` : ""
+      }`;
+    };
+    const toRect = (element: Element): RelevantRect => {
+      const rect = element.getBoundingClientRect();
+
+      return {
+        bottom: rect.bottom,
+        height: rect.height,
+        left: rect.left,
+        right: rect.right,
+        selector: describe(element),
+        top: rect.top,
+        width: rect.width,
+      };
+    };
+    const visibleRelevant = Array.from(document.querySelectorAll(relevantSelector))
+      .filter(effectiveVisibility)
+      .filter((element) => !isVisuallyClipped(element))
+      .map(toRect);
+    const visibleOverlays = Array.from(document.querySelectorAll(overlaySelector))
+      .filter(effectiveVisibility)
+      .map(toRect)
+      .filter((rect) => rect.width > tolerance && rect.height > tolerance);
+    const identity = Array.from(
+      document.querySelectorAll('a[aria-label*="Nexus AI"]'),
+    ).filter(effectiveVisibility);
+    const main = document.querySelector("main");
+    const mainRect = main ? toRect(main) : null;
+    const forbiddenIntersections = mainRect
+      ? visibleOverlays.filter((overlay) => {
+          const horizontalOverlap =
+            Math.min(mainRect.right, overlay.right) - Math.max(mainRect.left, overlay.left);
+          const verticalOverlap =
+            Math.min(mainRect.bottom, overlay.bottom) - Math.max(mainRect.top, overlay.top);
+
+          return horizontalOverlap > tolerance && verticalOverlap > tolerance;
+        })
+      : [];
+
+    return {
+      forbiddenIntersections,
+      identityText: identity.map((element) => element.textContent?.trim() ?? ""),
+      mainText: main?.textContent?.trim() ?? "",
+      outsideViewport: visibleRelevant.filter(
+        (rect) => rect.left < -tolerance || rect.right > window.innerWidth + tolerance,
+      ),
+      scrollWidth: document.documentElement.scrollWidth,
+      visibleOverlays,
+      zeroSize: visibleRelevant.filter(
+        (rect) => rect.width === 0 || rect.height === 0,
+      ),
+      viewportWidth: window.innerWidth,
+    };
+  }, tolerancePx);
+  const label = `${checkpoint.route} ${checkpoint.viewport.width}x${checkpoint.viewport.height} ${checkpoint.checkpoint}`;
+  const failures: string[] = [];
+
+  if (!inspection.mainText) failures.push("main has no text content");
+  if (inspection.identityText.every((text) => !text)) {
+    failures.push("visible Nexus AI identity is missing or empty");
+  }
+  if (inspection.visibleOverlays.length > 0) {
+    failures.push(
+      `visible development overlay(s): ${inspection.visibleOverlays
+        .map((rect) => `${rect.selector} (${rect.left.toFixed(1)},${rect.top.toFixed(1)},${rect.width.toFixed(1)}x${rect.height.toFixed(1)})`)
+        .join(", ")}`,
+    );
+  }
+  if (inspection.forbiddenIntersections.length > 0) {
+    failures.push(
+      `forbidden overlay/main intersection(s): ${inspection.forbiddenIntersections
+        .map((rect) => `${rect.selector} (${rect.left.toFixed(1)},${rect.top.toFixed(1)},${rect.width.toFixed(1)}x${rect.height.toFixed(1)})`)
+        .join(", ")}`,
+    );
+  }
+  if (inspection.scrollWidth > inspection.viewportWidth + tolerancePx) {
+    failures.push(
+      `horizontal overflow: scrollWidth ${inspection.scrollWidth}px exceeds viewport ${inspection.viewportWidth}px`,
+    );
+  }
+  if (inspection.outsideViewport.length > 0) {
+    failures.push(
+      `relevant content outside viewport: ${inspection.outsideViewport
+        .map((rect) => `${rect.selector} (${rect.left.toFixed(1)}..${rect.right.toFixed(1)})`)
+        .join(", ")}`,
+    );
+  }
+  if (inspection.zeroSize.length > 0) {
+    failures.push(
+      `visible zero-size content: ${inspection.zeroSize
+        .map((rect) => `${rect.selector} (${rect.width.toFixed(1)}x${rect.height.toFixed(1)})`)
+        .join(", ")}`,
+    );
+  }
+
+  if (failures.length > 0) {
+    throw new Error(`[layout checkpoint ${label}] ${failures.join("; ")}`);
   }
 }

@@ -1,10 +1,13 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type TestInfo } from "@playwright/test";
 
 import {
+  assertLayoutCheckpoint,
   assertContentWithinViewport,
   assertNoHorizontalOverflow,
   assertNoIntersectingRects,
 } from "./helpers/layout-assertions";
+
+test.describe.configure({ timeout: 90_000 });
 
 const desktopRoutes = [
   { path: "/", title: /Nexus AI/i },
@@ -27,6 +30,38 @@ const viewportProfiles = [
   { name: "mobile", width: 390, height: 844, expected: "mobile" },
 ] as const;
 
+const desktopViewportMatrix = [
+  { height: 768, width: 1024 },
+  { height: 720, width: 1280 },
+  { height: 768, width: 1366 },
+  { height: 900, width: 1440 },
+  { height: 600, width: 1600 },
+  { height: 1050, width: 1680 },
+  { height: 600, width: 1920 },
+  { height: 1080, width: 1920 },
+  { height: 720, width: 2560 },
+  { height: 1080, width: 2560 },
+  { height: 900, width: 3440 },
+  { height: 1080, width: 3840 },
+  { height: 2160, width: 3840 },
+] as const;
+
+const documentCheckpoints = [
+  { name: "top", progress: 0 },
+  { name: "25%", progress: 0.25 },
+  { name: "50%", progress: 0.5 },
+  { name: "75%", progress: 0.75 },
+  { name: "100%", progress: 1 },
+] as const;
+
+const accessibilitySentinelViewports = [
+  { height: 600, width: 1920 },
+  { height: 1080, width: 1920 },
+  { height: 720, width: 2560 },
+] as const;
+
+const rootFontScales = [125, 150, 200] as const;
+
 async function waitForAnimationFrames(page: Page): Promise<void> {
   await page.evaluate(
     () =>
@@ -39,6 +74,88 @@ async function waitForAnimationFrames(page: Page): Promise<void> {
 function isOpenClipPath(clipPath: string): boolean {
   return ["none", "inset(0%)", "inset(0% 0% 0% 0%)"].includes(clipPath);
 }
+
+function layoutLabel(
+  route: (typeof desktopRoutes)[number],
+  viewport: { height: number; width: number },
+  checkpoint: string,
+  suffix?: string,
+): string {
+  return [route.path, `${viewport.width}x${viewport.height}`, checkpoint, suffix]
+    .filter(Boolean)
+    .join(" | ");
+}
+
+function recordLayoutContext(testInfo: TestInfo, label: string): void {
+  testInfo.annotations.push({ description: label, type: "desktop-layout" });
+}
+
+function failureArtifactName(label: string): string {
+  const safeLabel = label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+  return `failure-${safeLabel || "layout"}.png`;
+}
+
+async function scrollToDocumentProgress(page: Page, progress: number): Promise<void> {
+  await page.evaluate((targetProgress) => {
+    const maximumScroll = Math.max(
+      0,
+      document.documentElement.scrollHeight - window.innerHeight,
+    );
+
+    window.scrollTo({ behavior: "instant", top: maximumScroll * targetProgress });
+  }, progress);
+  await waitForAnimationFrames(page);
+}
+
+async function assertDocumentCheckpoint(
+  page: Page,
+  route: (typeof desktopRoutes)[number],
+  viewport: { height: number; width: number },
+  checkpoint: (typeof documentCheckpoints)[number],
+  testInfo: TestInfo,
+  suffix?: string,
+): Promise<void> {
+  const label = layoutLabel(route, viewport, checkpoint.name, suffix);
+  recordLayoutContext(testInfo, label);
+  await scrollToDocumentProgress(page, checkpoint.progress);
+  await assertLayoutCheckpoint(page, {
+    checkpoint: checkpoint.name,
+    route: route.path,
+    viewport,
+  });
+}
+
+async function assertDocumentFlow(
+  page: Page,
+  route: (typeof desktopRoutes)[number],
+  viewport: { height: number; width: number },
+  testInfo: TestInfo,
+  checkpoints: readonly (typeof documentCheckpoints)[number][],
+  suffix?: string,
+): Promise<void> {
+  for (const checkpoint of checkpoints) {
+    await assertDocumentCheckpoint(page, route, viewport, checkpoint, testInfo, suffix);
+  }
+}
+
+test.afterEach(async ({ page }, testInfo) => {
+  if (testInfo.status === testInfo.expectedStatus) return;
+
+  const label =
+    testInfo.annotations.at(-1)?.description ?? testInfo.titlePath.join(" | ");
+  const screenshotPath = testInfo.outputPath(failureArtifactName(label));
+
+  await page.screenshot({ path: screenshotPath });
+  await testInfo.attach("desktop-layout-failure-context", {
+    body: label,
+    contentType: "text/plain",
+  });
+  await testInfo.attach("desktop-layout-failure-screenshot", { path: screenshotPath });
+});
 
 test.describe("desktop responsiveness smoke tests", () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
@@ -64,6 +181,90 @@ test.describe("desktop responsiveness smoke tests", () => {
         "main",
       );
     });
+  }
+});
+
+test.describe("desktop viewport matrix", () => {
+  test.describe.configure({ mode: "parallel" });
+
+  for (const viewport of desktopViewportMatrix) {
+    for (const route of desktopRoutes) {
+      test(`${route.path} validates all document checkpoints at ${viewport.width}x${viewport.height}`, async ({
+        page,
+      }, testInfo) => {
+        await page.setViewportSize(viewport);
+        await page.goto(route.path);
+        await expect(page).toHaveTitle(route.title);
+
+        await assertDocumentFlow(
+          page,
+          route,
+          viewport,
+          testInfo,
+          documentCheckpoints,
+        );
+      });
+    }
+  }
+});
+
+test.describe("desktop accessibility sentinels", () => {
+  test.describe.configure({ mode: "parallel" });
+
+  for (const viewport of accessibilitySentinelViewports) {
+    for (const route of desktopRoutes) {
+      test(`${route.path} uses static flow with reduced motion at ${viewport.width}x${viewport.height}`, async ({
+        page,
+      }, testInfo) => {
+        await page.emulateMedia({ reducedMotion: "reduce" });
+        await page.setViewportSize(viewport);
+        await page.goto(route.path);
+
+        const experience = motionExperiences.find(
+          (candidate) => candidate.path === route.path,
+        );
+        if (!experience) throw new Error(`No motion root is configured for ${route.path}.`);
+
+        await expect(page.locator(experience.root)).toHaveAttribute(
+          "data-motion-mode",
+          "static",
+        );
+        await assertDocumentFlow(
+          page,
+          route,
+          viewport,
+          testInfo,
+          [documentCheckpoints[0], documentCheckpoints[2], documentCheckpoints[4]],
+          "reduced-motion",
+        );
+      });
+    }
+  }
+
+  for (const rootFontScale of rootFontScales) {
+    for (const viewport of accessibilitySentinelViewports) {
+      for (const route of desktopRoutes) {
+        test(`${route.path} reflows at ${rootFontScale}% root font size and ${viewport.width}x${viewport.height}`, async ({
+          page,
+        }, testInfo) => {
+          await page.setViewportSize(viewport);
+          await page.goto(route.path);
+          await page.evaluate((scale) => {
+            document.documentElement.style.fontSize = `${scale}%`;
+          }, rootFontScale);
+          await waitForAnimationFrames(page);
+
+          await assertDocumentFlow(
+            page,
+            route,
+            viewport,
+            testInfo,
+            [documentCheckpoints[0], documentCheckpoints[2], documentCheckpoints[4]],
+            `root-font-${rootFontScale}`,
+          );
+        });
+      }
+    }
   }
 });
 
