@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nexus AI — website institucional
 
-## Getting Started
+Site Next.js da Nexus AI, com experiências cinematográficas responsivas nas rotas Home, Soluções, Processo e Contato.
 
-First, run the development server:
+## Requisitos
+
+- Node.js 22
+- npm
+- Chromium do Playwright para a suíte responsiva
+
+## Desenvolvimento local
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O servidor local usa `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Qualidade
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run test:unit
+npm run lint
+npm run build
+npx playwright install chromium
+npm run test:responsive
+```
 
-## Learn More
+Para executar unitários e responsivos em sequência:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run test:all
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para testar a saída standalone de produção:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> Encerre qualquer `npm run dev` que esteja usando a porta 3000 antes deste teste; fora do CI, o Playwright pode reutilizar um servidor já aberto.
 
-## Deploy on Vercel
+```bash
+npm run build
+PLAYWRIGHT_USE_PRODUCTION_BUILD=1 npm run test:responsive -- --project=chromium --workers=4
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+No PowerShell:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```powershell
+npm run build
+$env:PLAYWRIGHT_USE_PRODUCTION_BUILD = "1"
+npm run test:responsive -- --project=chromium --workers=4
+Remove-Item Env:PLAYWRIGHT_USE_PRODUCTION_BUILD
+```
+
+Screenshots, traces e contexto de falha são gravados somente quando um teste falha, em `.next/playwright-test-results/`.
+
+## Contrato responsivo
+
+Consulte [docs/responsive-desktop-matrix.md](docs/responsive-desktop-matrix.md) para os modos de viewport, a matriz automatizada, os critérios de aceite e o roteiro de validação manual em Chrome ou Edge.
+
+## Publicação na VPS
+
+A aplicação usa `output: "standalone"`, imagem Docker multi-stage e `docker compose`. O serviço publicado é `website`, exposto ao Traefik pela porta interna 3000.
+
+Consulte [docs/vps-update.md](docs/vps-update.md) para o procedimento de atualização, smoke test e rollback.
