@@ -71,6 +71,41 @@ async function waitForAnimationFrames(page: Page): Promise<void> {
   );
 }
 
+function collectHydrationFailures(page: Page): string[] {
+  const failures: string[] = [];
+  const hydrationMessage = /hydration failed|hydrated but|hydration error/i;
+
+  page.on("console", (message) => {
+    if (hydrationMessage.test(message.text())) {
+      failures.push(`console: ${message.text()}`);
+    }
+  });
+  page.on("pageerror", (error) => {
+    if (hydrationMessage.test(error.message)) {
+      failures.push(`pageerror: ${error.message}`);
+    }
+  });
+
+  return failures;
+}
+
+async function waitForRouteHydration(
+  page: Page,
+  route: (typeof desktopRoutes)[number],
+): Promise<(typeof motionExperiences)[number]> {
+  const experience = motionExperiences.find(
+    (candidate) => candidate.path === route.path,
+  );
+  if (!experience) throw new Error(`No motion root is configured for ${route.path}.`);
+
+  await expect(page.locator(experience.root)).toHaveAttribute(
+    "data-motion-mode",
+    /^(cinematic|compact|mobile|static)$/,
+  );
+
+  return experience;
+}
+
 function isOpenClipPath(clipPath: string): boolean {
   return ["none", "inset(0%)", "inset(0% 0% 0% 0%)"].includes(clipPath);
 }
@@ -216,14 +251,12 @@ test.describe("desktop accessibility sentinels", () => {
       test(`${route.path} uses static flow with reduced motion at ${viewport.width}x${viewport.height}`, async ({
         page,
       }, testInfo) => {
+        const hydrationFailures = collectHydrationFailures(page);
         await page.emulateMedia({ reducedMotion: "reduce" });
         await page.setViewportSize(viewport);
         await page.goto(route.path);
 
-        const experience = motionExperiences.find(
-          (candidate) => candidate.path === route.path,
-        );
-        if (!experience) throw new Error(`No motion root is configured for ${route.path}.`);
+        const experience = await waitForRouteHydration(page, route);
 
         await expect(page.locator(experience.root)).toHaveAttribute(
           "data-motion-mode",
@@ -237,6 +270,7 @@ test.describe("desktop accessibility sentinels", () => {
           [documentCheckpoints[0], documentCheckpoints[2], documentCheckpoints[4]],
           "reduced-motion",
         );
+        expect(hydrationFailures, "reduced-motion hydration failures").toEqual([]);
       });
     }
   }
@@ -247,8 +281,10 @@ test.describe("desktop accessibility sentinels", () => {
         test(`${route.path} reflows at ${rootFontScale}% root font size and ${viewport.width}x${viewport.height}`, async ({
           page,
         }, testInfo) => {
+          const hydrationFailures = collectHydrationFailures(page);
           await page.setViewportSize(viewport);
           await page.goto(route.path);
+          await waitForRouteHydration(page, route);
           await page.evaluate((scale) => {
             document.documentElement.style.fontSize = `${scale}%`;
           }, rootFontScale);
@@ -262,6 +298,7 @@ test.describe("desktop accessibility sentinels", () => {
             [documentCheckpoints[0], documentCheckpoints[2], documentCheckpoints[4]],
             `root-font-${rootFontScale}`,
           );
+          expect(hydrationFailures, "root-font hydration failures").toEqual([]);
         });
       }
     }

@@ -1,9 +1,13 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useSyncExternalStore } from "react";
 import { ArrowUpRight, ArrowDownRight, Package, AlertTriangle, TrendingUp, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const subscribeToHydration = () => () => {};
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 /**
  * Mock dashboard renders — pure CSS/SVG, no real data.
@@ -178,19 +182,24 @@ export function CopilotMockDashboard() {
   const rootRef = useRef<HTMLDivElement>(null);
   const inView = useInView(rootRef, { amount: 0.1 });
   const reducedMotion = useReducedMotion();
+  const hasHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
   const [progress, setProgress] = useState(0);
-  const displayProgress = reducedMotion ? 100 : progress;
+  const shouldReduceMotion = hasHydrated && reducedMotion === true;
+  const displayProgress = shouldReduceMotion ? 100 : progress;
 
   useEffect(() => {
-    if (reducedMotion) return;
-    if (!inView) return;
+    if (!hasHydrated || shouldReduceMotion || !inView) return;
 
     // Simulate a streaming generation — visual only
     const id = setInterval(() => {
       setProgress((p) => (p >= 100 ? 0 : p + 5));
     }, 120);
     return () => clearInterval(id);
-  }, [inView, reducedMotion]);
+  }, [hasHydrated, inView, shouldReduceMotion]);
 
   return (
     <div ref={rootRef} className="bg-card/40 p-3.5 sm:p-5 md:p-6">
