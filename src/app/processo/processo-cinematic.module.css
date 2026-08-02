@@ -141,7 +141,7 @@
   top: 50%;
   left: 50%;
   z-index: 6;
-  width: min(850px, calc(100% - 48px));
+  width: min(53.125rem, calc(100% - 48px));
   text-align: center;
   transform: translate(-50%, -50%);
 }
@@ -848,6 +848,9 @@
 
 @media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
   .root[data-motion-mode="compact"] .sceneSticky { height: 100svh; min-height: 0; }
+  .root[data-motion-mode="compact"] .sceneIntro { top: max(50%, 14.5rem); }
+  .root[data-motion-mode="compact"] .sceneIntro h1 { font-size: clamp(3.2rem, min(6.4vw, 14svh), 5.8rem); }
+  .root[data-motion-mode="compact"] .sceneIntro > p:last-child { font-size: clamp(1rem, min(1.6vw, 4.5svh), 1.18rem); }
   .root[data-motion-mode="compact"] .panelStage { width: min(860px, calc(100vw - (var(--cinematic-safe-inline) * 2)), 132svh); }
   .root[data-motion-mode="compact"] .panelCopy h2 { font-size: clamp(1.8rem, min(3vw, 4svh), 3.2rem); }
 }

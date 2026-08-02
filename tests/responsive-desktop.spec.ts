@@ -106,6 +106,73 @@ async function waitForRouteHydration(
   return experience;
 }
 
+async function assertFixedNavigationClearsVisibleHero(page: Page): Promise<void> {
+  const collisions = await page.evaluate(() => {
+    const fixedNavigation = [...document.querySelectorAll<HTMLElement>("nav")].find(
+      (element) => {
+        const rect = element.getBoundingClientRect();
+        const style = window.getComputedStyle(element);
+
+        return (
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          style.position === "fixed" &&
+          rect.width > 0 &&
+          rect.height > 0
+        );
+      },
+    );
+    if (!fixedNavigation) return [];
+
+    const navigationRect = fixedNavigation.getBoundingClientRect();
+
+    return [...document.querySelectorAll<HTMLElement>("main h1")]
+      .filter((heading) => {
+        const rect = heading.getBoundingClientRect();
+        const style = window.getComputedStyle(heading);
+
+        return (
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          Number.parseFloat(style.opacity) > 0 &&
+          rect.width > 0 &&
+          rect.height > 0 &&
+          rect.bottom > 0 &&
+          rect.top < window.innerHeight
+        );
+      })
+      .flatMap((heading) => {
+        const headingRect = heading.getBoundingClientRect();
+        const overlapX = Math.max(
+          0,
+          Math.min(navigationRect.right, headingRect.right) -
+            Math.max(navigationRect.left, headingRect.left),
+        );
+        const overlapY = Math.max(
+          0,
+          Math.min(navigationRect.bottom, headingRect.bottom) -
+            Math.max(navigationRect.top, headingRect.top),
+        );
+
+        return overlapX > 0.5 && overlapY > 0.5
+          ? [
+              {
+                heading: heading.textContent?.trim(),
+                headingTop: headingRect.top,
+                navigationBottom: navigationRect.bottom,
+                overlapX,
+                overlapY,
+              },
+            ]
+          : [];
+      });
+  });
+
+  expect(collisions, "fixed navigation must not overlap a visible hero title").toEqual(
+    [],
+  );
+}
+
 function isOpenClipPath(clipPath: string): boolean {
   return ["none", "inset(0%)", "inset(0% 0% 0% 0%)"].includes(clipPath);
 }
@@ -230,6 +297,8 @@ test.describe("desktop viewport matrix", () => {
         await page.setViewportSize(viewport);
         await page.goto(route.path);
         await expect(page).toHaveTitle(route.title);
+        await waitForRouteHydration(page, route);
+        await assertFixedNavigationClearsVisibleHero(page);
 
         await assertDocumentFlow(
           page,
@@ -262,6 +331,7 @@ test.describe("desktop accessibility sentinels", () => {
           "data-motion-mode",
           "static",
         );
+        await assertFixedNavigationClearsVisibleHero(page);
         await assertDocumentFlow(
           page,
           route,
@@ -289,6 +359,7 @@ test.describe("desktop accessibility sentinels", () => {
             document.documentElement.style.fontSize = `${scale}%`;
           }, rootFontScale);
           await waitForAnimationFrames(page);
+          await assertFixedNavigationClearsVisibleHero(page);
 
           await assertDocumentFlow(
             page,
