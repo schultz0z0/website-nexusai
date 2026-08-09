@@ -1,24 +1,8 @@
 .page {
-  --home-safe-area: clamp(1rem, min(5vw, 5svh), 3rem);
-  --home-shell: min(1180px, calc(100vw - (var(--home-safe-area) * 2)), 180svh);
+  --home-shell: min(1180px, calc(100vw - 48px));
   background: #06080d;
   color: #f6f8fb;
   overflow: clip;
-}
-
-@media (min-width: 768px) and (max-height: 639px) {
-  .hero,
-  .valueStage {
-    min-height: 0;
-    padding-block: var(--home-safe-area);
-  }
-}
-
-@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
-  .hero,
-  .valueStage {
-    min-height: 100svh;
-  }
 }
 
 .shell {
@@ -91,7 +75,7 @@
 }
 
 .heroContent {
-  width: min(52.5rem, 72vw);
+  width: min(840px, 72vw);
   padding: 9.5rem 0 5rem;
 }
 
@@ -115,7 +99,7 @@
 }
 
 .hero h1 {
-  max-width: min(51.25rem, 100%);
+  max-width: 820px;
   margin: 0;
   font-size: clamp(2.8rem, 4.8vw, 4.6rem);
   line-height: 1.05;
@@ -133,7 +117,7 @@
 }
 
 .heroBody {
-  max-width: min(40.625rem, 100%);
+  max-width: 650px;
   margin: 1.85rem 0 0;
   color: rgba(235, 241, 250, 0.76);
   font-size: clamp(1.06rem, 1.45vw, 1.3rem);
@@ -940,6 +924,32 @@
   }
 }
 
+@media (min-width: 768px) and (max-height: 819px) {
+  .valueStage[data-motion-mode="cinematic"] {
+    height: 100svh;
+    min-height: 0;
+    box-sizing: border-box;
+  }
+
+  .valueStage[data-motion-mode="cinematic"] .valueGrid {
+    padding-block: 0;
+    scale: 0.94;
+    transform-origin: center;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 719px) {
+  .valueStage[data-motion-mode="cinematic"] .valueGrid {
+    scale: 0.9;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 639px) {
+  .valueStage[data-motion-mode="cinematic"] .valueGrid {
+    scale: 0.86;
+  }
+}
+
 @media (max-width: 767px) {
   .page {
     --home-shell: min(100% - 32px, 680px);
@@ -1229,63 +1239,6 @@
 
   .faq {
     padding: 5rem 0 2rem;
-  }
-}
-
-@media (min-width: 768px) and (max-height: 639px) {
-  .hero,
-  .valueStage {
-    min-height: 100svh;
-  }
-
-  .hero {
-    height: auto;
-    padding-block: 0;
-    align-items: start;
-  }
-
-  .heroContent {
-    padding: max(6rem, var(--home-safe-area)) 0 2rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.6rem, 4vw, 3.75rem);
-  }
-
-  .heroBody {
-    margin-top: 1.15rem;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-
-  .heroActions {
-    margin-top: 1.35rem;
-  }
-
-  .heroProof {
-    margin-top: 1.2rem;
-  }
-
-  .valueGrid {
-    padding-block: 3rem;
-  }
-
-  .valueCopy h2 {
-    font-size: clamp(2.5rem, 4vw, 3.75rem);
-  }
-
-  .valueLead {
-    margin-top: 1rem;
-    line-height: 1.5;
-  }
-
-  .outcomeList {
-    gap: 0.35rem;
-    margin-top: 1.15rem;
-  }
-
-  .outcome {
-    padding-block: 0.45rem;
   }
 }
 

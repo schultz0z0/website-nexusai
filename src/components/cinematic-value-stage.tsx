@@ -31,10 +31,7 @@ export function CinematicValueStage({
       media.add(
         {
           mobile: "(max-width: 767px)",
-          static: "(min-width: 768px) and (max-height: 639px)",
-          compact:
-            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
-          cinematic: "(min-width: 768px) and (min-height: 820px)",
+          desktop: "(min-width: 768px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
         () => {
@@ -42,7 +39,7 @@ export function CinematicValueStage({
           stage.dataset.motionMode = mode;
           const clearMotionMode = () => delete stage.dataset.motionMode;
 
-          if (mode !== "compact" && mode !== "cinematic") {
+          if (mode !== "cinematic") {
             return clearMotionMode;
           }
 

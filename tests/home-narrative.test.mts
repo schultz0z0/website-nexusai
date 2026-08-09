@@ -50,37 +50,26 @@ test("keeps the blue stage in natural flow on mobile", () => {
   assert.equal(getBlueStageScrollDistance({ desktop: false }), 0);
 });
 
-test("maps compact desktop profiles to a bounded blue-stage distance", () => {
+test("keeps the full home choreography on low-height desktops", () => {
   assert.equal(
     getBlueStageScrollDistance({
       reducedMotion: false,
-      width: 768,
-      height: 640,
+      width: 1920,
+      height: 600,
     }),
-    520,
+    700,
   );
-});
-
-test("keeps the compact home profile distinct from cinematic motion", () => {
   assert.equal(
     getHomeMotionMode({
       reducedMotion: false,
-      width: 768,
-      height: 640,
+      width: 2560,
+      height: 720,
     }),
-    "compact",
+    "cinematic",
   );
 });
 
-test("keeps blue-stage scroll disabled for static and mobile profiles", () => {
-  assert.equal(
-    getBlueStageScrollDistance({
-      reducedMotion: false,
-      width: 768,
-      height: 639,
-    }),
-    0,
-  );
+test("keeps blue-stage scroll disabled on mobile", () => {
   assert.equal(
     getBlueStageScrollDistance({
       reducedMotion: false,

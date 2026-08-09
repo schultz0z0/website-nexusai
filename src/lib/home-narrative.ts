@@ -26,7 +26,6 @@ export function getBlueStageScrollDistance(
   const mode = getViewportMotionModeForSize(toViewportMotionConditions(conditions));
 
   if (mode === "cinematic") return 700;
-  if (mode === "compact") return 520;
   return 0;
 }
 

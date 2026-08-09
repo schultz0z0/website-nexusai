@@ -73,14 +73,14 @@ export function SolucoesCinematic() {
       media.add(
         {
           mobile: "(max-width: 767px)",
-          static: "(min-width: 768px) and (max-height: 639px)",
-          compact:
-            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
-          cinematic: "(min-width: 768px) and (min-height: 820px)",
+          desktop: "(min-width: 768px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
         () => {
           const mode = getViewportMotionMode();
+          const shortViewport = window.innerHeight < 820;
+          const crowdedScene =
+            shortViewport || window.innerWidth / window.innerHeight >= 3;
           root.dataset.motionMode = mode;
           const clearMotionMode = () => delete root.dataset.motionMode;
 
@@ -303,10 +303,9 @@ export function SolucoesCinematic() {
             },
           });
 
-          const introStart =
-            mode === "compact"
-              ? SCENE_WINDOWS[0].focus
-              : SCENE_WINDOWS[1].start;
+          const introStart = crowdedScene
+            ? SCENE_WINDOWS[0].focus
+            : SCENE_WINDOWS[1].start;
 
           timeline
              .to(
@@ -373,7 +372,7 @@ export function SolucoesCinematic() {
               SCENE_WINDOWS[1].start,
             );
 
-          if (mode === "compact") {
+          if (crowdedScene) {
             timeline.to(
               intro,
               {

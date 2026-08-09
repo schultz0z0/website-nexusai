@@ -16,6 +16,7 @@ import {
 } from "../src/lib/route-cinematics.ts";
 import {
   getViewportMotionModeForSize,
+  getViewportTextScale,
   type ViewportMotionConditions,
 } from "../src/lib/viewport-motion.ts";
 
@@ -62,18 +63,26 @@ const routeCinematicSources = [
   contactSource,
 ];
 
-test("classifies viewport motion profiles at their size boundaries", () => {
+test("keeps every motion-capable desktop on the full cinematic profile", () => {
   const cases: Array<ViewportMotionConditions & { expected: string }> = [
     { reducedMotion: false, width: 767, height: 900, expected: "mobile" },
-    { reducedMotion: false, width: 768, height: 639, expected: "static" },
-    { reducedMotion: false, width: 768, height: 640, expected: "compact" },
-    { reducedMotion: false, width: 1440, height: 819, expected: "compact" },
+    { reducedMotion: false, width: 768, height: 600, expected: "cinematic" },
+    { reducedMotion: false, width: 1600, height: 600, expected: "cinematic" },
+    { reducedMotion: false, width: 1920, height: 600, expected: "cinematic" },
+    { reducedMotion: false, width: 2560, height: 720, expected: "cinematic" },
     { reducedMotion: false, width: 1440, height: 820, expected: "cinematic" },
   ];
 
   cases.forEach(({ expected, ...conditions }) => {
     assert.equal(getViewportMotionModeForSize(conditions), expected);
   });
+});
+
+test("classifies enlarged root text independently from the cinematic viewport", () => {
+  assert.equal(getViewportTextScale(16), "default");
+  assert.equal(getViewportTextScale(20), "default");
+  assert.equal(getViewportTextScale(24), "large");
+  assert.equal(getViewportTextScale(32), "xlarge");
 });
 
 test("gives reduced motion precedence over every viewport profile", () => {
@@ -95,14 +104,18 @@ test("gives reduced motion precedence over every viewport profile", () => {
   );
 });
 
-test("maps only cinematic shared profiles to route scroll choreography", () => {
+test("keeps route scroll choreography on low-height desktops", () => {
   assert.equal(
     getRouteMotionMode({ reducedMotion: false, width: 768, height: 820 }),
     "scroll",
   );
   assert.equal(
-    getRouteMotionMode({ reducedMotion: false, width: 768, height: 640 }),
-    "compact",
+    getRouteMotionMode({ reducedMotion: false, width: 1920, height: 600 }),
+    "scroll",
+  );
+  assert.equal(
+    getRouteMotionMode({ reducedMotion: false, width: 2560, height: 720 }),
+    "scroll",
   );
 });
 

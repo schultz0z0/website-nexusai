@@ -1,4 +1,5 @@
-export type ViewportMotionMode = "mobile" | "static" | "compact" | "cinematic";
+export type ViewportMotionMode = "mobile" | "static" | "cinematic";
+export type ViewportTextScale = "default" | "large" | "xlarge";
 
 export type ViewportMotionConditions = {
   reducedMotion: boolean;
@@ -19,11 +20,14 @@ export function getViewportMotionMode(): ViewportMotionMode {
 export function getViewportMotionModeForSize({
   reducedMotion,
   width,
-  height,
 }: ViewportMotionConditions): ViewportMotionMode {
   if (reducedMotion) return "static";
   if (width < 768) return "mobile";
-  if (height < 640) return "static";
-  if (height < 820) return "compact";
   return "cinematic";
+}
+
+export function getViewportTextScale(rootFontSize: number): ViewportTextScale {
+  if (rootFontSize >= 28) return "xlarge";
+  if (rootFontSize >= 22) return "large";
+  return "default";
 }

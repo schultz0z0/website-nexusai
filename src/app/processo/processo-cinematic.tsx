@@ -14,7 +14,10 @@ import {
   createSceneWindows,
   getSceneScrollVh,
 } from "@/lib/route-cinematics";
-import { getViewportMotionMode } from "@/lib/viewport-motion";
+import {
+  getViewportMotionMode,
+  getViewportTextScale,
+} from "@/lib/viewport-motion";
 
 import styles from "./processo-cinematic.module.css";
 
@@ -36,16 +39,30 @@ export function ProcessoCinematic() {
       media.add(
         {
           mobile: "(max-width: 767px)",
-          static: "(min-width: 768px) and (max-height: 639px)",
-          compact:
-            "(min-width: 768px) and (min-height: 640px) and (max-height: 819px)",
-          cinematic: "(min-width: 768px) and (min-height: 820px)",
+          desktop: "(min-width: 768px)",
           reduced: "(prefers-reduced-motion: reduce)",
         },
         () => {
           const mode = getViewportMotionMode();
           root.dataset.motionMode = mode;
-          const clearMotionMode = () => delete root.dataset.motionMode;
+          const updateTextScale = () => {
+            root.dataset.textScale = getViewportTextScale(
+              Number.parseFloat(
+                getComputedStyle(document.documentElement).fontSize,
+              ),
+            );
+          };
+          const textScaleObserver = new MutationObserver(updateTextScale);
+          textScaleObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class", "style"],
+          });
+          updateTextScale();
+          const clearMotionMode = () => {
+            textScaleObserver.disconnect();
+            delete root.dataset.motionMode;
+            delete root.dataset.textScale;
+          };
 
           if (mode === "static") return clearMotionMode;
 

@@ -2,83 +2,6 @@
   --human-blue: #477fff;
 }
 
-@media (min-width: 768px) and (max-height: 639px) {
-  .signalScene,
-  .responseScene,
-  .briefingChapter {
-    min-height: 0;
-  }
-
-  .signalSticky,
-  .responseSticky,
-  .briefingSticky {
-    position: relative;
-    min-height: 0;
-    padding: var(--cinematic-safe-block) var(--cinematic-safe-inline);
-    overflow: visible;
-  }
-
-  .signalSticky {
-    padding-block-start: max(6rem, var(--cinematic-safe-block));
-  }
-
-  .responseSticky {
-    display: block;
-  }
-
-  .heroCopyBlock,
-  .responseHeader,
-  .responseStage {
-    position: relative;
-    inset: auto;
-    width: min(100%, 180svh);
-    margin-inline: auto;
-    transform: none;
-    opacity: 1;
-  }
-
-  .transmission,
-  .signalGrid,
-  .responseRail {
-    display: none;
-  }
-
-  .responseStage {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
-    gap: 0.85rem;
-    margin-top: 1.5rem;
-  }
-
-  .responsePanel {
-    position: relative;
-    inset: auto;
-    min-height: 0;
-    min-width: 0;
-    padding: clamp(1.25rem, 2.5vw, 2rem);
-    opacity: 1;
-    transform: none;
-  }
-
-  .responsePanel h3 {
-    max-width: 100%;
-    font-size: clamp(2rem, 3vw, 3.25rem);
-  }
-}
-
-@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
-  .signalSticky,
-  .responseSticky {
-    min-height: 0;
-    height: 100svh;
-    padding: clamp(4rem, 10svh, 5.5rem) var(--cinematic-safe-inline);
-  }
-
-  .responsePanel {
-    min-height: min(300px, 45svh);
-  }
-}
-
 .hero {
   display: block;
   padding: 8.5rem 24px 2rem;
@@ -798,36 +721,6 @@
   }
 }
 
-@media (min-width: 768px) and (max-height: 639px) {
-  .root[data-motion-mode="static"] .signalScene,
-  .root[data-motion-mode="static"] .responseScene,
-  .root[data-motion-mode="static"] .briefingChapter { min-height: 0; }
-  .root[data-motion-mode="static"] .signalSticky,
-  .root[data-motion-mode="static"] .responseSticky,
-  .root[data-motion-mode="static"] .briefingSticky { position: relative; min-height: 0; padding: var(--cinematic-safe-block) var(--cinematic-safe-inline); overflow: visible; }
-  .root[data-motion-mode="static"] .signalSticky { padding-block-start: max(6rem, var(--cinematic-safe-block)); }
-  .root[data-motion-mode="static"] .heroCopyBlock,
-  .root[data-motion-mode="static"] .responseHeader,
-  .root[data-motion-mode="static"] .responseStage,
-  .root[data-motion-mode="static"] .receipt { position: relative; inset: auto; width: min(100%, 180svh); margin-inline: auto; transform: none; opacity: 1; }
-  .root[data-motion-mode="static"] .briefingCopy { position: relative; top: auto; }
-  .root[data-motion-mode="static"] .receipt { margin-top: 1.5rem; }
-  .root[data-motion-mode="static"] .transmission,
-  .root[data-motion-mode="static"] .signalGrid,
-  .root[data-motion-mode="static"] .responseRail { display: none; }
-  .root[data-motion-mode="static"] .responseSticky { display: block; }
-  .root[data-motion-mode="static"] .responseStage { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 0.85rem; }
-  .root[data-motion-mode="static"] .responsePanel { position: relative; inset: auto; min-height: 0; min-width: 0; padding: clamp(1.25rem, 2.5vw, 2rem); opacity: 1; transform: none; }
-  .root[data-motion-mode="static"] .responsePanel h3 { max-width: 100%; font-size: clamp(2rem, 3vw, 3.25rem); }
-}
-
-@media (min-width: 768px) and (min-height: 640px) and (max-height: 819px) {
-  .root[data-motion-mode="compact"] .signalSticky,
-  .root[data-motion-mode="compact"] .responseSticky { height: 100svh; min-height: 0; }
-  .root[data-motion-mode="compact"] .heroCopyBlock { top: max(50%, 14.5rem); }
-  .root[data-motion-mode="compact"] .responsePanel { min-height: min(300px, 45svh); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .briefingSticky {
     position: relative;
@@ -893,7 +786,7 @@
   top: 50%;
   left: clamp(2rem, 8vw, 9rem);
   z-index: 4;
-  width: min(38.75rem, 44vw);
+  width: min(620px, 44vw);
   transform: translateY(-50%);
 }
 
@@ -908,7 +801,7 @@
 }
 
 .heroCopyBlock > p:last-child {
-  max-width: min(33.125rem, 100%);
+  max-width: 530px;
   margin: 2rem 0 0;
   color: rgb(231 235 244 / 69%);
   font-size: clamp(1rem, 1.5vw, 1.15rem);
@@ -1562,6 +1455,56 @@
     line-height: 1.08;
     letter-spacing: -0.04em;
     text-wrap: balance;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 819px) {
+  .root[data-motion-mode="cinematic"] .signalSticky,
+  .root[data-motion-mode="cinematic"] .responseSticky {
+    height: 100svh;
+    min-height: 0;
+    box-sizing: border-box;
+  }
+
+  .root[data-motion-mode="cinematic"] .responseSticky {
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: max(5.25rem, 12svh) clamp(2rem, 7vw, 8rem)
+      max(2.25rem, 6svh);
+  }
+
+  .root[data-motion-mode="cinematic"] .responseHeader h2 {
+    font-size: clamp(3rem, min(5.4vw, 10svh), 6rem);
+  }
+
+  .root[data-motion-mode="cinematic"] .responseHeader > p:last-child {
+    margin-top: min(1.25rem, 3svh);
+  }
+
+  .root[data-motion-mode="cinematic"] .responseStage {
+    min-height: min(480px, 72svh);
+  }
+
+  .root[data-motion-mode="cinematic"] .responsePanel {
+    padding: clamp(1.8rem, min(4vw, 6svh), 3.8rem);
+  }
+
+  .root[data-motion-mode="cinematic"] .responsePanel h3 {
+    font-size: clamp(2.25rem, min(4vw, 9svh), 4.6rem);
+  }
+
+  .root[data-motion-mode="cinematic"] .responsePanel p {
+    margin-top: min(1.2rem, 3svh);
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 819px) {
+  .root[data-motion-mode="cinematic"][data-text-scale="large"] .heroCopyBlock {
+    top: calc(50% + 2rem);
+  }
+
+  .root[data-motion-mode="cinematic"][data-text-scale="xlarge"] .heroCopyBlock {
+    top: calc(50% + 6rem);
   }
 }
 

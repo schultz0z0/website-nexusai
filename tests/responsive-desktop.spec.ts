@@ -24,8 +24,8 @@ const motionExperiences = [
 ] as const;
 
 const viewportProfiles = [
-  { name: "static", width: 1920, height: 600, expected: "static" },
-  { name: "compact", width: 2560, height: 720, expected: "compact" },
+  { name: "short-wide cinematic", width: 1920, height: 600, expected: "cinematic" },
+  { name: "ultrawide cinematic", width: 2560, height: 720, expected: "cinematic" },
   { name: "cinematic", width: 1920, height: 1080, expected: "cinematic" },
   { name: "mobile", width: 390, height: 844, expected: "mobile" },
 ] as const;
@@ -100,7 +100,8 @@ async function waitForRouteHydration(
 
   await expect(page.locator(experience.root)).toHaveAttribute(
     "data-motion-mode",
-    /^(cinematic|compact|mobile|static)$/,
+    /^(cinematic|mobile|static)$/,
+    { timeout: 10_000 },
   );
 
   return experience;
@@ -404,297 +405,87 @@ test.describe("viewport motion profiles", () => {
     await expect(root).toHaveAttribute("data-motion-mode", "cinematic");
 
     await page.setViewportSize({ width: 2560, height: 720 });
-    await expect(root).toHaveAttribute("data-motion-mode", "compact");
+    await expect(root).toHaveAttribute("data-motion-mode", "cinematic");
 
     await page.setViewportSize({ width: 1920, height: 600 });
-    await expect(root).toHaveAttribute("data-motion-mode", "static");
+    await expect(root).toHaveAttribute("data-motion-mode", "cinematic");
   });
 });
-
-test.describe("static desktop fallbacks", () => {
-  test.use({ viewport: { width: 1920, height: 600 } });
-
-  test("keeps every Solutions layer visibly rendered in static flow", async ({
-    page,
-  }) => {
-    await page.goto("/solucoes");
-    await expect(page.locator("main")).toHaveAttribute(
-      "data-motion-mode",
-      "static",
-    );
-
-    const layers = page.locator("[data-solutions-layer]");
-    await expect(layers).toHaveCount(3);
-
-    const renderedLayers = await layers.evaluateAll((elements) =>
-      elements.map((element) => {
-        const style = window.getComputedStyle(element);
-        const rect = element.getBoundingClientRect();
-
-        return {
-          height: rect.height,
-          opacity: Number.parseFloat(style.opacity),
-          visibility: style.visibility,
-          width: rect.width,
-        };
-      }),
-    );
-
-    expect(renderedLayers).toEqual(
-      Array.from({ length: 3 }, () => ({
-        height: expect.any(Number),
-        opacity: 1,
-        visibility: "visible",
-        width: expect.any(Number),
-      })),
-    );
-    expect(renderedLayers.every((layer) => layer.width > 0 && layer.height > 0)).toBe(
-      true,
-    );
-  });
-
-  test("keeps the Solutions hero, explanation, and six cards in an ordered static flow", async ({
-    page,
-  }) => {
-    await page.goto("/solucoes");
-    await expect(page.locator("main")).toHaveAttribute(
-      "data-motion-mode",
-      "static",
-    );
-
-    await waitForAnimationFrames(page);
-
-    const layout = await page.evaluate(() => {
-      const toLayout = (selector: string) =>
-        Array.from(document.querySelectorAll<HTMLElement>(selector)).map(
-          (element) => {
-            const rect = element.getBoundingClientRect();
-            const style = window.getComputedStyle(element);
-
-            return {
-              bottom: rect.bottom,
-              height: rect.height,
-              left: rect.left,
-              opacity: Number.parseFloat(style.opacity),
-              position: style.position,
-              right: rect.right,
-              top: rect.top,
-              visibility: style.visibility,
-            };
-          },
-        );
-
-      return {
-        cards: toLayout("[data-field-card]"),
-        hero: toLayout("[data-solutions-heading]"),
-        intro: toLayout("[data-solutions-intro]"),
-        layers: toLayout("[data-solutions-layer]"),
-      };
-    });
-
-    expect(layout.hero).toHaveLength(1);
-    expect(layout.intro).toHaveLength(1);
-    expect(layout.cards).toHaveLength(6);
-    expect(layout.hero[0].position).toBe("relative");
-    expect(layout.intro[0].position).toBe("relative");
-    expect(layout.intro[0].top).toBeGreaterThanOrEqual(layout.hero[0].bottom - 1);
-    expect(layout.layers[0].top).toBeGreaterThanOrEqual(layout.intro[0].bottom - 1);
-    expect(layout.layers.every((layer) => layer.position === "relative")).toBe(
-      true,
-    );
-    expect(
-      layout.layers.every(
-        (layer, index) =>
-          index === 0 || layer.top >= layout.layers[index - 1].bottom - 1,
-      ),
-    ).toBe(true);
-    expect(
-      layout.cards.every(
-        (card) =>
-          card.height > 0 &&
-          card.opacity >= 0.95 &&
-          card.visibility === "visible",
-      ),
-    ).toBe(true);
-
-    await page.evaluate(() => window.scrollTo({ top: 520, behavior: "instant" }));
-    await waitForAnimationFrames(page);
-
-    const scrolledCards = await page.evaluate(() =>
-      Array.from(document.querySelectorAll<HTMLElement>("[data-field-card]")).map(
-        (element) => {
-          const rect = element.getBoundingClientRect();
-          return {
-            bottom: rect.bottom,
-            left: rect.left,
-            right: rect.right,
-            top: rect.top,
-          };
-        },
-      ),
-    );
-
-    const intersections = scrolledCards.flatMap((card, index) =>
-      scrolledCards.slice(index + 1).filter((other) => {
-        const horizontal = Math.min(card.right, other.right) - Math.max(card.left, other.left);
-        const vertical = Math.min(card.bottom, other.bottom) - Math.max(card.top, other.top);
-        return horizontal > 8 && vertical > 8;
-      }),
-    );
-
-    expect(intersections).toHaveLength(0);
-  });
-
-  test("keeps the Contact receipt in flow below the static hero", async ({ page }) => {
-    await page.goto("/contato");
-    await expect(page.locator("main")).toHaveAttribute(
-      "data-motion-mode",
-      "static",
-    );
-
-    const receipt = page.locator("[data-contact-receipt]");
-    const layout = await receipt.evaluate((receiptElement, heroSelector) => {
-      const heroElement = document.querySelector(heroSelector);
-      if (!heroElement) throw new Error("Contact hero was not rendered.");
-
-      const receiptStyle = window.getComputedStyle(receiptElement);
-      const receiptRect = receiptElement.getBoundingClientRect();
-      const heroRect = heroElement.getBoundingClientRect();
-
-      return {
-        position: receiptStyle.position,
-        receiptTop: receiptRect.top,
-        heroBottom: heroRect.bottom,
-      };
-    }, "[data-contact-hero-copy]");
-
-    expect(layout.position).not.toBe("absolute");
-    expect(layout.receiptTop).toBeGreaterThanOrEqual(layout.heroBottom);
-  });
-});
-
-test("ends the compact Solutions intro before the first solution layer enters", async ({
+test("ends the crowded-desktop Solutions intro before the first solution layer enters", async ({
   page,
 }) => {
-  await page.setViewportSize({ width: 2560, height: 720 });
-  await page.goto("/solucoes");
-  await expect(page.locator("main")).toHaveAttribute(
-    "data-motion-mode",
-    "compact",
-  );
+  for (const viewport of [
+    { width: 1920, height: 600 },
+    { width: 3440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/solucoes");
+    await expect(page.locator("main")).toHaveAttribute(
+      "data-motion-mode",
+      "cinematic",
+    );
 
-  await page.evaluate(() => {
-    const scene = document.querySelector<HTMLElement>("[data-solutions-scene]");
-    if (!scene) throw new Error("Solutions scene was not rendered.");
+    await page.evaluate(() => {
+      const scene = document.querySelector<HTMLElement>("[data-solutions-scene]");
+      if (!scene) throw new Error("Solutions scene was not rendered.");
 
-    window.scrollTo({
-      top: scene.offsetTop + (scene.offsetHeight - window.innerHeight) * 0.4,
-      behavior: "instant",
+      window.scrollTo({
+        top: scene.offsetTop + (scene.offsetHeight - window.innerHeight) * 0.4,
+        behavior: "instant",
+      });
     });
-  });
-  await waitForAnimationFrames(page);
+    await waitForAnimationFrames(page);
 
-  const checkpoint = await page.evaluate(() => {
-    const effectiveVisibility = (element: HTMLElement) => {
-      let opacity = 1;
+    const checkpoint = await page.evaluate(() => {
+      const effectiveVisibility = (element: HTMLElement) => {
+        let opacity = 1;
 
-      for (let current: HTMLElement | null = element; current; current = current.parentElement) {
-        const style = window.getComputedStyle(current);
-        if (style.display === "none" || style.visibility === "hidden") return false;
-        opacity *= Number.parseFloat(style.opacity) || 0;
-      }
+        for (let current: HTMLElement | null = element; current; current = current.parentElement) {
+          const style = window.getComputedStyle(current);
+          if (style.display === "none" || style.visibility === "hidden") return false;
+          opacity *= Number.parseFloat(style.opacity) || 0;
+        }
 
-      return opacity >= 0.05;
-    };
-    const intro = document.querySelector<HTMLElement>("[data-solutions-intro]");
-    const layer = document.querySelector<HTMLElement>("[data-solutions-layer]");
-    if (!intro || !layer) throw new Error("Solutions intro or first layer was not rendered.");
+        return opacity >= 0.05;
+      };
+      const intro = document.querySelector<HTMLElement>("[data-solutions-intro]");
+      const layer = document.querySelector<HTMLElement>("[data-solutions-layer]");
+      if (!intro || !layer) throw new Error("Solutions intro or first layer was not rendered.");
 
-    const introRect = intro.getBoundingClientRect();
-    const layerRect = layer.getBoundingClientRect();
-    const style = window.getComputedStyle(intro);
+      const introRect = intro.getBoundingClientRect();
+      const layerRect = layer.getBoundingClientRect();
+      const style = window.getComputedStyle(intro);
 
-    const introVisible = effectiveVisibility(intro);
-    const layerVisible = effectiveVisibility(layer);
+      const introVisible = effectiveVisibility(intro);
+      const layerVisible = effectiveVisibility(layer);
 
-    return {
-      introOpacity: Number.parseFloat(style.opacity),
-      introVisible,
-      layerVisible,
-      visibleCollision:
-        introVisible &&
-        layerVisible &&
-        Math.min(introRect.right, layerRect.right) - Math.max(introRect.left, layerRect.left) > 8 &&
-        Math.min(introRect.bottom, layerRect.bottom) - Math.max(introRect.top, layerRect.top) > 8,
-    };
-  });
+      return {
+        introOpacity: Number.parseFloat(style.opacity),
+        introVisible,
+        layerVisible,
+        visibleCollision:
+          introVisible &&
+          layerVisible &&
+          Math.min(introRect.right, layerRect.right) - Math.max(introRect.left, layerRect.left) > 8 &&
+          Math.min(introRect.bottom, layerRect.bottom) - Math.max(introRect.top, layerRect.top) > 8,
+      };
+    });
 
-  expect(checkpoint.layerVisible).toBe(true);
-  expect(checkpoint.introOpacity).toBeLessThan(0.05);
-  expect(checkpoint.introVisible).toBe(false);
-  expect(checkpoint.visibleCollision).toBe(false);
+    expect(checkpoint.layerVisible).toBe(true);
+    expect(checkpoint.introOpacity).toBeLessThan(0.05);
+    expect(checkpoint.introVisible).toBe(false);
+    expect(checkpoint.visibleCollision).toBe(false);
+  }
 });
 
-test("keeps static Process checkpoints in a vertical unclipped list", async ({
+test("keeps short-desktop Process titles contained while checkpoints 03 and 04 show their complete descriptions", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1920, height: 600 });
   await page.goto("/processo");
   await expect(page.locator("main")).toHaveAttribute(
     "data-motion-mode",
-    "static",
-  );
-
-  await waitForAnimationFrames(page);
-  await page.evaluate(() => window.scrollTo({ top: 360, behavior: "instant" }));
-
-  const panels = await page.evaluate(() =>
-    Array.from(document.querySelectorAll<HTMLElement>("[data-process-panel]")).map(
-      (element) => {
-        const rect = element.getBoundingClientRect();
-        const style = window.getComputedStyle(element);
-
-        return {
-          bottom: rect.bottom,
-          clipPath: style.clipPath,
-          height: rect.height,
-          left: rect.left,
-          opacity: Number.parseFloat(style.opacity),
-          position: style.position,
-          right: rect.right,
-          top: rect.top,
-          visibility: style.visibility,
-        };
-      },
-    ),
-  );
-
-  expect(panels).toHaveLength(4);
-  expect(
-    panels.every(
-      (panel) =>
-        panel.position === "relative" &&
-        panel.height > 0 &&
-        panel.opacity >= 0.95 &&
-        panel.visibility === "visible" &&
-        panel.clipPath === "none",
-    ),
-  ).toBe(true);
-  expect(
-    panels.every(
-      (panel, index) => index === 0 || panel.top >= panels[index - 1].bottom - 1,
-    ),
-  ).toBe(true);
-});
-
-test("keeps compact Process titles contained while checkpoints 03 and 04 show their complete descriptions", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 2560, height: 720 });
-  await page.goto("/processo");
-  await expect(page.locator("main")).toHaveAttribute(
-    "data-motion-mode",
-    "compact",
+    "cinematic",
   );
 
   const inspectCheckpoint = async (progress: number, stage: string) => {
@@ -783,55 +574,14 @@ test("keeps compact Process titles contained while checkpoints 03 and 04 show th
   }
 });
 
-test("keeps the static Contact briefing and form in ordinary document flow", async ({
+test("fully clears the short-desktop Contact hero before the briefing begins", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1920, height: 600 });
   await page.goto("/contato");
   await expect(page.locator("main")).toHaveAttribute(
     "data-motion-mode",
-    "static",
-  );
-
-  await page.evaluate(() => {
-    const briefing = document.querySelector<HTMLElement>("[data-contact-briefing]");
-    if (!briefing) throw new Error("Contact briefing was not rendered.");
-    window.scrollTo({ top: briefing.offsetTop + 180, behavior: "instant" });
-  });
-  await waitForAnimationFrames(page);
-
-  const layout = await page.evaluate(() => {
-    const copy = document.querySelector<HTMLElement>("[data-contact-briefing-copy]");
-    const form = document.querySelector<HTMLElement>("[data-contact-form-stage]");
-    if (!copy || !form) throw new Error("Contact briefing content was not rendered.");
-
-    const copyRect = copy.getBoundingClientRect();
-    const formRect = form.getBoundingClientRect();
-
-    return {
-      copyPosition: window.getComputedStyle(copy).position,
-      formPosition: window.getComputedStyle(form).position,
-      intersects:
-        Math.min(copyRect.right, formRect.right) - Math.max(copyRect.left, formRect.left) > 8 &&
-        Math.min(copyRect.bottom, formRect.bottom) - Math.max(copyRect.top, formRect.top) > 8,
-      visible: [copyRect.height, formRect.height].every((height) => height > 0),
-    };
-  });
-
-  expect(layout.copyPosition).not.toBe("sticky");
-  expect(layout.formPosition).toBe("relative");
-  expect(layout.visible).toBe(true);
-  expect(layout.intersects).toBe(false);
-});
-
-test("fully clears the compact Contact hero before the briefing begins", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 2560, height: 720 });
-  await page.goto("/contato");
-  await expect(page.locator("main")).toHaveAttribute(
-    "data-motion-mode",
-    "compact",
+    "cinematic",
   );
 
   await page.evaluate(() => {
@@ -868,6 +618,70 @@ test("fully clears the compact Contact hero before the briefing begins", async (
   expect(checkpoint.visibleCollision).toBe(false);
 });
 
+test("keeps the short-desktop Contact response scene inside the cinematic viewport", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1920, height: 600 });
+  await page.goto("/contato");
+  await expect(page.locator("main")).toHaveAttribute(
+    "data-motion-mode",
+    "cinematic",
+  );
+
+  await page.evaluate(() => {
+    const scene = document.querySelector<HTMLElement>("[data-response-scene]");
+    if (!scene) throw new Error("Contact response scene was not rendered.");
+    window.scrollTo({ top: scene.offsetTop + 24, behavior: "instant" });
+  });
+  await waitForAnimationFrames(page);
+
+  const checkpoint = await page.evaluate(() => {
+    const scene = document.querySelector<HTMLElement>("[data-response-scene]");
+    const sticky = scene?.firstElementChild as HTMLElement | null;
+    const heading = scene?.querySelector<HTMLElement>("h2");
+    const stage = scene?.querySelector<HTMLElement>("[data-response-panel]")
+      ?.parentElement;
+    const panel = scene?.querySelector<HTMLElement>("[data-response-panel]");
+    const description = panel?.querySelector<HTMLElement>("p");
+    if (!sticky || !heading || !stage || !panel || !description) {
+      throw new Error("Contact response content was not rendered.");
+    }
+
+    const stickyRect = sticky.getBoundingClientRect();
+    const headingRect = heading.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+    const descriptionRect = description.getBoundingClientRect();
+
+    return {
+      descriptionBottom: descriptionRect.bottom,
+      headingBottom: headingRect.bottom,
+      headingTop: headingRect.top,
+      panelBottom: panelRect.bottom,
+      panelTop: panelRect.top,
+      stageBottom: stageRect.bottom,
+      stageTop: stageRect.top,
+      stickyBottom: stickyRect.bottom,
+      stickyTop: stickyRect.top,
+      viewportHeight: window.innerHeight,
+    };
+  });
+
+  expect(checkpoint.stickyTop).toBeGreaterThanOrEqual(-1);
+  expect(checkpoint.stickyBottom).toBeLessThanOrEqual(
+    checkpoint.viewportHeight + 1,
+  );
+  expect(checkpoint.headingTop).toBeGreaterThanOrEqual(checkpoint.stickyTop - 1);
+  expect(checkpoint.headingBottom).toBeLessThanOrEqual(checkpoint.stickyBottom + 1);
+  expect(checkpoint.stageTop).toBeGreaterThanOrEqual(checkpoint.stickyTop - 1);
+  expect(checkpoint.stageBottom).toBeLessThanOrEqual(checkpoint.stickyBottom + 1);
+  expect(checkpoint.panelTop).toBeGreaterThanOrEqual(checkpoint.stageTop - 1);
+  expect(checkpoint.panelBottom).toBeLessThanOrEqual(checkpoint.stageBottom + 1);
+  expect(checkpoint.descriptionBottom).toBeLessThanOrEqual(
+    checkpoint.panelBottom - 8,
+  );
+});
+
 test("keeps the short desktop Home hero and value stage readable without hiding its CTA or proof", async ({
   page,
 }) => {
@@ -875,7 +689,7 @@ test("keeps the short desktop Home hero and value stage readable without hiding 
   await page.goto("/");
   await expect(page.locator('[data-home-chapter="value"]')).toHaveAttribute(
     "data-motion-mode",
-    "static",
+    "cinematic",
   );
 
   const hero = await page.evaluate(() => {
@@ -897,11 +711,9 @@ test("keeps the short desktop Home hero and value stage readable without hiding 
       proofBottom: proofRect.bottom,
       proofTop: proofRect.top,
       titleBottom: titleRect.bottom,
-      viewportHeight: window.innerHeight,
     };
   });
 
-  expect(hero.heroBottom).toBeLessThanOrEqual(hero.viewportHeight + 1);
   expect(hero.actionsTop).toBeGreaterThanOrEqual(hero.titleBottom - 1);
   expect(hero.proofTop).toBeGreaterThanOrEqual(hero.actionsBottom - 1);
   expect(hero.proofBottom).toBeLessThanOrEqual(hero.heroBottom + 1);
@@ -909,7 +721,10 @@ test("keeps the short desktop Home hero and value stage readable without hiding 
   await page.evaluate(() => {
     const stage = document.querySelector<HTMLElement>('[data-home-chapter="value"]');
     if (!stage) throw new Error("Home value stage was not rendered.");
-    window.scrollTo({ top: stage.offsetTop, behavior: "instant" });
+    window.scrollTo({
+      top: window.scrollY + stage.getBoundingClientRect().top,
+      behavior: "instant",
+    });
   });
 
   const value = await page.evaluate(() => {
@@ -932,6 +747,7 @@ test("keeps the short desktop Home hero and value stage readable without hiding 
       titleLeft: titleRect.left,
       titleRight: titleRect.right,
       titleTop: titleRect.top,
+      viewportHeight: window.innerHeight,
     };
   });
 
@@ -939,5 +755,8 @@ test("keeps the short desktop Home hero and value stage readable without hiding 
     Math.min(value.flowRight, value.titleRight) - Math.max(value.flowLeft, value.titleLeft) > 8 &&
     Math.min(value.flowBottom, value.titleBottom) - Math.max(value.flowTop, value.titleTop) > 8;
   expect(valueOverlap).toBe(false);
-  expect(value.flowBottom).toBeLessThanOrEqual(value.stageBottom + 1);
+  expect(value.flowTop).toBeGreaterThanOrEqual(-1);
+  expect(value.flowBottom).toBeLessThanOrEqual(
+    Math.min(value.stageBottom, value.viewportHeight) + 1,
+  );
 });
