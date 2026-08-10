@@ -225,11 +225,13 @@ async function assertDocumentCheckpoint(
   const label = layoutLabel(route, viewport, checkpoint.name, suffix);
   recordLayoutContext(testInfo, label);
   await scrollToDocumentProgress(page, checkpoint.progress);
-  await assertLayoutCheckpoint(page, {
-    checkpoint: checkpoint.name,
-    route: route.path,
-    viewport,
-  });
+  await expect(async () => {
+    await assertLayoutCheckpoint(page, {
+      checkpoint: checkpoint.name,
+      route: route.path,
+      viewport,
+    });
+  }).toPass({ timeout: 5_000 });
 }
 
 async function assertDocumentFlow(
@@ -436,7 +438,7 @@ test("ends the crowded-desktop Solutions intro before the first solution layer e
     });
     await waitForAnimationFrames(page);
 
-    const checkpoint = await page.evaluate(() => {
+    const inspectCheckpoint = () => page.evaluate(() => {
       const effectiveVisibility = (element: HTMLElement) => {
         let opacity = 1;
 
@@ -470,6 +472,19 @@ test("ends the crowded-desktop Solutions intro before the first solution layer e
           Math.min(introRect.bottom, layerRect.bottom) - Math.max(introRect.top, layerRect.top) > 8,
       };
     });
+
+    await expect.poll(async () => {
+      const checkpoint = await inspectCheckpoint();
+
+      return (
+        checkpoint.layerVisible &&
+        checkpoint.introOpacity < 0.05 &&
+        !checkpoint.introVisible &&
+        !checkpoint.visibleCollision
+      );
+    }, { timeout: 5_000 }).toBe(true);
+
+    const checkpoint = await inspectCheckpoint();
 
     expect(checkpoint.layerVisible).toBe(true);
     expect(checkpoint.introOpacity).toBeLessThan(0.05);

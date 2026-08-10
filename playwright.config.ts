@@ -4,9 +4,10 @@ import path from "node:path";
 
 const baseURL = "http://127.0.0.1:3000";
 const useProductionBuild = process.env.PLAYWRIGHT_USE_PRODUCTION_BUILD === "1";
+const isPlaywrightWorker = process.env.TEST_WORKER_INDEX !== undefined;
 const standaloneDirectory = path.resolve(".next/standalone");
 
-if (useProductionBuild) {
+if (useProductionBuild && !isPlaywrightWorker) {
   if (!existsSync(standaloneDirectory)) {
     throw new Error("PLAYWRIGHT_USE_PRODUCTION_BUILD=1 requires `npm run build` first.");
   }
