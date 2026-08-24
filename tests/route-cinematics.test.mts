@@ -210,15 +210,6 @@ test("stacks the desktop process FAQ heading and support copy in two title lines
   );
 });
 
-test("uses separate art-directed home hero images for desktop and mobile", () => {
-  assert.match(homeHeroSource, /data-home-hero-media/);
-  assert.match(
-    homeHeroSource,
-    /<source[\s\S]*?media="\(max-width: 767px\)"[\s\S]*?home-hero-mobile\.webp/,
-  );
-  assert.match(homeHeroSource, /home-hero-desktop\.webp/);
-});
-
 test("keeps the home hero inside the document width", () => {
   assert.doesNotMatch(homeHeroSource, /\bw-screen\b/);
 });

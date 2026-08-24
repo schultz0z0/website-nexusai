@@ -697,6 +697,347 @@ test("keeps the short-desktop Contact response scene inside the cinematic viewpo
   );
 });
 
+test("presents the approved static Nexus connection hero", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const hero = page.locator("#hero");
+  const title = hero.getByRole("heading", { level: 1 });
+
+  await expect(title).toHaveText(
+    /Multiplique a capacidade\s+da sua equipe com IA/,
+  );
+  await expect(title.locator("span")).toHaveText("da sua equipe com IA");
+  await expect(
+    hero.getByText(
+      "Automações e agentes sob medida que eliminam tarefas repetitivas e ampliam a capacidade da sua equipe.",
+    ),
+  ).toBeVisible();
+  await expect(
+    hero.getByRole("link", { name: "Descobrir onde aplicar IA" }),
+  ).toBeVisible();
+  await expect(hero.locator('a[href="/contato"]')).toHaveCount(1);
+  await expect(hero.getByText("Integrada à sua operação")).toBeVisible();
+  await expect(hero.getByText("Código e dados são seus")).toBeVisible();
+  await expect(hero.getByText("Primeira entrega em 2–3 semanas")).toBeVisible();
+
+  const alignment = await hero.evaluate((section) => {
+    const heading = section.querySelector("h1");
+    if (!heading) throw new Error("Home hero title was not rendered.");
+
+    const heroRect = section.getBoundingClientRect();
+    const titleRect = heading.getBoundingClientRect();
+
+    return {
+      heroCenter: heroRect.left + heroRect.width / 2,
+      titleCenter: titleRect.left + titleRect.width / 2,
+    };
+  });
+
+  expect(Math.abs(alignment.heroCenter - alignment.titleCenter)).toBeLessThanOrEqual(2);
+});
+
+test("uses the exact Solutions cinematic text treatment on the Home hero title", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/solucoes");
+
+  const solutionsTreatment = await page
+    .locator("[data-solutions-title]")
+    .evaluate((title) => {
+      const styles = getComputedStyle(title);
+      return {
+        backgroundClip: styles.backgroundClip,
+        backgroundImage: styles.backgroundImage,
+        color: styles.color,
+        filter: styles.filter,
+        textStrokeColor: styles.getPropertyValue("-webkit-text-stroke-color"),
+        textStrokeWidth: styles.getPropertyValue("-webkit-text-stroke-width"),
+      };
+    });
+
+  await page.goto("/");
+  const homeTitle = page.locator("#hero h1");
+  const homeTreatment = await homeTitle.evaluate((title) => {
+    const styles = getComputedStyle(title);
+    return {
+      backgroundClip: styles.backgroundClip,
+      backgroundImage: styles.backgroundImage,
+      color: styles.color,
+      filter: styles.filter,
+      textStrokeColor: styles.getPropertyValue("-webkit-text-stroke-color"),
+      textStrokeWidth: styles.getPropertyValue("-webkit-text-stroke-width"),
+    };
+  });
+  const accentColor = await homeTitle.locator("span").evaluate(
+    (accent) => getComputedStyle(accent).color,
+  );
+
+  expect(solutionsTreatment.backgroundImage).not.toBe("none");
+  expect(solutionsTreatment.backgroundClip).toBe("text");
+  expect(homeTreatment).toEqual(solutionsTreatment);
+  expect(accentColor).toBe(homeTreatment.color);
+});
+
+test("reserves paint area below the Home title descenders", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const paintArea = await page.locator("#hero h1").evaluate((title) => {
+    const finalLine = title.querySelector<HTMLElement>("span");
+    if (!finalLine) throw new Error("Home hero final title line was not rendered.");
+
+    const titleRect = title.getBoundingClientRect();
+    const finalLineRect = finalLine.getBoundingClientRect();
+    const fontSize = Number.parseFloat(getComputedStyle(title).fontSize);
+
+    return {
+      descenderRoom: titleRect.bottom - finalLineRect.bottom,
+      fontSize,
+    };
+  });
+
+  expect(paintArea.descenderRoom).toBeGreaterThanOrEqual(paintArea.fontSize * 0.09);
+});
+
+test("loads the static hero poster through the video-ready media layer", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const media = page.locator("[data-home-hero-media]");
+  const poster = media.locator("[data-home-hero-poster]");
+  await expect(poster).toBeVisible();
+  await expect(poster).toHaveAttribute("src", /home-hero-touch-desktop\.png/);
+  await expect(poster).toHaveAttribute("sizes", "100vw");
+  await expect(poster).toHaveAttribute("width", "1672");
+  await expect(poster).toHaveAttribute("height", "941");
+
+  await expect
+    .poll(() =>
+      poster.evaluate(
+        (image) =>
+          image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+});
+
+test("centers the Home hero touch between the navigation and headline", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const placement = await page.evaluate(() => {
+    const navigation = [...document.querySelectorAll<HTMLElement>("nav")].find(
+      (element) =>
+        getComputedStyle(element).position === "fixed" &&
+        element.getBoundingClientRect().width > 0,
+    );
+    const headline = document.querySelector<HTMLElement>("#hero h1");
+    const poster = document.querySelector<HTMLElement>("[data-home-hero-poster]");
+
+    if (!navigation || !headline || !poster) {
+      throw new Error("Home hero placement anchors were not rendered.");
+    }
+
+    const navigationRect = navigation.getBoundingClientRect();
+    const headlineRect = headline.getBoundingClientRect();
+    const posterRect = poster.getBoundingClientRect();
+
+    return {
+      availableSpace: headlineRect.top - navigationRect.bottom,
+      targetY: (navigationRect.bottom + headlineRect.top) / 2,
+      touchY: posterRect.top + posterRect.height / 2,
+    };
+  });
+
+  expect(placement.availableSpace).toBeGreaterThan(240);
+  expect(Math.abs(placement.touchY - placement.targetY)).toBeLessThanOrEqual(36);
+});
+
+test("renders the Home hero as a static image without video requests", async ({
+  page,
+}) => {
+  const videoRequests: string[] = [];
+  page.on("request", (request) => {
+    if (/\/videos\//.test(request.url())) {
+      videoRequests.push(request.url());
+    }
+  });
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const media = page.locator("[data-home-hero-media]");
+  const poster = media.locator("[data-home-hero-poster]");
+  await expect(media.locator("video")).toHaveCount(0);
+  await expect(poster).toBeVisible();
+
+  const initialImageState = await poster.evaluate((image) => {
+    const styles = getComputedStyle(image);
+    return {
+      animationName: styles.animationName,
+      transform: styles.transform,
+    };
+  });
+  await page.waitForTimeout(400);
+  const settledTransform = await poster.evaluate(
+    (image) => getComputedStyle(image).transform,
+  );
+
+  expect(initialImageState.animationName).toBe("none");
+  expect(settledTransform).toBe(initialImageState.transform);
+  expect(videoRequests).toEqual([]);
+});
+
+test("adds restrained ambient motion without animating the Home hero image", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const ambient = page.locator("[data-home-hero-ambient]");
+  const grain = page.locator("[data-home-hero-grain]");
+  const poster = page.locator("[data-home-hero-poster]");
+  await expect(ambient).toBeVisible();
+  await expect(grain).toBeVisible();
+
+  const motion = await page.evaluate(() => {
+    const ambientLayer = document.querySelector<HTMLElement>(
+      "[data-home-hero-ambient]",
+    );
+    const grainLayer = document.querySelector<HTMLElement>(
+      "[data-home-hero-grain]",
+    );
+    const image = document.querySelector<HTMLElement>("[data-home-hero-poster]");
+    if (!ambientLayer || !grainLayer || !image) {
+      throw new Error("Home hero ambient layers were not rendered.");
+    }
+
+    const ambientStyles = getComputedStyle(ambientLayer);
+    const grainStyles = getComputedStyle(grainLayer);
+    const imageStyles = getComputedStyle(image);
+    return {
+      ambientAnimation: ambientStyles.animationName,
+      ambientDuration: Number.parseFloat(ambientStyles.animationDuration),
+      ambientOpacity: Number.parseFloat(ambientStyles.opacity),
+      ambientPointerEvents: ambientStyles.pointerEvents,
+      grainAnimation: grainStyles.animationName,
+      grainDuration: Number.parseFloat(grainStyles.animationDuration),
+      imageAnimation: imageStyles.animationName,
+    };
+  });
+
+  expect(motion.imageAnimation).toBe("none");
+  expect(motion.ambientAnimation).not.toBe("none");
+  expect(motion.ambientDuration).toBeGreaterThanOrEqual(8);
+  expect(motion.ambientOpacity).toBeLessThanOrEqual(0.3);
+  expect(motion.ambientPointerEvents).toBe("none");
+  expect(motion.grainAnimation).not.toBe("none");
+  expect(motion.grainDuration).toBeGreaterThanOrEqual(12);
+  await expect(poster).toBeVisible();
+});
+
+test("stops Home hero ambient motion when reduced motion is requested", async ({
+  page,
+}) => {
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const media = page.locator("[data-home-hero-media]");
+  await expect(media.locator("video")).toHaveCount(0);
+  await expect(media.locator("[data-home-hero-poster]")).toBeVisible();
+  const animations = await page.evaluate(() => ({
+    ambient: getComputedStyle(
+      document.querySelector<HTMLElement>("[data-home-hero-ambient]")!,
+    ).animationName,
+    grain: getComputedStyle(
+      document.querySelector<HTMLElement>("[data-home-hero-grain]")!,
+    ).animationName,
+  }));
+  expect(animations).toEqual({ ambient: "none", grain: "none" });
+});
+
+test("keeps the mobile Home hero proof inside the first viewport", async ({ page }) => {
+  const mobileViewports = [
+    { width: 360, height: 800 },
+    { width: 390, height: 844 },
+    { width: 430, height: 932 },
+    { width: 438, height: 852 },
+  ];
+
+  for (const viewport of mobileViewports) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const hero = page.locator("#hero");
+    await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(hero.getByRole("link", { name: "Descobrir onde aplicar IA" })).toBeVisible();
+    await expect(hero.getByText("Primeira entrega em 2–3 semanas")).toBeVisible();
+
+    const layout = await hero.evaluate((section) => {
+      const title = section.querySelector<HTMLElement>("h1");
+      const proof = section.querySelector<HTMLElement>('[aria-label="Provas de experiência"]');
+      if (!title || !proof) throw new Error("Mobile Home hero content was not rendered.");
+
+      const heroRect = section.getBoundingClientRect();
+      const titleRect = title.getBoundingClientRect();
+      const proofRect = proof.getBoundingClientRect();
+
+      return {
+        heroCenter: heroRect.left + heroRect.width / 2,
+        heroHeight: heroRect.height,
+        proofBottom: proofRect.bottom,
+        titleCenter: titleRect.left + titleRect.width / 2,
+        viewportHeight: window.innerHeight,
+        viewportOverflow: document.documentElement.scrollWidth - window.innerWidth,
+      };
+    });
+
+    expect(Math.abs(layout.heroCenter - layout.titleCenter)).toBeLessThanOrEqual(2);
+    expect(layout.heroHeight).toBeLessThanOrEqual(layout.viewportHeight + 1);
+    expect(layout.proofBottom).toBeLessThanOrEqual(layout.viewportHeight - 56);
+    expect(layout.viewportOverflow).toBeLessThanOrEqual(1);
+  }
+});
+
+test("shows the mobile Home hero image without zoom and centers its touch", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const placement = await page.evaluate(() => {
+    const logo = [...document.querySelectorAll<HTMLElement>(
+      'a[aria-label="Nexus AI — voltar ao início"]',
+    )].find((element) => element.getBoundingClientRect().width > 0);
+    const headline = document.querySelector<HTMLElement>("#hero h1");
+    const poster = document.querySelector<HTMLElement>("[data-home-hero-poster]");
+    if (!logo || !headline || !poster) {
+      throw new Error("Mobile Home hero placement anchors were not rendered.");
+    }
+
+    const logoRect = logo.getBoundingClientRect();
+    const headlineRect = headline.getBoundingClientRect();
+    const posterRect = poster.getBoundingClientRect();
+
+    return {
+      aspectRatio: posterRect.height / posterRect.width,
+      objectFit: getComputedStyle(poster).objectFit,
+      targetY: (logoRect.bottom + headlineRect.top) / 2,
+      touchY: posterRect.top + posterRect.height / 2,
+    };
+  });
+
+  expect(placement.aspectRatio).toBeCloseTo(941 / 1672, 2);
+  expect(placement.objectFit).toBe("contain");
+  expect(Math.abs(placement.touchY - placement.targetY)).toBeLessThanOrEqual(28);
+});
+
 test("keeps the short desktop Home hero and value stage readable without hiding its CTA or proof", async ({
   page,
 }) => {
@@ -731,7 +1072,7 @@ test("keeps the short desktop Home hero and value stage readable without hiding 
 
   expect(hero.actionsTop).toBeGreaterThanOrEqual(hero.titleBottom - 1);
   expect(hero.proofTop).toBeGreaterThanOrEqual(hero.actionsBottom - 1);
-  expect(hero.proofBottom).toBeLessThanOrEqual(hero.heroBottom + 1);
+  expect(hero.proofBottom).toBeLessThanOrEqual(hero.heroBottom - 12);
 
   await page.evaluate(() => {
     const stage = document.querySelector<HTMLElement>('[data-home-chapter="value"]');

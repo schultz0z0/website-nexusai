@@ -1,9 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Bot,
   Check,
-  ChevronRight,
   Clock3,
   Gauge,
   LineChart,
@@ -11,7 +11,6 @@ import {
   PackageSearch,
   RefreshCcw,
   ShieldCheck,
-  Sparkles,
   TimerReset,
   Workflow,
   Zap,
@@ -97,65 +96,55 @@ export function ConversionHome() {
         className={styles.hero}
       >
         <div className={styles.heroMedia} data-home-hero-media aria-hidden="true">
-          <picture>
-            <source
-              media="(max-width: 767px)"
-              srcSet="/images/cinematic/home-hero-mobile.webp"
-            />
-            <img
-              src="/images/cinematic/home-hero-desktop.webp"
-              alt=""
-              width={1920}
-              height={1081}
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </picture>
+          <Image
+            data-home-hero-poster
+            src="/images/cinematic/home-hero-touch-desktop.png"
+            alt=""
+            width={1672}
+            height={941}
+            sizes="100vw"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
         </div>
         <div className={styles.heroShade} aria-hidden="true" />
-        <div className={styles.grain} aria-hidden="true" />
-        <div className={styles.heroGlow} aria-hidden="true" />
+        <div
+          className={styles.grain}
+          data-home-hero-grain
+          aria-hidden="true"
+        />
+        <div
+          className={styles.heroGlow}
+          data-home-hero-ambient
+          aria-hidden="true"
+        />
 
         <div className={styles.shell}>
           <div className={styles.heroContent}>
-            <p className={styles.kicker}>
-              <Sparkles aria-hidden="true" />
-              Automação inteligente para empresas
-            </p>
             <h1>
-              Multiplique a capacidade
+              Multiplique a capacidade{" "}
               <span>da sua equipe com IA</span>
             </h1>
             <p className={styles.heroBody}>
-              A Nexus AI encontra gargalos e entrega automações sob medida que
-              reduzem retrabalho, aceleram decisões e liberam seu negócio para
-              crescer.
+              Automações e agentes sob medida que eliminam tarefas repetitivas
+              e ampliam a capacidade da sua equipe.
             </p>
 
             <div className={styles.heroActions}>
               <Link className={styles.primaryButton} href="/contato">
-                Mapear meu gargalo
+                Descobrir onde aplicar IA
                 <ArrowRight aria-hidden="true" />
-              </Link>
-              <Link className={styles.secondaryButton} href="/solucoes">
-                Ver soluções
-                <ChevronRight aria-hidden="true" />
               </Link>
             </div>
 
             <div className={styles.heroProof} aria-label="Provas de experiência">
-              <span>12+ plataformas em produção</span>
-              <span>8 setores</span>
-              <span>Primeiros ganhos em 4–8 semanas</span>
+              <span>Integrada à sua operação</span>
+              <span>Código e dados são seus</span>
+              <span>Primeira entrega em 2–3 semanas</span>
             </div>
           </div>
         </div>
-
-        <a className={styles.scrollCue} href="#value">
-          <span>Como o ganho acontece</span>
-          <span className={styles.scrollLine} aria-hidden="true" />
-        </a>
       </section>
 
       <CinematicValueStage className={styles.valueStage}>
