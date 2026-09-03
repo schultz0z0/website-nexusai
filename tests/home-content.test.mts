@@ -1,0 +1,58 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import {
+  CONTACT_COPY,
+  HOME_ASSURANCES,
+  HOME_CAPABILITIES,
+  HOME_COPY,
+  HOME_DEMOS,
+  HOME_FAQ,
+} from "../src/lib/content.ts";
+
+const publicContent = {
+  CONTACT_COPY,
+  HOME_ASSURANCES,
+  HOME_CAPABILITIES,
+  HOME_COPY,
+  HOME_DEMOS,
+  HOME_FAQ,
+};
+
+test("contains no prohibited or unverified public claims", () => {
+  const serialized = JSON.stringify(publicContent);
+
+  assert.doesNotMatch(serialized, /gargal/i);
+  assert.doesNotMatch(
+    serialized,
+    /12\+|plataformas operando|em cliente, com uso real|8 setores|100%|primeiros ganhos|ROI esperado/i,
+  );
+});
+
+test("labels both examples as functional demonstrations", () => {
+  assert.equal(HOME_DEMOS.length, 2);
+  assert.ok(
+    HOME_DEMOS.every((demo) => demo.label === "Demonstração funcional"),
+  );
+});
+
+test("keeps contact classification lightweight", () => {
+  assert.equal(CONTACT_COPY.fields.length, 4);
+  assert.deepEqual(
+    CONTACT_COPY.fields.map((field) => field.name),
+    ["nome", "email", "empresa", "mensagem"],
+  );
+  assert.equal(
+    CONTACT_COPY.fields.find((field) => field.name === "empresa")?.required,
+    false,
+  );
+});
+
+test("answers the six approved decision questions", () => {
+  assert.equal(HOME_FAQ.length, 6);
+  assert.deepEqual(
+    HOME_ASSURANCES.map((item) => item.id),
+    ["context", "integration", "control", "ownership"],
+  );
+  assert.equal(HOME_CAPABILITIES.length, 4);
+});

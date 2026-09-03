@@ -1,6 +1,8 @@
 # Atualização da VPS
 
-Este projeto é publicado como container Next.js standalone. O `docker-compose.yml` define o serviço `website`, o container `solucoes-nexus-website` e as labels usadas pelo Traefik para `solucoes-nexus.tech` e `www.solucoes-nexus.tech`.
+Este projeto é publicado como container Next.js standalone. O `docker-compose.yml` define o serviço `website`, o container `prometeus-website` e as labels usadas pelo Traefik para `solucoes-nexus.tech` e `www.solucoes-nexus.tech`.
+
+O build injeta apenas IDs públicos (`NEXT_PUBLIC_*`) como argumentos; segredos de servidor não devem ser colocados nesses argumentos nem no bundle do navegador.
 
 ## Antes de acessar a VPS
 
@@ -57,6 +59,8 @@ curl -fsS -o /dev/null -w "%{http_code}  /\n" https://solucoes-nexus.tech/
 curl -fsS -o /dev/null -w "%{http_code}  /solucoes\n" https://solucoes-nexus.tech/solucoes
 curl -fsS -o /dev/null -w "%{http_code}  /processo\n" https://solucoes-nexus.tech/processo
 curl -fsS -o /dev/null -w "%{http_code}  /contato\n" https://solucoes-nexus.tech/contato
+curl -fsSI https://www.solucoes-nexus.tech/ | grep -i '^location: https://solucoes-nexus.tech/'
+curl -fsSI https://solucoes-nexus.tech/ | grep -Ei 'strict-origin-when-cross-origin|nosniff|deny'
 ```
 
 O esperado é o serviço `website` em estado `Up`, logs sem erro de inicialização e HTTP `200` nas quatro rotas. Depois, faça um hard refresh no navegador com `Ctrl+Shift+R` e repita o smoke responsivo descrito em `docs/responsive-desktop-matrix.md`.

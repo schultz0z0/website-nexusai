@@ -7,15 +7,15 @@ import {
   getHomeMotionMode,
 } from "../src/lib/home-narrative.ts";
 
-test("keeps the approved home chapter order", () => {
+test("keeps the consolidated home chapter order", () => {
   assert.deepEqual(
     HOME_CHAPTERS.map((chapter) => chapter.id),
     [
       "hero",
       "value",
-      "proof",
-      "cases",
-      "trust",
+      "applications",
+      "demos",
+      "assurances",
       "cta",
     ],
   );

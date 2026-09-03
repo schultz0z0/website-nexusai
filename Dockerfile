@@ -12,7 +12,7 @@ COPY package.json package-lock.json ./
 # package.json e package-lock.json em ambientes de produção. `npm ci` é estrito
 # e quebra o build sempre que alguém instala uma dependência nova e esquece de
 # commitar o lockfile atualizado.
-RUN npm install --no-audit --no-fund
+RUN npm ci --no-audit --no-fund
 
 # 2. Rebuild the source code only when needed
 FROM base AS builder
@@ -22,6 +22,16 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ARG NEXT_PUBLIC_GTM_ID
+ARG NEXT_PUBLIC_GA4_MEASUREMENT_ID
+ARG NEXT_PUBLIC_META_PIXEL_ID
+ARG NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+ARG NEXT_PUBLIC_BING_SITE_VERIFICATION
+ENV NEXT_PUBLIC_GTM_ID=$NEXT_PUBLIC_GTM_ID
+ENV NEXT_PUBLIC_GA4_MEASUREMENT_ID=$NEXT_PUBLIC_GA4_MEASUREMENT_ID
+ENV NEXT_PUBLIC_META_PIXEL_ID=$NEXT_PUBLIC_META_PIXEL_ID
+ENV NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+ENV NEXT_PUBLIC_BING_SITE_VERIFICATION=$NEXT_PUBLIC_BING_SITE_VERIFICATION
 
 RUN npm run build
 

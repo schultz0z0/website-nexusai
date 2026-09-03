@@ -5,6 +5,9 @@ node_modules
 .next
 .git
 .gitignore
+.superdesign
+.superpowers
+referencias-animações
 README.md
 *.md
 npm-debug.log

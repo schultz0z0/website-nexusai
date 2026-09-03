@@ -24,7 +24,7 @@ export function StockMockDashboard() {
             <Package className="w-4 h-4 text-foreground/85" />
           </div>
           <div>
-            <div className="text-sm font-semibold text-foreground">Nexus Stock</div>
+            <div className="text-sm font-semibold text-foreground">Stock · Prometeus</div>
             <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Visão geral · Tempo real</div>
           </div>
         </div>
@@ -210,7 +210,7 @@ export function CopilotMockDashboard() {
             <Sparkles className="w-3.5 h-3.5 text-foreground/85" />
           </div>
           <div>
-            <div className="text-xs sm:text-sm font-semibold text-foreground">Nexus Copilot</div>
+            <div className="text-xs sm:text-sm font-semibold text-foreground">Copilot · Prometeus</div>
             <div className="text-[9px] sm:text-[10px] text-muted-foreground uppercase tracking-wider">Campanha · Black Friday</div>
           </div>
         </div>

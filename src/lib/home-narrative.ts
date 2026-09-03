@@ -6,9 +6,9 @@ import {
 export const HOME_CHAPTERS = [
   { id: "hero", purpose: "promise" },
   { id: "value", purpose: "business-outcomes" },
-  { id: "proof", purpose: "credibility" },
-  { id: "cases", purpose: "application" },
-  { id: "trust", purpose: "risk-reversal" },
+  { id: "applications", purpose: "custom-scope" },
+  { id: "demos", purpose: "demonstration" },
+  { id: "assurances", purpose: "risk-reversal" },
   { id: "cta", purpose: "conversion" },
 ] as const;
 

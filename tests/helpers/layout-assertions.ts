@@ -201,7 +201,7 @@ export async function assertLayoutCheckpoint(
       .map(toRect)
       .filter((rect) => rect.width > tolerance && rect.height > tolerance);
     const identity = Array.from(
-      document.querySelectorAll('a[aria-label*="Nexus AI"]'),
+      document.querySelectorAll('a[aria-label*="Prometeus"]'),
     ).filter(effectiveVisibility);
     const main = document.querySelector("main");
     const mainRect = main ? toRect(main) : null;
@@ -236,7 +236,7 @@ export async function assertLayoutCheckpoint(
 
   if (!inspection.mainText) failures.push("main has no text content");
   if (inspection.identityText.every((text) => !text)) {
-    failures.push("visible Nexus AI identity is missing or empty");
+    failures.push("visible Prometeus identity is missing or empty");
   }
   if (inspection.visibleOverlays.length > 0) {
     failures.push(

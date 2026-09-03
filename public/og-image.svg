@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Prometeus — soluções digitais sob medida</title>
+  <desc id="desc">Automações, agentes de IA e integrações sob medida para empresas.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="70%">
+      <stop offset="0" stop-color="#123878"/>
+      <stop offset="0.55" stop-color="#071326"/>
+      <stop offset="1" stop-color="#02050c"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#02050c"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect x="72" y="72" width="1056" height="486" rx="28" fill="none" stroke="#315da5" stroke-opacity="0.42"/>
+  <text x="108" y="190" fill="#8eb5ff" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">PROMETEUS</text>
+  <text x="108" y="300" fill="#f6f8fb" font-family="Arial, sans-serif" font-size="64" font-weight="600">Soluções digitais</text>
+  <text x="108" y="378" fill="#f6f8fb" font-family="Arial, sans-serif" font-size="64" font-weight="600">sob medida.</text>
+  <text x="108" y="468" fill="#afbdd3" font-family="Arial, sans-serif" font-size="25">Automações, agentes de IA e integrações para sua operação.</text>
+</svg>

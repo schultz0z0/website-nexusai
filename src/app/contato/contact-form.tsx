@@ -1,14 +1,18 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import { useActionState, useId, useState } from "react";
+import Link from "next/link";
+import { useActionState, useEffect, useId, useRef } from "react";
+
+import { CONTACT_COPY } from "@/lib/content";
+import { trackEvent } from "@/lib/tracking";
 
 import { enviarMensagem } from "./actions";
-import styles from "./contato-cinematic.module.css";
+import styles from "./contact-page.module.css";
 
 type FormState =
-  | { ok: true }
+  | { ok: true; captured: boolean }
   | { ok: false; error: string }
   | null;
 
@@ -18,136 +22,87 @@ export function ContactForm() {
     null,
   );
   const formId = useId();
-  const [setorSelected, setSetorSelected] = useState("");
-  const [cargoSelected, setCargoSelected] = useState("");
+  const formStarted = useRef(false);
+
+  useEffect(() => {
+    if (state?.ok && state.captured) trackEvent("lead_captured");
+  }, [state]);
 
   if (state?.ok === true) {
     return (
       <motion.div
         className={styles.successState}
-        initial={{ opacity: 0, y: 14 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         role="status"
         aria-live="polite"
       >
+        <Check aria-hidden="true" />
         <div>
-          <span className={styles.successSignal} aria-hidden="true">
-            <Check />
-          </span>
-          <h2>Mensagem recebida</h2>
-          <p>
-            A equipe vai responder em até 24h úteis com o próximo passo mais
-            útil para o seu cenário.
-          </p>
+          <h2>Contexto recebido</h2>
+          <p>Sua mensagem chegou e será lida pela equipe.</p>
         </div>
       </motion.div>
     );
   }
 
   return (
-    <form action={formAction} className={styles.contactForm} noValidate>
+    <form
+      action={formAction}
+      className={styles.form}
+      noValidate
+      onFocus={(event) => {
+        const isFormControl = event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement;
+        if (!formStarted.current && isFormControl) {
+          formStarted.current = true;
+          trackEvent("form_start");
+        }
+      }}
+      onSubmit={() => trackEvent("form_submit")}
+    >
       <input
         type="text"
         name="_gotcha_hp"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
-        style={{ display: "none" }}
-        className="absolute opacity-0 pointer-events-none h-0 w-0"
+        className={styles.honeypot}
       />
 
       <div className={styles.formTopline} aria-hidden="true">
         <span>Contexto inicial</span>
-        <span>Lido pela equipe</span>
+        <span>Lido por uma pessoa</span>
       </div>
 
       <div className={styles.fieldGrid}>
-        <FormField id={`${formId}-nome`} label="Nome" name="nome" required />
+        <FormField
+          id={`${formId}-nome`}
+          label={CONTACT_COPY.fields[0].label}
+          name="nome"
+          required
+        />
         <FormField
           id={`${formId}-email`}
-          label="Email"
+          label={CONTACT_COPY.fields[1].label}
           name="email"
           type="email"
           required
         />
-        <FormField
-          id={`${formId}-empresa`}
-          label="Empresa"
-          name="empresa"
-          required
-        />
-        <FormSelect
-          id={`${formId}-cargo`}
-          label="Cargo"
-          name="cargo"
-          options={CARGOS}
-          value={cargoSelected}
-          onChange={(e) => setCargoSelected(e.target.value)}
-        />
       </div>
 
-      <AnimatePresence>
-        {cargoSelected === "Outro" && (
-          <motion.div
-            key="cargo-outro"
-            initial={{ opacity: 0, height: 0, marginTop: 0 }}
-            animate={{ opacity: 1, height: "auto", marginTop: 12 }}
-            exit={{ opacity: 0, height: 0, marginTop: 0 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden mb-3"
-          >
-            <FormField
-              id={`${formId}-cargo-outro`}
-              label="Qual é o seu cargo?"
-              name="cargo_outro"
-              placeholder="Ex: Head de Inovação, PMO..."
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <FormField
+        id={`${formId}-empresa`}
+        label={CONTACT_COPY.fields[2].label}
+        name="empresa"
+      />
 
-      <div className={styles.fieldBlock}>
-        <FormSelect
-          id={`${formId}-setor`}
-          label="Setor principal"
-          name="setor"
-          options={SETORES}
-          value={setorSelected}
-          onChange={(e) => setSetorSelected(e.target.value)}
-        />
-        <AnimatePresence>
-          {setorSelected === "Outro" && (
-            <motion.div
-              key="setor-outro"
-              initial={{ opacity: 0, height: 0, marginTop: 0 }}
-              animate={{ opacity: 1, height: "auto", marginTop: 12 }}
-              exit={{ opacity: 0, height: 0, marginTop: 0 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
-              <FormField
-                id={`${formId}-setor-outro`}
-                label="Qual é o seu setor?"
-                name="setor_outro"
-                placeholder="Ex: Logística, Saúde, Advocacia..."
-                required
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <div className={styles.fieldBlock}>
-        <FormTextarea
-          id={`${formId}-mensagem`}
-          label="Onde sua operação perde tempo hoje?"
-          name="mensagem"
-          required
-          minLength={10}
-          maxLength={500}
-        />
-      </div>
+      <FormTextarea
+        id={`${formId}-mensagem`}
+        label={CONTACT_COPY.fields[3].label}
+        name="mensagem"
+        required
+      />
 
       {state && state.ok === false ? (
         <motion.p
@@ -161,48 +116,19 @@ export function ContactForm() {
         </motion.p>
       ) : null}
 
-      <div className={styles.formActions}>
-        <a
-          href="mailto:raphaelschultz12@gmail.com,esttevao.henrique@hotmail.com"
-          className={styles.directLink}
-        >
-          Ou escreva direto: raphaelschultz12@gmail.com ou esttevao.henrique@hotmail.com
-        </a>
-        <motion.button
-          type="submit"
-          disabled={pending}
-          className={styles.submitButton}
-          whileHover={pending ? undefined : { y: -2 }}
-          whileTap={pending ? undefined : { scale: 0.985 }}
-          transition={{ duration: 0.16 }}
-        >
-          {pending ? "Enviando..." : "Enviar contexto"}
-          <ArrowRight aria-hidden="true" />
-        </motion.button>
-      </div>
+      <button type="submit" disabled={pending} className={styles.submitButton}>
+        {pending ? "Enviando..." : "Enviar contexto"}
+        <ArrowRight aria-hidden="true" />
+      </button>
+      <p className="text-xs leading-relaxed text-foreground/55">
+        Ao enviar, usaremos os dados somente para responder à sua solicitação. Veja a{" "}
+        <Link href="/privacidade" className="underline underline-offset-2 transition-colors hover:text-foreground">
+          Política de Privacidade
+        </Link>.
+      </p>
     </form>
   );
 }
-
-const CARGOS = [
-  "Gerente",
-  "Coordenador",
-  "Superintendente",
-  "Diretor",
-  "Sócio/Dono",
-  "Outro",
-] as const;
-
-const SETORES = [
-  "Atendimento",
-  "Operações",
-  "Vendas",
-  "Marketing",
-  "TI/Tech",
-  "Financeiro",
-  "RH",
-  "Outro",
-] as const;
 
 function FormField({
   id,
@@ -210,14 +136,12 @@ function FormField({
   name,
   type = "text",
   required,
-  placeholder,
 }: {
   id: string;
   label: string;
   name: string;
   type?: "text" | "email";
   required?: boolean;
-  placeholder?: string;
 }) {
   return (
     <div className={styles.field}>
@@ -227,40 +151,8 @@ function FormField({
         name={name}
         type={type}
         required={required}
-        placeholder={placeholder}
+        aria-label={label}
       />
-    </div>
-  );
-}
-
-function FormSelect({
-  id,
-  label,
-  name,
-  options,
-  value,
-  onChange,
-}: {
-  id: string;
-  label: string;
-  name: string;
-  options: readonly string[];
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}) {
-  return (
-    <div className={styles.field}>
-      <FieldLabel id={id} label={label} />
-      <select id={id} name={name} value={value} onChange={onChange}>
-        <option value="" disabled>
-          Selecione...
-        </option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
     </div>
   );
 }
@@ -270,15 +162,11 @@ function FormTextarea({
   label,
   name,
   required,
-  minLength,
-  maxLength,
 }: {
   id: string;
   label: string;
   name: string;
   required?: boolean;
-  minLength?: number;
-  maxLength?: number;
 }) {
   return (
     <div className={styles.field}>
@@ -287,9 +175,10 @@ function FormTextarea({
         id={id}
         name={name}
         required={required}
-        minLength={minLength}
-        maxLength={maxLength}
+        minLength={10}
+        maxLength={1000}
         rows={5}
+        aria-label={label}
       />
     </div>
   );
@@ -307,11 +196,7 @@ function FieldLabel({
   return (
     <label htmlFor={id}>
       {label}
-      {required ? (
-        <span aria-hidden="true" className={styles.required}>
-          *
-        </span>
-      ) : null}
+      {required ? <span aria-hidden="true">*</span> : null}
     </label>
   );
 }

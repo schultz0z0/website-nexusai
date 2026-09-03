@@ -4,7 +4,7 @@ export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
 /**
- * Apple touch icon — reaproveita o mesmo "N" do nav (mesma geometria do NexusMark).
+ * Apple touch icon — símbolo tipográfico provisório da Prometeus.
  * Gerado em build time pelo Next (route handler estático).
  */
 export default function AppleIcon() {
@@ -25,7 +25,7 @@ export default function AppleIcon() {
           letterSpacing: -4,
         }}
       >
-        N
+        P
       </div>
     ),
     { ...size }

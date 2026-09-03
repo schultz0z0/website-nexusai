@@ -3,15 +3,37 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: solucoes-nexus-website
+      args:
+        NEXT_PUBLIC_GTM_ID: ${NEXT_PUBLIC_GTM_ID:-}
+        NEXT_PUBLIC_GA4_MEASUREMENT_ID: ${NEXT_PUBLIC_GA4_MEASUREMENT_ID:-}
+        NEXT_PUBLIC_META_PIXEL_ID: ${NEXT_PUBLIC_META_PIXEL_ID:-}
+        NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:-}
+        NEXT_PUBLIC_BING_SITE_VERIFICATION: ${NEXT_PUBLIC_BING_SITE_VERIFICATION:-}
+    container_name: prometeus-website
     restart: unless-stopped
     environment:
       - NODE_ENV=production
       - PORT=3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.solucoes-nexus.rule=Host(`solucoes-nexus.tech`) || Host(`www.solucoes-nexus.tech`)"
-      - "traefik.http.routers.solucoes-nexus.entrypoints=websecure"
-      - "traefik.http.routers.solucoes-nexus.tls=true"
-      - "traefik.http.routers.solucoes-nexus.tls.certresolver=letsencrypt"
-      - "traefik.http.services.solucoes-nexus.loadbalancer.server.port=3000"
+      - "traefik.http.routers.prometeus.rule=Host(`solucoes-nexus.tech`)"
+      - "traefik.http.routers.prometeus.entrypoints=websecure"
+      - "traefik.http.routers.prometeus.tls=true"
+      - "traefik.http.routers.prometeus.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prometeus.middlewares=prometeus-security"
+      - "traefik.http.routers.prometeus-www.rule=Host(`www.solucoes-nexus.tech`)"
+      - "traefik.http.routers.prometeus-www.entrypoints=websecure"
+      - "traefik.http.routers.prometeus-www.tls=true"
+      - "traefik.http.routers.prometeus-www.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prometeus-www.middlewares=prometeus-www-redirect,prometeus-security"
+      - "traefik.http.routers.prometeus-www.service=prometeus"
+      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.regex=^https?://www\\.solucoes-nexus\\.tech/(.*)"
+      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.replacement=https://solucoes-nexus.tech/$$1"
+      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.permanent=true"
+      - "traefik.http.middlewares.prometeus-security.headers.contentTypeNosniff=true"
+      - "traefik.http.middlewares.prometeus-security.headers.frameDeny=true"
+      - "traefik.http.middlewares.prometeus-security.headers.referrerPolicy=strict-origin-when-cross-origin"
+      - "traefik.http.middlewares.prometeus-security.headers.permissionsPolicy=camera=(), microphone=(), geolocation=()"
+      - "traefik.http.middlewares.prometeus-security.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.prometeus-security.headers.stsIncludeSubdomains=true"
+      - "traefik.http.services.prometeus.loadbalancer.server.port=3000"

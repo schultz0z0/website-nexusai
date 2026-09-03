@@ -2,17 +2,19 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
+import { SITE_OG_IMAGE } from "@/lib/site-metadata";
 
-import { ContatoCinematic } from "./contato-cinematic";
+import { ContactPage } from "./contact-page";
 
-const TITLE = "Fale com a Nexus AI · Diagnóstico inicial";
+const TITLE = "Diagnóstico de automação com IA | Prometeus";
 const DESCRIPTION =
-  "Conte onde sua operação perde tempo. A equipe responde em até 24h úteis e organiza o próximo passo com você.";
+  "Conte onde sua operação perde tempo. A Prometeus analisa o contexto e organiza o próximo passo para um diagnóstico de automação com IA.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: `${COMPANY.url}/contato` },
+  alternates: { canonical: "/contato" },
+  robots: { index: true, follow: true },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -20,20 +22,13 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
-    images: [
-      {
-        url: `${COMPANY.url}/images/cinematic/contact-hero-desktop.webp`,
-        width: 1586,
-        height: 992,
-        alt: "Conversa de diagnóstico com a equipe Nexus AI",
-      },
-    ],
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Prometeus — diagnóstico de automação com IA" }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${COMPANY.url}/images/cinematic/contact-hero-desktop.webp`],
+    images: [{ url: SITE_OG_IMAGE, alt: "Prometeus — diagnóstico de automação com IA" }],
   },
 };
 
@@ -43,11 +38,16 @@ const contactSchema = {
   name: TITLE,
   description: DESCRIPTION,
   url: `${COMPANY.url}/contato`,
-  contactOption: {
-    "@type": "ContactOption",
-    contactType: "sales",
-    email: COMPANY.email,
-    availableLanguage: ["pt-BR"],
+  publisher: {
+    "@type": "Organization",
+    name: COMPANY.name,
+    url: COMPANY.url,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: COMPANY.email,
+      availableLanguage: ["pt-BR"],
+    },
   },
 };
 
@@ -55,7 +55,7 @@ export default function ContatoPage() {
   return (
     <>
       <JsonLd schema={contactSchema} />
-      <ContatoCinematic />
+      <ContactPage />
     </>
   );
 }

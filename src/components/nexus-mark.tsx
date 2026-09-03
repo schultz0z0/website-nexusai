@@ -3,7 +3,7 @@ type NexusMarkProps = {
 };
 
 /**
- * "N" mark da marca Nexus AI — usado no nav e no favicon (via ImageResponse / SVG).
+ * Símbolo tipográfico da marca Prometeus — usado em superfícies compactas.
  * Mantém viewBox e geometria em um único lugar para garantir consistência visual
  * entre o site e o ícone que aparece na aba do navegador / preview de link.
  */
@@ -17,7 +17,7 @@ export function NexusMark({ className }: NexusMarkProps) {
     >
       <rect x="2" y="2" width="20" height="20" rx="6" className="fill-foreground" />
       <path
-        d="M7 17 V7 L17 17 V7"
+        d="M8 17 V7 H14.5 A3.5 3.5 0 0 1 14.5 14 H8"
         stroke="currentColor"
         strokeWidth="2.2"
         strokeLinecap="round"

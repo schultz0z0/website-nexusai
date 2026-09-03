@@ -1,91 +1,42 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
-  Bot,
   Check,
   Clock3,
   Gauge,
   LineChart,
-  LockKeyholeOpen,
   PackageSearch,
   RefreshCcw,
-  ShieldCheck,
-  TimerReset,
   Workflow,
   Zap,
+  type LucideIcon,
 } from "lucide-react";
 
 import { CinematicValueStage } from "@/components/cinematic-value-stage";
-import {
-  CopilotMockDashboard,
-  StockMockDashboard,
-} from "@/components/mock-dashboards";
-import { FAQ_HOME, METRICAS } from "@/lib/content";
+import { CustomCapabilities } from "@/components/home/custom-capabilities";
+import { DecisionAssurances } from "@/components/home/decision-assurances";
+import { FinalConversion } from "@/components/home/final-conversion";
+import { FunctionalDemos } from "@/components/home/functional-demos";
+import { TechnologyStrip } from "@/components/home/technology-strip";
+import { HOME_COPY } from "@/lib/content";
 
 import styles from "./conversion-home.module.css";
 
-const VALUE_OUTCOMES = [
-  {
-    icon: Clock3,
-    title: "Tempo recuperado",
-    description: "Menos horas presas em tarefas operacionais.",
-  },
-  {
-    icon: RefreshCcw,
-    title: "Menos retrabalho",
-    description: "Fluxos conectados, dados consistentes e menos erro manual.",
-  },
-  {
-    icon: LineChart,
-    title: "Mais capacidade para crescer",
-    description: "A mesma equipe entrega mais sem inflar a operação.",
-  },
-] as const;
+const VALUE_ICONS: readonly LucideIcon[] = [Clock3, RefreshCcw, LineChart];
+const FLOW_ICONS: readonly LucideIcon[] = [PackageSearch, Workflow, Gauge];
 
-const FLOW_STEPS = [
-  {
-    eyebrow: "01 · Diagnóstico",
-    title: "Encontramos o gargalo",
-    detail: "Processos, filas, dados e custo do trabalho manual.",
-    icon: PackageSearch,
-  },
-  {
-    eyebrow: "02 · Automação",
-    title: "Construímos o fluxo",
-    detail: "IA, integrações e regras sob medida para a sua rotina.",
-    icon: Workflow,
-  },
-  {
-    eyebrow: "03 · Resultado",
-    title: "Acompanhamos o ganho",
-    detail: "Tempo, qualidade e capacidade monitorados em produção.",
-    icon: Gauge,
-  },
-] as const;
+const VALUE_OUTCOMES = HOME_COPY.value.outcomes.map((outcome, index) => ({
+  ...outcome,
+  icon: VALUE_ICONS[index],
+}));
 
-const TRUST_POINTS = [
-  {
-    icon: PackageSearch,
-    title: "Diagnóstico antes da proposta",
-    description: "Primeiro entendemos o processo. Depois fechamos escopo.",
-  },
-  {
-    icon: LineChart,
-    title: "ROI estimado",
-    description: "Você sabe o ganho esperado e o que vale priorizar.",
-  },
-  {
-    icon: TimerReset,
-    title: "Primeira entrega em 2–3 semanas",
-    description: "Valor aparece em ciclos curtos, sem projeto interminável.",
-  },
-  {
-    icon: LockKeyholeOpen,
-    title: "Código, dados e documentação seus",
-    description: "Stack aberta e operação sem dependência artificial.",
-  },
-] as const;
+const FLOW_STEPS = HOME_COPY.value.flow.map((step, index) => ({
+  eyebrow: step.step,
+  title: step.title,
+  detail: step.description,
+  icon: FLOW_ICONS[index],
+}));
 
 export function ConversionHome() {
   return (
@@ -98,11 +49,12 @@ export function ConversionHome() {
         <div className={styles.heroMedia} data-home-hero-media aria-hidden="true">
           <Image
             data-home-hero-poster
-            src="/images/cinematic/home-hero-touch-desktop.png"
+            src="/images/cinematic/home-hero-touch-desktop.webp"
             alt=""
             width={1672}
             height={941}
             sizes="100vw"
+            quality={90}
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -132,35 +84,27 @@ export function ConversionHome() {
             </p>
 
             <div className={styles.heroActions}>
-              <Link className={styles.primaryButton} href="/contato">
+              <Link className={styles.primaryButton} href="/contato" data-track-cta="hero_contact">
                 Descobrir onde aplicar IA
                 <ArrowRight aria-hidden="true" />
               </Link>
-            </div>
-
-            <div className={styles.heroProof} aria-label="Provas de experiência">
-              <span>Integrada à sua operação</span>
-              <span>Código e dados são seus</span>
-              <span>Primeira entrega em 2–3 semanas</span>
             </div>
           </div>
         </div>
       </section>
 
+      <TechnologyStrip />
+
       <CinematicValueStage className={styles.valueStage}>
         <div className={styles.valueOrbit} data-value-orbit aria-hidden="true" />
         <div className={`${styles.shell} ${styles.valueGrid}`}>
           <div className={styles.valueCopy}>
-            <p className={styles.sectionEyebrow}>Da fricção ao resultado</p>
+            <p className={styles.sectionEyebrow}>{HOME_COPY.value.eyebrow}</p>
             <h2>
-              Seu gargalo vira
-              <span>capacidade.</span>
+              {HOME_COPY.value.title[0]}
+              <span>{HOME_COPY.value.title[1]}</span>
             </h2>
-            <p className={styles.valueLead}>
-              Mapeamos o trabalho repetitivo, automatizamos o fluxo e
-              acompanhamos o resultado. Sua equipe recupera tempo sem trocar
-              toda a operação.
-            </p>
+            <p className={styles.valueLead}>{HOME_COPY.value.lead}</p>
 
             <div className={styles.outcomeList}>
               {VALUE_OUTCOMES.map((outcome) => {
@@ -218,7 +162,7 @@ export function ConversionHome() {
             <div className={styles.flowFooter}>
               <span>
                 <Zap aria-hidden="true" />
-                Sem trocar toda a sua operação
+                {HOME_COPY.value.guardrail}
               </span>
               <span>Integração + IA + acompanhamento</span>
             </div>
@@ -226,185 +170,10 @@ export function ConversionHome() {
         </div>
       </CinematicValueStage>
 
-      <section
-        id="proof"
-        data-home-chapter="proof"
-        className={styles.proofSection}
-      >
-        <div className={styles.shell}>
-          <div className={styles.proofHeading}>
-            <p className={styles.sectionEyebrow}>Experiência em produção</p>
-            <h2>IA aplicada onde o trabalho acontece.</h2>
-          </div>
-          <div className={styles.proofGrid}>
-            {METRICAS.map((metric) => (
-              <article className={styles.proofCard} key={metric.label}>
-                <p>{metric.eyebrow}</p>
-                <strong>
-                  {metric.prefix}
-                  {metric.value}
-                  {metric.suffix}
-                </strong>
-                <h3>{metric.label}</h3>
-                <span>{metric.note}</span>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="cases"
-        data-home-chapter="cases"
-        className={styles.casesSection}
-      >
-        <div className={styles.shell}>
-          <div className={styles.casesIntro}>
-            <div>
-              <p className={styles.sectionEyebrow}>Dois exemplos. Um princípio.</p>
-              <h2>Resultado antes da tecnologia.</h2>
-            </div>
-            <p>
-              A solução muda conforme o gargalo. O objetivo é o mesmo: tirar
-              trabalho repetitivo do caminho e devolver capacidade para a
-              equipe.
-            </p>
-          </div>
-
-          <article className={styles.caseCard}>
-            <div className={styles.caseCopy}>
-              <span className={styles.caseIcon}>
-                <PackageSearch aria-hidden="true" />
-              </span>
-              <p className={styles.caseLabel}>Nexus Stock</p>
-              <h3>Estoque sem achismo.</h3>
-              <p>
-                Previsão de demanda, alertas de ruptura e sugestão de compra
-                transformam planilhas dispersas em decisões mais rápidas.
-              </p>
-              <ul>
-                <li><Check aria-hidden="true" /> Menos capital parado</li>
-                <li><Check aria-hidden="true" /> Menos ruptura surpresa</li>
-                <li><Check aria-hidden="true" /> Decisão com contexto</li>
-              </ul>
-              <Link href="/solucoes">
-                Ver como aplicamos
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </div>
-            <div className={styles.productFrame}>
-              <StockMockDashboard />
-            </div>
-          </article>
-
-          <article className={`${styles.caseCard} ${styles.caseCardReverse}`}>
-            <div className={styles.caseCopy}>
-              <span className={styles.caseIcon}>
-                <Bot aria-hidden="true" />
-              </span>
-              <p className={styles.caseLabel}>Nexus Copilot</p>
-              <h3>Marketing sem fila.</h3>
-              <p>
-                Pesquisa, copy, imagem e análise de concorrência avançam no
-                mesmo fluxo. O time aprova, ajusta e publica mais rápido.
-              </p>
-              <ul>
-                <li><Check aria-hidden="true" /> Briefings mais completos</li>
-                <li><Check aria-hidden="true" /> Menos espera entre áreas</li>
-                <li><Check aria-hidden="true" /> Mais campanhas em movimento</li>
-              </ul>
-              <Link href="/solucoes">
-                Conhecer soluções
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </div>
-            <div className={styles.productFrame}>
-              <CopilotMockDashboard />
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section
-        id="trust"
-        data-home-chapter="trust"
-        className={styles.trustSection}
-      >
-        <div className={styles.shell}>
-          <div className={styles.trustHeader}>
-            <p className={styles.sectionEyebrow}>Menos risco para começar</p>
-            <h2>Clareza antes de compromisso.</h2>
-            <p>
-              Você entende o que automatizar, em que ordem e com qual impacto
-              antes de entrar em uma implementação maior.
-            </p>
-          </div>
-          <div className={styles.trustGrid}>
-            {TRUST_POINTS.map((point) => {
-              const Icon = point.icon;
-              return (
-                <article className={styles.trustCard} key={point.title}>
-                  <Icon aria-hidden="true" />
-                  <h3>{point.title}</h3>
-                  <p>{point.description}</p>
-                </article>
-              );
-            })}
-          </div>
-          <div className={styles.trustLink}>
-            <ShieldCheck aria-hidden="true" />
-            <span>Você mantém o controle da decisão e da operação.</span>
-            <Link href="/processo">
-              Ver nosso processo
-              <ArrowRight aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="cta"
-        data-home-chapter="cta"
-        className={styles.ctaSection}
-      >
-        <div className={styles.ctaGlow} aria-hidden="true" />
-        <div className={styles.shell}>
-          <div className={styles.ctaCard}>
-            <p className={styles.sectionEyebrow}>Diagnóstico inicial gratuito</p>
-            <h2>Descubra onde sua operação perde tempo e margem.</h2>
-            <p>
-              Em uma conversa, mapeamos o ponto de maior alavancagem e mostramos
-              qual próximo passo faz sentido — inclusive se não for construir
-              nada agora.
-            </p>
-            <div className={styles.ctaActions}>
-              <Link className={styles.primaryButton} href="/contato">
-                Mapear meu gargalo
-                <ArrowRight aria-hidden="true" />
-              </Link>
-              <span>Sem compromisso · retorno em até 1 dia útil</span>
-            </div>
-          </div>
-
-          <div className={styles.faq}>
-            <div className={styles.faqHeading}>
-              <p className={styles.sectionEyebrow}>Perguntas frequentes</p>
-              <h2>Decida sem ponto cego.</h2>
-            </div>
-            <div className={styles.faqList}>
-              {FAQ_HOME.map((item) => (
-                <details key={item.q}>
-                  <summary>
-                    {item.q}
-                    <span aria-hidden="true">+</span>
-                  </summary>
-                  <p>{item.a}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CustomCapabilities />
+      <FunctionalDemos />
+      <DecisionAssurances />
+      <FinalConversion />
     </main>
   );
 }

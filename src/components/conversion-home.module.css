@@ -14,7 +14,7 @@
 
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(100svh - clamp(6rem, 11svh, 7rem));
   display: grid;
   align-items: center;
   isolation: isolate;
@@ -32,6 +32,9 @@
 
 .heroMedia {
   z-index: -5;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(13, 31, 59, 0.55) 0%, rgba(4, 8, 16, 0.94) 62%, #02040a 100%),
+    #02040a;
 }
 
 .heroMedia img {
@@ -47,8 +50,115 @@
 .heroShade {
   z-index: -4;
   background:
+    linear-gradient(90deg, #02050c 0%, rgba(2, 5, 12, 0.72) 5%, transparent 20%, transparent 80%, rgba(2, 5, 12, 0.72) 95%, #02050c 100%),
     radial-gradient(circle at 50% 50%, transparent 0 22%, rgba(2, 5, 12, 0.12) 52%, rgba(2, 5, 12, 0.42) 100%),
     linear-gradient(180deg, rgba(2, 5, 12, 0.08) 0%, rgba(2, 5, 12, 0.08) 42%, rgba(2, 5, 12, 0.68) 72%, #06080d 100%);
+}
+
+@media (min-width: 768px) {
+  .heroMedia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heroMedia::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: -4%;
+    pointer-events: none;
+    opacity: 0.3;
+    background:
+      linear-gradient(rgba(2, 5, 12, 0.42), rgba(2, 5, 12, 0.66)),
+      url("/images/cinematic/home-hero-touch-desktop.webp") center / cover no-repeat;
+    filter: blur(30px) saturate(0.72);
+    transform: translateY(-1.5rem) scale(1.04);
+  }
+
+  .heroMedia::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 56%,
+        rgba(2, 5, 12, 0.18) 70%,
+        rgba(2, 5, 12, 0.62) 86%,
+        #02050c 100%
+      ),
+      linear-gradient(
+        90deg,
+        #02050c 0%,
+        rgba(2, 5, 12, 0.9) 4%,
+        rgba(2, 5, 12, 0.52) 13%,
+        transparent 24%,
+        transparent 76%,
+        rgba(2, 5, 12, 0.52) 87%,
+        rgba(2, 5, 12, 0.9) 96%,
+        #02050c 100%
+      );
+  }
+
+  .heroMedia img {
+    position: relative;
+    z-index: 1;
+    inset: auto;
+    width: auto;
+    max-width: min(100%, 1600px);
+    height: 100%;
+    object-fit: contain;
+    object-position: center 46%;
+    transform: translateY(
+      clamp(-4.5rem, calc(-4.5svh - 1.5rem), -3.25rem)
+    );
+    -webkit-mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.35) 9%,
+        #000 20%,
+        #000 80%,
+        rgba(0, 0, 0, 0.35) 91%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 64%,
+        rgba(0, 0, 0, 0.75) 76%,
+        rgba(0, 0, 0, 0.28) 89%,
+        transparent 100%
+      );
+    mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.35) 9%,
+        #000 20%,
+        #000 80%,
+        rgba(0, 0, 0, 0.35) 91%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 64%,
+        rgba(0, 0, 0, 0.75) 76%,
+        rgba(0, 0, 0, 0.28) 89%,
+        transparent 100%
+      );
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
 }
 
 .grain {
@@ -101,7 +211,7 @@
 .heroContent {
   width: min(960px, 82vw);
   margin-inline: auto;
-  padding: 55svh 0 clamp(2rem, 5svh, 4rem);
+  padding: 49svh 0 clamp(2rem, 5svh, 4rem);
   text-align: center;
 }
 
@@ -234,31 +344,6 @@
 .caseCopy a:hover svg,
 .trustLink a:hover svg {
   transform: translateX(3px);
-}
-
-.heroProof {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem 1.7rem;
-  justify-content: center;
-  margin-top: 1.35rem;
-  color: rgba(229, 236, 248, 0.62);
-  font-size: 0.76rem;
-}
-
-.heroProof span {
-  position: relative;
-}
-
-.heroProof span:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: -0.9rem;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #78a9fa;
 }
 
 .scrollCue {
@@ -990,10 +1075,10 @@
   }
 }
 
-@media (min-width: 768px) and (max-height: 719px) {
+@media (min-width: 768px) and (max-height: 759px) {
   .heroContent {
-    padding-top: 56svh;
-    padding-bottom: 1.4rem;
+    padding-top: 40svh;
+    padding-bottom: 1rem;
   }
 
   .hero h1 {
@@ -1009,10 +1094,6 @@
 
   .heroActions {
     margin-top: 1rem;
-  }
-
-  .heroProof {
-    margin-top: 0.85rem;
   }
 
   .valueStage[data-motion-mode="cinematic"] .valueGrid {
@@ -1036,12 +1117,30 @@
   }
 
   .heroMedia img {
-    inset: clamp(7rem, 15svh, 8.75rem) 0 auto;
+    inset: clamp(4.75rem, 10svh, 6rem) 0 auto;
     width: 100%;
     height: auto;
     object-fit: contain;
     object-position: center;
     transform: none;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.55) 8%,
+      #000 18%,
+      #000 68%,
+      rgba(0, 0, 0, 0.55) 84%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.55) 8%,
+      #000 18%,
+      #000 68%,
+      rgba(0, 0, 0, 0.55) 84%,
+      transparent 100%
+    );
   }
 
   .heroShade {
@@ -1089,19 +1188,6 @@
 
   .hero .primaryButton {
     width: min(100%, 320px);
-  }
-
-  .heroProof {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.35rem;
-    margin-top: 1rem;
-    font-size: 0.62rem;
-    line-height: 1.35;
-  }
-
-  .heroProof span::after {
-    display: none;
   }
 
   .scrollCue {

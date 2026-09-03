@@ -1,6 +1,6 @@
-# Nexus AI — website institucional
+# Prometeus — website institucional
 
-Site Next.js da Nexus AI, com experiências cinematográficas responsivas nas rotas Home, Soluções, Processo e Contato.
+Site Next.js da Prometeus, com experiências cinematográficas responsivas nas rotas Home, Soluções, Processo e Contato. O domínio canônico permanece `https://solucoes-nexus.tech` nesta etapa de transição.
 
 ## Requisitos
 
