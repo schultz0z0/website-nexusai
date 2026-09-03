@@ -16,7 +16,7 @@ import {
 } from "../src/lib/tracking.ts";
 
 test("uses the official canonical domain and publishes only indexable routes", () => {
-  assert.equal(COMPANY.url, "https://solucoes-nexus.tech");
+  assert.equal(COMPANY.url, "https://agenciaprometeus.com.br");
   assert.deepEqual(
     sitemap().map((entry) => new URL(entry.url).pathname),
     ["/", "/contato", "/privacidade", "/cookies"],

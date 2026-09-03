@@ -4,7 +4,7 @@ test.describe("SEO, discovery and consent", () => {
   test("publishes crawl resources and a real 404", async ({ request }) => {
     const resources = [
       ["/robots.txt", "User-Agent: *"],
-      ["/sitemap.xml", "solucoes-nexus.tech"],
+      ["/sitemap.xml", "agenciaprometeus.com.br"],
       ["/llms.txt", "# Prometeus"],
     ] as const;
 
@@ -22,11 +22,11 @@ test.describe("SEO, discovery and consent", () => {
     await page.goto("/?utm_source=test&utm_campaign=qa");
     await expect(page).toHaveTitle(/Prometeus \| Automação e IA sob medida para empresas/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Automações, agentes de IA/);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://solucoes-nexus.tech");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://agenciaprometeus.com.br");
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /og-image\.png/);
   });
 
-  test("publishes the Prometeus identity while keeping the current domain", async ({ page }) => {
+  test("publishes the Prometeus identity on its canonical domain", async ({ page }) => {
     for (const path of ["/", "/contato", "/privacidade", "/cookies"]) {
       await page.goto(path);
       await expect(page.locator("body")).not.toContainText("Nexus AI");
@@ -36,7 +36,7 @@ test.describe("SEO, discovery and consent", () => {
     await page.goto("/");
     await expect(page.locator('[data-site-navigation="true"] a[aria-label="Prometeus — voltar ao início"]')).toBeVisible();
     await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute("content", "Prometeus");
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://solucoes-nexus.tech");
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://agenciaprometeus.com.br");
   });
 
   test("emits baseline security headers", async ({ request }) => {

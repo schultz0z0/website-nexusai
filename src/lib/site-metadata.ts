@@ -1,4 +1,4 @@
-export const SITE_URL = "https://solucoes-nexus.tech";
+export const SITE_URL = "https://agenciaprometeus.com.br";
 export const SITE_OG_IMAGE = "/og-image.png";
 
 export const SITE_TITLE = "Prometeus | Automação e IA sob medida para empresas";

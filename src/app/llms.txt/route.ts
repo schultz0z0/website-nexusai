@@ -4,13 +4,13 @@ const CONTENT = `# Prometeus
 
 ## Site
 
-- [Início](https://solucoes-nexus.tech/): visão geral da proposta da Prometeus.
-- [Contato](https://solucoes-nexus.tech/contato): solicitação de diagnóstico inicial.
+- [Início](https://agenciaprometeus.com.br/): visão geral da proposta da Prometeus.
+- [Contato](https://agenciaprometeus.com.br/contato): solicitação de diagnóstico inicial.
 
 ## Legal
 
-- [Política de Privacidade](https://solucoes-nexus.tech/privacidade)
-- [Política de Cookies](https://solucoes-nexus.tech/cookies)
+- [Política de Privacidade](https://agenciaprometeus.com.br/privacidade)
+- [Política de Cookies](https://agenciaprometeus.com.br/cookies)
 `;
 
 export function GET() {

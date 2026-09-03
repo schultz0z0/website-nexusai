@@ -1,3 +1,5 @@
+name: prometeus-site
+
 services:
   website:
     build:
@@ -16,19 +18,19 @@ services:
       - PORT=3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prometeus.rule=Host(`solucoes-nexus.tech`)"
+      - "traefik.http.routers.prometeus.rule=Host(`agenciaprometeus.com.br`)"
       - "traefik.http.routers.prometeus.entrypoints=websecure"
       - "traefik.http.routers.prometeus.tls=true"
       - "traefik.http.routers.prometeus.tls.certresolver=letsencrypt"
       - "traefik.http.routers.prometeus.middlewares=prometeus-security"
-      - "traefik.http.routers.prometeus-www.rule=Host(`www.solucoes-nexus.tech`)"
+      - "traefik.http.routers.prometeus-www.rule=Host(`www.agenciaprometeus.com.br`)"
       - "traefik.http.routers.prometeus-www.entrypoints=websecure"
       - "traefik.http.routers.prometeus-www.tls=true"
       - "traefik.http.routers.prometeus-www.tls.certresolver=letsencrypt"
       - "traefik.http.routers.prometeus-www.middlewares=prometeus-www-redirect,prometeus-security"
       - "traefik.http.routers.prometeus-www.service=prometeus"
-      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.regex=^https?://www\\.solucoes-nexus\\.tech/(.*)"
-      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.replacement=https://solucoes-nexus.tech/$$1"
+      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.regex=^https?://www\\.agenciaprometeus\\.com\\.br/(.*)"
+      - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.replacement=https://agenciaprometeus.com.br/$$1"
       - "traefik.http.middlewares.prometeus-www-redirect.redirectregex.permanent=true"
       - "traefik.http.middlewares.prometeus-security.headers.contentTypeNosniff=true"
       - "traefik.http.middlewares.prometeus-security.headers.frameDeny=true"

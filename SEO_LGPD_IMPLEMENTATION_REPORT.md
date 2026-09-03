@@ -1,7 +1,7 @@
 # Relatório de implementação — SEO, LGPD, tracking e performance da Prometeus
 
 Data da revisão local: 31 de agosto de 2026  
-Domínio canônico: `https://solucoes-nexus.tech`
+Domínio canônico: `https://agenciaprometeus.com.br`
 
 ## Resumo
 
@@ -11,7 +11,7 @@ Foram preservados design, copy principal, animações, rotas consolidadas e flux
 
 ## SEO implementado
 
-- Domínio oficial centralizado em `https://solucoes-nexus.tech`.
+- Domínio oficial centralizado em `https://agenciaprometeus.com.br`.
 - Metadata inicial renderizada pelo servidor, `lang="pt-BR"`, title e description específicos para home, contato, privacidade e cookies.
 - Canonical limpo; UTMs não entram no canonical nem no sitemap.
 - Open Graph e Twitter Card com imagem social PNG 1200×630 gerada a partir da identidade existente (`public/og-image.png`), mais compatível com crawlers sociais.

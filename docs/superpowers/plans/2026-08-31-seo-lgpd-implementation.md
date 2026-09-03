@@ -16,7 +16,7 @@
 - Never invent CNPJ, legal name, address, DPO, social profiles, tracking IDs, verification tokens, testimonials, cases, results, or cookies.
 - Optional analytics/marketing remain disabled until explicit consent.
 - Never send form PII or free-text context to analytics, GTM, or Meta Pixel.
-- Canonical base is `https://solucoes-nexus.tech`.
+- Canonical base is `https://agenciaprometeus.com.br`.
 - Work locally only; no commit or push.
 
 ### Task 1: SEO foundation and route metadata

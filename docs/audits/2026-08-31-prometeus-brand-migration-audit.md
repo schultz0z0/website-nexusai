@@ -6,7 +6,7 @@ Data: 31 de agosto de 2026
 Projeto: site institucional Next.js standalone  
 Marca atual: Nexus AI  
 Marca proposta: Prometeus  
-Domínio mantido por enquanto: `https://solucoes-nexus.tech`
+Domínio oficial atual: `https://agenciaprometeus.com.br`
 
 ## 1. Decisão de linguagem recomendada
 
@@ -38,7 +38,7 @@ Regra editorial: não forçar artigo em toda ocorrência. Em chamadas e títulos
 - Tratamento dos exemplos atuais:
   - opção A: `Prometeus Stock` e `Prometeus Copilot`;
   - opção B (recomendada): `Stock` e `Copilot`, apresentados como exemplos de soluções da Prometeus.
-- Domínio: manter `solucoes-nexus.tech` nesta etapa. A migração para um domínio Prometeus fica para uma fase posterior, quando houver domínio escolhido e registrado.
+- Domínio: usar `agenciaprometeus.com.br` como endereço oficial da Prometeus.
 - E-mail institucional definitivo.
 - Logo horizontal, símbolo reduzido e favicon da Prometeus.
 - Razão social, CNPJ, endereço, canal de privacidade e demais dados legais reais.
@@ -151,7 +151,7 @@ Documentos históricos podem continuar mencionando Nexus quando servirem como re
 
 ### Fase 4 — domínio e VPS
 
-Nesta etapa, o domínio `solucoes-nexus.tech` permanece ativo. A infraestrutura deve apenas continuar apontando para ele, enquanto a marca visível, metadata e copy passam a usar Prometeus.
+O domínio oficial é `agenciaprometeus.com.br`. Infraestrutura, metadata, dados estruturados e copy devem publicar esse endereço como origem canônica.
 
 Quando um domínio Prometeus for definido em uma fase posterior:
 

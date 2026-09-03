@@ -12,7 +12,7 @@ Não entregue apenas recomendações. **Inspecione o repositório, implemente as
 
 A **fonte da verdade do conteúdo e posicionamento** é o site publicado:
 
-- Produção: `https://solucoes-nexus.tech/`
+- Produção: `https://agenciaprometeus.com.br/`
 
 Rotas públicas atualmente conhecidas:
 
@@ -360,7 +360,7 @@ Definir um padrão canônico único para todas as rotas públicas.
 
 Base:
 
-`https://solucoes-nexus.tech`
+`https://agenciaprometeus.com.br`
 
 Requisitos:
 
@@ -427,7 +427,7 @@ JSON-LD deve estar serializado com segurança e não pode receber conteúdo livr
 
 Criar/ajustar:
 
-`https://solucoes-nexus.tech/robots.txt`
+`https://agenciaprometeus.com.br/robots.txt`
 
 Objetivo:
 
@@ -443,7 +443,7 @@ Base mínima esperada, adaptando ao framework:
 User-agent: *
 Allow: /
 
-Sitemap: https://solucoes-nexus.tech/sitemap.xml
+Sitemap: https://agenciaprometeus.com.br/sitemap.xml
 ```
 
 Se existirem rotas administrativas, preview, endpoints ou páginas privadas publicamente expostas, trate cada caso corretamente. Para páginas HTML que não devem aparecer no Google, prefira `noindex` quando apropriado.
@@ -456,7 +456,7 @@ Validar sintaxe após a implementação.
 
 Criar sitemap XML no root:
 
-`https://solucoes-nexus.tech/sitemap.xml`
+`https://agenciaprometeus.com.br/sitemap.xml`
 
 Deve conter somente páginas:
 
@@ -467,12 +467,12 @@ Deve conter somente páginas:
 
 Incluir no mínimo, se continuarem públicas:
 
-- `https://solucoes-nexus.tech/`
-- `https://solucoes-nexus.tech/solucoes`
-- `https://solucoes-nexus.tech/processo`
-- `https://solucoes-nexus.tech/contato`
-- `https://solucoes-nexus.tech/privacidade`
-- `https://solucoes-nexus.tech/cookies`
+- `https://agenciaprometeus.com.br/`
+- `https://agenciaprometeus.com.br/solucoes`
+- `https://agenciaprometeus.com.br/processo`
+- `https://agenciaprometeus.com.br/contato`
+- `https://agenciaprometeus.com.br/privacidade`
+- `https://agenciaprometeus.com.br/cookies`
 
 Não incluir:
 
@@ -498,7 +498,7 @@ Adicionar referência no `robots.txt`.
 
 Criar:
 
-`https://solucoes-nexus.tech/llms.txt`
+`https://agenciaprometeus.com.br/llms.txt`
 
 Observação: `llms.txt` ainda é uma proposta/convenção emergente, não um fator garantido de SEO. Implementar porque foi solicitado, sem tratá-lo como substituto de sitemap, robots, HTML semântico ou dados estruturados.
 
@@ -521,15 +521,15 @@ Estrutura sugerida:
 
 ## Site
 
-- [Início](https://solucoes-nexus.tech/): visão geral da proposta da Nexus AI.
-- [Soluções](https://solucoes-nexus.tech/solucoes): áreas e exemplos de aplicação de IA e automação.
-- [Processo](https://solucoes-nexus.tech/processo): diagnóstico, proposta, implementação e suporte.
-- [Contato](https://solucoes-nexus.tech/contato): solicitação de diagnóstico inicial.
+- [Início](https://agenciaprometeus.com.br/): visão geral da proposta da Nexus AI.
+- [Soluções](https://agenciaprometeus.com.br/solucoes): áreas e exemplos de aplicação de IA e automação.
+- [Processo](https://agenciaprometeus.com.br/processo): diagnóstico, proposta, implementação e suporte.
+- [Contato](https://agenciaprometeus.com.br/contato): solicitação de diagnóstico inicial.
 
 ## Legal
 
-- [Política de Privacidade](https://solucoes-nexus.tech/privacidade)
-- [Política de Cookies](https://solucoes-nexus.tech/cookies)
+- [Política de Privacidade](https://agenciaprometeus.com.br/privacidade)
+- [Política de Cookies](https://agenciaprometeus.com.br/cookies)
 ```
 
 Antes de publicar, ajuste o texto para refletir exatamente o site no momento da implementação.
@@ -566,10 +566,10 @@ Nunca commitar token real se o projeto não usar variáveis apropriadas.
 
 Criar `SEARCH_ENGINE_SETUP.md` com:
 
-1. Criar/adicionar propriedade `solucoes-nexus.tech` no Google Search Console.
+1. Criar/adicionar propriedade `agenciaprometeus.com.br` no Google Search Console.
 2. Preferir propriedade de domínio e verificar via DNS TXT.
 3. Confirmar HTTPS/canonical.
-4. Enviar `https://solucoes-nexus.tech/sitemap.xml`.
+4. Enviar `https://agenciaprometeus.com.br/sitemap.xml`.
 5. Inspecionar as URLs principais.
 6. Solicitar indexação após o deploy quando necessário.
 7. Acompanhar:
@@ -599,9 +599,9 @@ Quando configurado, renderizar a verificação adequada, por exemplo `msvalidate
 
 No `SEARCH_ENGINE_SETUP.md`, documentar:
 
-1. Adicionar/importar `solucoes-nexus.tech` no Bing Webmaster Tools.
+1. Adicionar/importar `agenciaprometeus.com.br` no Bing Webmaster Tools.
 2. Verificar propriedade.
-3. Enviar `https://solucoes-nexus.tech/sitemap.xml`.
+3. Enviar `https://agenciaprometeus.com.br/sitemap.xml`.
 4. Confirmar que o sitemap também está referenciado no `robots.txt`.
 5. Monitorar crawl/indexação.
 

@@ -1,7 +1,7 @@
 export const COMPANY = {
   name: "Prometeus",
   legalName: "Prometeus",
-  url: "https://solucoes-nexus.tech",
+  url: "https://agenciaprometeus.com.br",
   emails: [
     "raphaelschultz12@gmail.com",
     "esttevao.henrique@hotmail.com",

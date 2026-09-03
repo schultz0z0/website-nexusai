@@ -1,6 +1,6 @@
 # Atualização da VPS
 
-Este projeto é publicado como container Next.js standalone. O `docker-compose.yml` define o serviço `website`, o container `prometeus-website` e as labels usadas pelo Traefik para `solucoes-nexus.tech` e `www.solucoes-nexus.tech`.
+Este projeto é publicado de `/opt/prometeus-site` como container Next.js standalone. O `docker-compose.yml` define o projeto `prometeus-site`, o serviço `website`, o container `prometeus-website` e as labels usadas pelo Traefik para `agenciaprometeus.com.br` e `www.agenciaprometeus.com.br`.
 
 O build injeta apenas IDs públicos (`NEXT_PUBLIC_*`) como argumentos; segredos de servidor não devem ser colocados nesses argumentos nem no bundle do navegador.
 
@@ -17,7 +17,7 @@ npm run build
 PLAYWRIGHT_USE_PRODUCTION_BUILD=1 npm run test:responsive -- --project=chromium --workers=4
 ```
 
-3. Tenha o endereço SSH, o usuário e o diretório atual do repositório na VPS.
+3. Tenha o endereço SSH e o usuário da VPS; o checkout oficial fica em `/opt/prometeus-site`.
 
 ## Atualização
 
@@ -25,7 +25,7 @@ Conecte-se e entre no diretório do projeto:
 
 ```bash
 ssh <usuario>@<ip-ou-host-da-vps>
-cd <diretorio-do-site-na-vps>
+cd /opt/prometeus-site
 ```
 
 Confirme que não existem alterações locais na VPS:
@@ -55,12 +55,12 @@ Guarde `COMMIT_ANTERIOR` até concluir a validação. O SHA final mostrado por `
 ```bash
 docker compose ps website
 docker compose logs --tail=100 website
-curl -fsS -o /dev/null -w "%{http_code}  /\n" https://solucoes-nexus.tech/
-curl -fsS -o /dev/null -w "%{http_code}  /solucoes\n" https://solucoes-nexus.tech/solucoes
-curl -fsS -o /dev/null -w "%{http_code}  /processo\n" https://solucoes-nexus.tech/processo
-curl -fsS -o /dev/null -w "%{http_code}  /contato\n" https://solucoes-nexus.tech/contato
-curl -fsSI https://www.solucoes-nexus.tech/ | grep -i '^location: https://solucoes-nexus.tech/'
-curl -fsSI https://solucoes-nexus.tech/ | grep -Ei 'strict-origin-when-cross-origin|nosniff|deny'
+curl -fsS -o /dev/null -w "%{http_code}  /\n" https://agenciaprometeus.com.br/
+curl -fsS -o /dev/null -w "%{http_code}  /solucoes\n" https://agenciaprometeus.com.br/solucoes
+curl -fsS -o /dev/null -w "%{http_code}  /processo\n" https://agenciaprometeus.com.br/processo
+curl -fsS -o /dev/null -w "%{http_code}  /contato\n" https://agenciaprometeus.com.br/contato
+curl -fsSI https://www.agenciaprometeus.com.br/ | grep -i '^location: https://agenciaprometeus.com.br/'
+curl -fsSI https://agenciaprometeus.com.br/ | grep -Ei 'strict-origin-when-cross-origin|nosniff|deny'
 ```
 
 O esperado é o serviço `website` em estado `Up`, logs sem erro de inicialização e HTTP `200` nas quatro rotas. Depois, faça um hard refresh no navegador com `Ctrl+Shift+R` e repita o smoke responsivo descrito em `docs/responsive-desktop-matrix.md`.
