@@ -26,8 +26,8 @@
 - Modify: `tests/seo-lgpd.test.mts`
 - Modify: `tests/seo-lgpd.spec.ts`
 
-- [ ] Escrever asserções para o novo domínio, para o nome do Compose e para ausência do endereço legado.
-- [ ] Executar os testes e confirmar a falha causada pela configuração atual.
+- [x] Escrever asserções para o novo domínio, para o nome do Compose e para ausência do endereço legado.
+- [x] Executar os testes e confirmar a falha causada pela configuração atual.
 
 ### Task 2: Configuração canônica e operacional
 
@@ -38,9 +38,9 @@
 - Modify: `docker-compose.yml`
 - Modify: documentação que contém o endereço anterior
 
-- [ ] Substituir o domínio em todas as superfícies textuais versionadas.
-- [ ] Definir `name: prometeus-site` no Compose e labels Traefik para raiz e `www`.
-- [ ] Executar testes unitários, lint, build e matriz Playwright de produção.
+- [x] Substituir o domínio em todas as superfícies textuais versionadas.
+- [x] Definir `name: prometeus-site` no Compose e labels Traefik para raiz e `www`.
+- [x] Executar testes unitários, lint, build e matriz Playwright de produção.
 
 ### Task 3: Publicação cirúrgica na VPS
 
@@ -48,11 +48,10 @@
 - Create remotely: `/opt/prometeus-site`
 - Remove after validation: `/opt/site-nexus`
 
-- [ ] Enviar o commit verificado para `main`.
-- [ ] Auditar o projeto atual e clonar o novo checkout.
-- [ ] Construir a imagem `prometeus-site-website` antes da troca.
-- [ ] Parar somente `site-nexus` e iniciar somente `prometeus-site`.
-- [ ] Validar o contêiner e a resposta HTTP interna com cabeçalhos Host do novo domínio.
-- [ ] Arquivar o Compose anterior e remover o checkout e a imagem antigos.
-- [ ] Confirmar pelo inventário da Hostinger que o projeto do site aparece apenas como `prometeus-site`.
-
+- [x] Enviar o commit verificado para `main`.
+- [x] Auditar o projeto atual e clonar o novo checkout.
+- [x] Construir a imagem `prometeus-site-website` antes da troca.
+- [x] Parar somente `site-nexus` e iniciar somente `prometeus-site`.
+- [x] Validar o contêiner e a resposta HTTP interna com cabeçalhos Host do novo domínio.
+- [x] Arquivar o Compose anterior e remover o checkout e a imagem antigos.
+- [x] Confirmar pelo inventário da Hostinger que o projeto do site aparece apenas como `prometeus-site`.
