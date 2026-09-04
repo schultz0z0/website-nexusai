@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useId, useRef } from "react";
 
 import { CONTACT_COPY } from "@/lib/content";
+import { formatBrazilianPhone } from "@/lib/contact-submission";
 import { trackEvent } from "@/lib/tracking";
 
 import { enviarMensagem } from "./actions";
@@ -91,15 +92,32 @@ export function ContactForm() {
         />
       </div>
 
-      <FormField
-        id={`${formId}-empresa`}
-        label={CONTACT_COPY.fields[2].label}
-        name="empresa"
-      />
+      <div className={styles.fieldGrid}>
+        <FormField
+          id={`${formId}-telefone`}
+          label={CONTACT_COPY.fields[2].label}
+          name="telefone"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          placeholder="(00) 00000-0000"
+          maxLength={15}
+          required
+          onInput={(event) => {
+            event.currentTarget.value = formatBrazilianPhone(event.currentTarget.value);
+          }}
+        />
+        <FormField
+          id={`${formId}-empresa`}
+          label={CONTACT_COPY.fields[3].label}
+          name="empresa"
+          autoComplete="organization"
+        />
+      </div>
 
       <FormTextarea
         id={`${formId}-mensagem`}
-        label={CONTACT_COPY.fields[3].label}
+        label={CONTACT_COPY.fields[4].label}
         name="mensagem"
         required
       />
@@ -135,13 +153,23 @@ function FormField({
   label,
   name,
   type = "text",
+  inputMode,
+  autoComplete,
+  placeholder,
+  maxLength,
   required,
+  onInput,
 }: {
   id: string;
   label: string;
   name: string;
-  type?: "text" | "email";
+  type?: "text" | "email" | "tel";
+  inputMode?: "tel";
+  autoComplete?: string;
+  placeholder?: string;
+  maxLength?: number;
   required?: boolean;
+  onInput?: React.FormEventHandler<HTMLInputElement>;
 }) {
   return (
     <div className={styles.field}>
@@ -150,8 +178,13 @@ function FormField({
         id={id}
         name={name}
         type={type}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        maxLength={maxLength}
         required={required}
         aria-label={label}
+        onInput={onInput}
       />
     </div>
   );

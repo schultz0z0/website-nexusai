@@ -187,6 +187,7 @@ export const CONTACT_COPY = {
   fields: [
     { name: "nome", label: "Nome", required: true },
     { name: "email", label: "Email", required: true },
+    { name: "telefone", label: "Telefone/WhatsApp", required: true },
     { name: "empresa", label: "Empresa (opcional)", required: false },
     {
       name: "mensagem",

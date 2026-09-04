@@ -34,6 +34,13 @@ for (const viewport of [
     await expect(form).toBeVisible();
     await expect(form.getByLabel("Nome", { exact: true })).toBeVisible();
     await expect(form.getByLabel("Email", { exact: true })).toBeVisible();
+    const phone = form.getByLabel("Telefone/WhatsApp", { exact: true });
+    await expect(phone).toBeVisible();
+    await expect(phone).toHaveAttribute("type", "tel");
+    await expect(phone).toHaveAttribute("inputmode", "tel");
+    await expect(phone).toHaveAttribute("autocomplete", "tel");
+    await phone.fill("11912345678");
+    await expect(phone).toHaveValue("(11) 91234-5678");
     await expect(form.getByLabel("Empresa (opcional)", { exact: true })).toBeVisible();
     await expect(form.getByLabel("Conte o problema e o contexto", { exact: true })).toBeVisible();
     await expect(form.locator("select")).toHaveCount(0);

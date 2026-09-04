@@ -37,10 +37,14 @@ test("labels both examples as functional demonstrations", () => {
 });
 
 test("keeps contact classification lightweight", () => {
-  assert.equal(CONTACT_COPY.fields.length, 4);
+  assert.equal(CONTACT_COPY.fields.length, 5);
   assert.deepEqual(
     CONTACT_COPY.fields.map((field) => field.name),
-    ["nome", "email", "empresa", "mensagem"],
+    ["nome", "email", "telefone", "empresa", "mensagem"],
+  );
+  assert.equal(
+    CONTACT_COPY.fields.find((field) => field.name === "telefone")?.required,
+    true,
   );
   assert.equal(
     CONTACT_COPY.fields.find((field) => field.name === "empresa")?.required,

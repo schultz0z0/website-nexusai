@@ -1,19 +1,20 @@
 "use server";
 
-import { parseContactSubmission } from "@/lib/contact-submission";
+import {
+  buildGoogleFormsRequest,
+  parseContactSubmission,
+} from "@/lib/contact-submission";
 
 /**
  * Server action para o formulário de contato integrado ao Google Forms.
- * Endpoint: https://docs.google.com/forms/d/e/1FAIpQLSej3brjCF19IjUJBhJ50ViHqqsRTkQo_Z6svLt_zZjv011evQ/formResponse
+ * O endpoint e os IDs dos campos ficam centralizados e cobertos por teste
+ * em `buildGoogleFormsRequest`.
  */
 
 type FormState =
   | { ok: true; captured: boolean }
   | { ok: false; error: string }
   | null;
-
-const GOOGLE_FORM_ACTION_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSej3brjCF19IjUJBhJ50ViHqqsRTkQo_Z6svLt_zZjv011evQ/formResponse";
 
 export async function enviarMensagem(
   _prev: FormState,
@@ -27,21 +28,15 @@ export async function enviarMensagem(
 
   const parsed = parseContactSubmission(formData);
   if (!parsed.ok) return parsed;
-  const { nome, email, empresa, mensagem } = parsed.data;
-
-  const params = new URLSearchParams();
-  params.append("entry.535238991", nome);
-  params.append("entry.2104687615", email);
-  if (empresa) params.append("entry.978699660", empresa);
-  params.append("entry.687152363", mensagem);
+  const request = buildGoogleFormsRequest(parsed.data);
 
   try {
-    const res = await fetch(GOOGLE_FORM_ACTION_URL, {
+    const res = await fetch(request.actionUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: params.toString(),
+      body: request.body.toString(),
     });
 
     if (!res.ok) {
