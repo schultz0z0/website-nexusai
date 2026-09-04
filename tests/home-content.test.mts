@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  COMPANY,
   CONTACT_COPY,
   HOME_ASSURANCES,
   HOME_CAPABILITIES,
@@ -11,6 +12,7 @@ import {
 } from "../src/lib/content.ts";
 
 const publicContent = {
+  COMPANY,
   CONTACT_COPY,
   HOME_ASSURANCES,
   HOME_CAPABILITIES,
@@ -18,6 +20,31 @@ const publicContent = {
   HOME_DEMOS,
   HOME_FAQ,
 };
+
+test("publishes only the official Prometeus contact and social channels", () => {
+  assert.equal(COMPANY.email, "comercial@agenciaprometeus.com.br");
+  assert.deepEqual(COMPANY.emails, ["comercial@agenciaprometeus.com.br"]);
+  assert.deepEqual(COMPANY.socials, [
+    {
+      id: "instagram",
+      label: "Instagram",
+      href: "https://www.instagram.com/prometeus.official/",
+    },
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/company/prometeus-official",
+    },
+    {
+      id: "facebook",
+      label: "Facebook",
+      href: "https://www.facebook.com/profile.php?id=61594187724984",
+    },
+  ]);
+
+  const serialized = JSON.stringify(COMPANY);
+  assert.doesNotMatch(serialized, /raphaelschultz12|esttevao\.henrique/i);
+});
 
 test("contains no prohibited or unverified public claims", () => {
   const serialized = JSON.stringify(publicContent);

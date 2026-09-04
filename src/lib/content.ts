@@ -2,11 +2,25 @@ export const COMPANY = {
   name: "Prometeus",
   legalName: "Prometeus",
   url: "https://agenciaprometeus.com.br",
-  emails: [
-    "raphaelschultz12@gmail.com",
-    "esttevao.henrique@hotmail.com",
+  emails: ["comercial@agenciaprometeus.com.br"],
+  email: "comercial@agenciaprometeus.com.br",
+  socials: [
+    {
+      id: "instagram",
+      label: "Instagram",
+      href: "https://www.instagram.com/prometeus.official/",
+    },
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/company/prometeus-official",
+    },
+    {
+      id: "facebook",
+      label: "Facebook",
+      href: "https://www.facebook.com/profile.php?id=61594187724984",
+    },
   ],
-  email: "raphaelschultz12@gmail.com",
   description:
     "Soluções digitais sob medida para problemas reais de operação. Você traz o problema; a Prometeus constrói o que ele exige.",
 } as const;

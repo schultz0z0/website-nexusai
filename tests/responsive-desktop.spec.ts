@@ -31,6 +31,61 @@ const publicRoutes = [
   { path: "/cookies", title: /Política de Cookies/i },
 ] as const;
 
+test("publishes the official email and social profiles in the footer", async ({
+  page,
+}) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 768, height: 1024 },
+    { width: 1440, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const footer = page.locator("footer");
+    await footer.scrollIntoViewIfNeeded();
+
+    await expect(
+      footer.getByRole("link", {
+        name: "Enviar email para comercial@agenciaprometeus.com.br",
+      }),
+    ).toHaveAttribute("href", "mailto:comercial@agenciaprometeus.com.br");
+    await expect(footer).not.toContainText(
+      /raphaelschultz12@gmail\.com|esttevao\.henrique@hotmail\.com/i,
+    );
+
+    for (const social of [
+      {
+        name: "Prometeus no Instagram",
+        href: "https://www.instagram.com/prometeus.official/",
+      },
+      {
+        name: "Prometeus no LinkedIn",
+        href: "https://www.linkedin.com/company/prometeus-official",
+      },
+      {
+        name: "Prometeus no Facebook",
+        href: "https://www.facebook.com/profile.php?id=61594187724984",
+      },
+    ]) {
+      const link = footer.getByRole("link", { name: social.name });
+      await expect(link).toHaveAttribute("href", social.href);
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", /noopener/);
+      await expect(link).toHaveAttribute("rel", /noreferrer/);
+      await expect(link.locator("svg")).toHaveCount(1);
+      await expect(link).toBeInViewport();
+
+      const box = await link.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.width).toBeGreaterThanOrEqual(40);
+      expect(box!.height).toBeGreaterThanOrEqual(40);
+    }
+
+    await assertNoHorizontalOverflow(page);
+  }
+});
+
 for (const viewport of viewports) {
   test(`keeps the full home inside ${viewport.name}`, async ({ page }) => {
     await page.setViewportSize(viewport);
