@@ -36,6 +36,13 @@ export default function Home() {
     logo: `${COMPANY.url}/images/logo.png`,
     email: COMPANY.email,
     description: COMPANY.description,
+    sameAs: COMPANY.socials.map((social) => social.href),
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: COMPANY.email,
+      availableLanguage: ["pt-BR"],
+    },
   };
   const siteSchema = {
     "@context": "https://schema.org",
