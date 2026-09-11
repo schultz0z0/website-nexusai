@@ -26,7 +26,7 @@ export function NexusNav() {
         >
           <div className="flex h-10 items-center">
             <Image
-              src="/images/Logo Principal.png"
+              src="/images/logo-principal.webp"
               alt="Prometeus"
               width={322}
               height={88}

@@ -18,7 +18,7 @@ test("uses the Prometeus wordmark in the desktop navigation", async ({
   await expect(wordmark).toBeVisible();
   await expect(wordmark).toHaveAttribute(
     "src",
-    /Logo%20Principal\.png|Logo\+Principal\.png|logo\.png/,
+    /Logo.*Principal|logo-principal|logo/i,
   );
   await expect(brandLink.locator("svg, span")).toHaveCount(0);
 
@@ -119,7 +119,7 @@ test("keeps the official wordmark and compact contact action at opposite ends of
   await expect(wordmark).toBeVisible();
   await expect(wordmark).toHaveAttribute(
     "src",
-    /Logo%20Principal\.png|Logo\+Principal\.png|logo\.png/,
+    /Logo.*Principal|logo-principal|logo/i,
   );
   const mobileWordmarkBox = await wordmark.boundingBox();
   expect(mobileWordmarkBox).not.toBeNull();

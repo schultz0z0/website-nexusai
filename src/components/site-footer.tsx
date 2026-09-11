@@ -57,7 +57,7 @@ export function SiteFooter() {
           className="inline-flex w-fit items-center rounded-lg opacity-85 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           <Image
-            src="/images/Logo Secundária.png"
+            src="/images/logo-secundaria.webp"
             alt="Prometeus"
             width={532}
             height={145}
