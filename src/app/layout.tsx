@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   robots: { index: true, follow: true },
   icons: {
-    icon: "/icon.svg",
-    apple: "/apple-icon",
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
   },
   openGraph: {
     title: SITE_TITLE,

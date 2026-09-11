@@ -24,15 +24,14 @@ export function NexusNav() {
           aria-label="Prometeus — voltar ao início"
           className="inline-flex h-10 items-center opacity-90 transition-opacity hover:opacity-100 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
-          <div className="flex h-10 w-[168px] items-center overflow-hidden">
+          <div className="flex h-10 items-center">
             <Image
-              src="/images/logo.png"
+              src="/images/Logo Principal.png"
               alt="Prometeus"
-              width={1823}
-              height={467}
-              sizes="116px"
+              width={322}
+              height={88}
               priority
-              className="h-auto w-[168px] max-w-none"
+              className="h-8 w-auto md:h-9"
             />
           </div>
         </Link>

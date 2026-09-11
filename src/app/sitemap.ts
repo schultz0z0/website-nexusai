@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { COMPANY } from "@/lib/content";
+import { COMPANY } from "../lib/content.ts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = COMPANY.url;

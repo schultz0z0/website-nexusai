@@ -18,7 +18,7 @@ test("uses the Prometeus wordmark in the desktop navigation", async ({
   await expect(wordmark).toBeVisible();
   await expect(wordmark).toHaveAttribute(
     "src",
-    /logo\.png/,
+    /Logo%20Principal\.png|Logo\+Principal\.png|logo\.png/,
   );
   await expect(brandLink.locator("svg, span")).toHaveCount(0);
 
@@ -86,17 +86,20 @@ test("uses the Prometeus wordmark in the desktop navigation", async ({
   );
 });
 
-test("publishes the selected logo asset and archives the previous Nexus assets", async ({
+test("publishes the official brand logo assets", async ({
   request,
 }) => {
-  const logo = await request.get("/images/logo.png");
-  expect(logo.status()).toBe(200);
-  expect(logo.headers()["content-type"]).toContain("image/png");
+  const mainLogo = await request.get("/images/logo-principal.png");
+  expect(mainLogo.status()).toBe(200);
+  expect(mainLogo.headers()["content-type"]).toContain("image/png");
 
-  const archivedOptimized = await request.get("/images/old-logo-white-optimized.webp");
-  const archivedPng = await request.get("/images/old-logo-white.png");
-  expect(archivedOptimized.status()).toBe(200);
-  expect(archivedPng.status()).toBe(200);
+  const secondaryLogo = await request.get("/images/logo-secundaria.png");
+  expect(secondaryLogo.status()).toBe(200);
+  expect(secondaryLogo.headers()["content-type"]).toContain("image/png");
+
+  const iconLogo = await request.get("/images/icon-logo.png");
+  expect(iconLogo.status()).toBe(200);
+  expect(iconLogo.headers()["content-type"]).toContain("image/png");
 });
 
 test("keeps the official wordmark and compact contact action at opposite ends of a full-width mobile header", async ({
@@ -116,7 +119,7 @@ test("keeps the official wordmark and compact contact action at opposite ends of
   await expect(wordmark).toBeVisible();
   await expect(wordmark).toHaveAttribute(
     "src",
-    /logo\.png/,
+    /Logo%20Principal\.png|Logo\+Principal\.png|logo\.png/,
   );
   const mobileWordmarkBox = await wordmark.boundingBox();
   expect(mobileWordmarkBox).not.toBeNull();
