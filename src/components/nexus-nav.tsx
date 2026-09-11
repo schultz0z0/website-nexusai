@@ -22,16 +22,16 @@ export function NexusNav() {
         <Link
           href="/"
           aria-label="Prometeus — voltar ao início"
-          className="inline-flex h-10 items-center opacity-90 transition-opacity hover:opacity-100 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="inline-flex h-11 items-center opacity-90 transition-opacity hover:opacity-100 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary md:h-12"
         >
-          <div className="flex h-10 items-center">
+          <div className="flex h-11 items-center md:h-12">
             <Image
               src="/images/logo-principal.webp"
               alt="Prometeus"
               width={322}
               height={88}
               priority
-              className="h-8 w-auto md:h-9"
+              className="h-[38px] w-auto md:h-[44px]"
             />
           </div>
         </Link>
