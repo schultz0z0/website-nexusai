@@ -8,6 +8,8 @@ export type TrackingEventName =
 
 type EventParams = Record<string, unknown>;
 
+type ClarityCommand = ((...args: unknown[]) => void) & { q?: unknown[][] };
+
 const SAFE_PARAM_KEYS: Record<TrackingEventName, readonly string[]> = {
   cta_click: ["cta_id", "cta_text", "destination"],
   form_start: [],
@@ -20,6 +22,7 @@ declare global {
     dataLayer?: Array<Record<string, unknown> | unknown[]>;
     gtag?: (...args: unknown[]) => void;
     fbq?: (...args: unknown[]) => void;
+    clarity?: ClarityCommand;
   }
 }
 
@@ -32,7 +35,7 @@ export function getTrackingScriptIdsToRemove(consent: {
   marketing: boolean;
 }): string[] {
   const ids: string[] = [];
-  if (!consent.analytics) ids.push("gtm", "ga4");
+  if (!consent.analytics) ids.push("gtm", "ga4", "clarity");
   if (!consent.marketing) ids.push("meta-pixel");
   return ids;
 }
@@ -118,6 +121,20 @@ export function syncOptionalTracking(consent: {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
   const ga4Id = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
   const metaId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  // This project ID is public. An empty override disables Clarity at build time.
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID ?? "yjrsmq8w37";
+  const clarityWasLoaded = Boolean(window.clarity);
+
+  if (consent.analytics && clarityId) {
+    window.clarity = window.clarity ?? ((...args: unknown[]) => {
+      window.clarity!.q = window.clarity!.q ?? [];
+      window.clarity!.q.push(args);
+    });
+  }
+  window.clarity?.("consentv2", {
+    analytics_Storage: consent.analytics ? "granted" : "denied",
+    ad_Storage: consent.analytics && consent.marketing ? "granted" : "denied",
+  });
 
   if (!consent.analytics) {
     window.gtag?.("consent", "update", {
@@ -129,8 +146,19 @@ export function syncOptionalTracking(consent: {
 
   removeTrackingScriptsById(getTrackingScriptIdsToRemove(consent));
 
+  if (!consent.analytics && clarityWasLoaded) {
+    // Removing the tag cannot unload its running recorder. The caller has already
+    // saved the new preference; a reload ends recording and won't load it again.
+    window.location.reload();
+    return;
+  }
+
   if (!consent.analytics && !consent.marketing) {
     return;
+  }
+
+  if (consent.analytics && clarityId) {
+    appendScript(`https://www.clarity.ms/tag/${encodeURIComponent(clarityId)}`, "clarity");
   }
 
   if (consent.analytics && (gtmId || ga4Id)) {

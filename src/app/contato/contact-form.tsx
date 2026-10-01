@@ -50,6 +50,7 @@ export function ContactForm() {
 
   return (
     <form
+      data-clarity-mask="true"
       action={formAction}
       className={styles.form}
       noValidate

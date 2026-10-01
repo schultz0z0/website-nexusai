@@ -81,7 +81,7 @@ test("queues tracking commands as argument arrays", () => {
 test("removes optional scripts by revoked consent category", () => {
   assert.deepEqual(
     getTrackingScriptIdsToRemove({ analytics: false, marketing: true }),
-    ["gtm", "ga4"],
+    ["gtm", "ga4", "clarity"],
   );
   assert.deepEqual(
     getTrackingScriptIdsToRemove({ analytics: true, marketing: false }),
@@ -89,6 +89,6 @@ test("removes optional scripts by revoked consent category", () => {
   );
   assert.deepEqual(
     getTrackingScriptIdsToRemove({ analytics: false, marketing: false }),
-    ["gtm", "ga4", "meta-pixel"],
+    ["gtm", "ga4", "clarity", "meta-pixel"],
   );
 });

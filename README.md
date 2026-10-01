@@ -17,6 +17,26 @@ npm run dev
 
 O servidor local usa `http://localhost:3000`.
 
+## Microsoft Clarity
+
+O projeto `yjrsmq8w37` é carregado globalmente pelo gerenciador de consentimento,
+somente após autorização de **Analytics**. A escolha de **Marketing** controla
+separadamente o consentimento para armazenamento de publicidade via `consentv2`.
+O formulário de contato usa `data-clarity-mask="true"`.
+
+`NEXT_PUBLIC_CLARITY_ID` permite substituir o ID público; uma variável explicitamente
+vazia desativa a integração. O ID é incorporado no build, inclusive no Docker.
+Após alterar a configuração, gere e publique um novo build.
+
+Para validar após publicar, aceite Analytics nas preferências de cookies e confira
+na aba Network do navegador uma requisição para
+`https://www.clarity.ms/tag/yjrsmq8w37` e as requisições `/collect` do Clarity.
+Ao recusar Analytics, a tag não carrega. Ao revogar depois de aceitar, o site salva
+a escolha e recarrega a página para encerrar o gravador em execução.
+
+Referências: [tutorial do acervo O Setup](https://setup.omatheusdaia.com.br/tutoriais/microsoft-clarity-com-ia)
+e [API oficial de consentimento](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v2).
+
 ## Qualidade
 
 ```bash
