@@ -12,6 +12,7 @@
     "test:responsive": "playwright test --workers=1",
     "test:all": "npm run test:unit && npm run test:responsive",
     "video:hero": "node --experimental-strip-types scripts/generate-hero-video.mts",
+    "search:submit": "node --experimental-strip-types scripts/indexnow.mts",
     "lint": "eslint"
   },
   "dependencies": {

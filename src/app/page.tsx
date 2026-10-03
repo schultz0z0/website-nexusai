@@ -31,6 +31,7 @@ export default function Home() {
   const orgSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${COMPANY.url}/#organization`,
     name: COMPANY.name,
     url: COMPANY.url,
     logo: `${COMPANY.url}/images/logo.png`,

@@ -51,6 +51,11 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
+# IndexNow operational CLI (no additional dependency or public submission endpoint).
+COPY --from=builder /app/scripts/indexnow.mts ./scripts/indexnow.mts
+COPY --from=builder /app/scripts/lib/indexnow.mts ./scripts/lib/indexnow.mts
+COPY --from=builder /app/src/lib/site-metadata.ts ./src/lib/site-metadata.ts
+
 # Set the correct permissions for static & standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static

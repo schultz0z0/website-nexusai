@@ -8,8 +8,18 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../src/lib/site-metadata.ts";
 test("publishes only canonical public routes in the sitemap", () => {
   assert.deepEqual(
     sitemap().map((entry) => new URL(entry.url).pathname),
-    ["/", "/contato", "/privacidade", "/cookies"],
+    ["/", "/contato", "/privacidade", "/cookies", "/servicos", "/servicos/automacao-de-processos", "/servicos/agentes-de-ia", "/servicos/integracao-de-sistemas", "/servicos/desenvolvimento-sob-medida"],
   );
+});
+
+test("keeps editorial modification dates stable across generations", () => {
+  assert.deepEqual(sitemap(), sitemap());
+  for (const entry of sitemap()) {
+    if (entry.lastModified) {
+      assert.equal(typeof entry.lastModified, "string", "Use uma data editorial estável, não a data de geração.");
+      assert.ok(new Date(entry.lastModified).getTime() <= Date.now());
+    }
+  }
 });
 
 test("positions Prometeus as a custom digital solutions company", () => {

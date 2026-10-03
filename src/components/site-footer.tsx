@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { COMPANY } from "@/lib/content";
+import { SERVICES, servicePath } from "@/lib/service-content";
 
 const NAV_ITEMS = [
   { label: "Início", href: "/" },
+  { label: "Serviços", href: "/servicos" },
   { label: "Contato", href: "/contato" },
   { label: "Privacidade", href: "/privacidade" },
   { label: "Cookies", href: "/cookies" },
@@ -70,6 +72,14 @@ export function SiteFooter() {
             {NAV_ITEMS.map((item) => (
               <Link key={item.href} href={item.href} className="transition-colors hover:text-foreground">
                 {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <nav aria-label="Serviços no rodapé" className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-foreground/70 md:max-w-2xl md:justify-end">
+            {SERVICES.map((service) => (
+              <Link key={service.slug} href={servicePath(service)} className="underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">
+                {service.shortName}
               </Link>
             ))}
           </nav>

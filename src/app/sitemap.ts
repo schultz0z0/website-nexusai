@@ -1,34 +1,43 @@
 import type { MetadataRoute } from "next";
 import { COMPANY } from "../lib/content.ts";
+import { SERVICES, servicePath } from "../lib/service-content.ts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = COMPANY.url;
-  const now = new Date();
 
   return [
     {
       url: baseUrl,
-      lastModified: now,
+      lastModified: "2026-10-03",
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${baseUrl}/contato`,
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/privacidade`,
-      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/cookies`,
-      lastModified: now,
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${baseUrl}/servicos`,
+      lastModified: "2026-10-03",
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    ...SERVICES.map((service) => ({
+      url: `${baseUrl}${servicePath(service)}`,
+      lastModified: service.updatedAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
 }

@@ -59,11 +59,17 @@ curl -fsS -o /dev/null -w "%{http_code}  /\n" https://agenciaprometeus.com.br/
 curl -fsS -o /dev/null -w "%{http_code}  /solucoes\n" https://agenciaprometeus.com.br/solucoes
 curl -fsS -o /dev/null -w "%{http_code}  /processo\n" https://agenciaprometeus.com.br/processo
 curl -fsS -o /dev/null -w "%{http_code}  /contato\n" https://agenciaprometeus.com.br/contato
+curl -fsS -o /dev/null -w "%{http_code}  /servicos\n" https://agenciaprometeus.com.br/servicos
+curl -fsS -o /dev/null -w "%{http_code}  /servicos/agentes-de-ia\n" https://agenciaprometeus.com.br/servicos/agentes-de-ia
+curl -fsS -o /dev/null -w "%{http_code}  /sitemap.xml\n" https://agenciaprometeus.com.br/sitemap.xml
+curl -fsS https://agenciaprometeus.com.br/indexnow.txt
 curl -fsSI https://www.agenciaprometeus.com.br/ | grep -i '^location: https://agenciaprometeus.com.br/'
 curl -fsSI https://agenciaprometeus.com.br/ | grep -Ei 'strict-origin-when-cross-origin|nosniff|deny'
 ```
 
-O esperado é o serviço `website` em estado `Up`, logs sem erro de inicialização e HTTP `200` nas quatro rotas. Depois, faça um hard refresh no navegador com `Ctrl+Shift+R` e repita o smoke responsivo descrito em `docs/responsive-desktop-matrix.md`.
+O esperado é o serviço `website` em estado `Up`, logs sem erro de inicialização, HTTP `200` nas páginas públicas e no sitemap, e `308` em `/solucoes` e `/processo`, que redirecionam para seções da home. A chave em `/indexnow.txt` deve corresponder ao arquivo `public/indexnow.txt` da versão publicada. Depois, faça um hard refresh no navegador com `Ctrl+Shift+R` e repita o smoke responsivo descrito em `docs/responsive-desktop-matrix.md`.
+
+Após validar a publicação, siga `SEARCH_ENGINE_SETUP.md` para enviar as URLs alteradas ao IndexNow e conferir as propriedades dos buscadores. A imagem inclui o CLI operacional em `scripts/indexnow.mts`; não envia URLs automaticamente no build ou na inicialização do container.
 
 ## Rollback recuperável
 

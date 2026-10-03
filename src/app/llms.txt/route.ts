@@ -1,3 +1,6 @@
+import { SERVICES, servicePath } from "../../lib/service-content.ts";
+import { COMPANY } from "../../lib/content.ts";
+
 const CONTENT = `# Prometeus
 
 > A Prometeus desenvolve automações, agentes de IA, integrações e soluções digitais sob medida para eliminar tarefas repetitivas, conectar processos e ampliar a capacidade operacional de empresas.
@@ -13,7 +16,16 @@ const CONTENT = `# Prometeus
 
 1. **Diagnóstico**: Localizamos onde o tempo e a eficiência da operação se perdem.
 2. **Automação com Controle**: Construímos soluções com regras claras, limites e supervisão humana.
-3. **Propriedade da Empresa**: Código, dados e documentação permanecem com o cliente.
+3. **Propriedade da Empresa**: Código, dados, acessos e documentação são definidos explicitamente no escopo e na entrega.
+
+## Serviços detalhados
+
+- [Todos os serviços](${COMPANY.url}/servicos): Aplicações, requisitos e limites dos serviços.
+${SERVICES.map((service) => `- [${service.name}](${COMPANY.url}${servicePath(service)}): ${service.description}`).join("\n")}
+
+## Escopo e condições
+
+Atendimento a empresas no Brasil. Viabilidade, investimento, prazo, acessos e responsabilidades são definidos após entender o contexto. Os exemplos nas páginas de serviços são ilustrativos, não resultados de clientes. Código, dados e dependências de terceiros são tratados explicitamente no escopo.
 
 ## Páginas Principais
 
@@ -22,7 +34,7 @@ const CONTENT = `# Prometeus
 
 ## Informações Corporativas
 
-- **Razão Social / Nome**: Prometeus
+- **Nome / Marca**: Prometeus
 - **Site Oficial**: https://agenciaprometeus.com.br
 - **E-mail de Contato**: comercial@agenciaprometeus.com.br
 - **Atendimento**: Brasil (Nacional)

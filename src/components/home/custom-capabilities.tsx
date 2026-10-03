@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -124,6 +125,7 @@ export function CustomCapabilities() {
           <p className={styles.eyebrow}>{HOME_COPY.applications.eyebrow}</p>
           <h2 id="applications-title">{HOME_COPY.applications.title}</h2>
           <p>{HOME_COPY.applications.body}</p>
+          <Link href="/servicos" className="mt-5 inline-flex min-h-11 items-center text-sm text-[#8db5ff] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4">Conhecer os serviços e suas aplicações</Link>
         </header>
 
         <div className={styles.workspace}>

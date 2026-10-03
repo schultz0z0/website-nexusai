@@ -40,6 +40,7 @@ const contactSchema = {
   url: `${COMPANY.url}/contato`,
   publisher: {
     "@type": "Organization",
+    "@id": `${COMPANY.url}/#organization`,
     name: COMPANY.name,
     url: COMPANY.url,
     contactPoint: {

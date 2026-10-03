@@ -19,7 +19,7 @@ test("uses the official canonical domain and publishes only indexable routes", (
   assert.equal(COMPANY.url, "https://agenciaprometeus.com.br");
   assert.deepEqual(
     sitemap().map((entry) => new URL(entry.url).pathname),
-    ["/", "/contato", "/privacidade", "/cookies"],
+    ["/", "/contato", "/privacidade", "/cookies", "/servicos", "/servicos/automacao-de-processos", "/servicos/agentes-de-ia", "/servicos/integracao-de-sistemas", "/servicos/desenvolvimento-sob-medida"],
   );
   assert.ok(sitemap().every((entry) => !entry.url.includes("?")));
 });

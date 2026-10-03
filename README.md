@@ -37,7 +37,13 @@ a escolha e recarrega a página para encerrar o gravador em execução.
 Referências: [tutorial do acervo O Setup](https://setup.omatheusdaia.com.br/tutoriais/microsoft-clarity-com-ia)
 e [API oficial de consentimento](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-consent-api-v2).
 
-## Qualidade
+## Descoberta em buscadores e respostas de IA
+
+O catálogo `/servicos` e quatro páginas detalhadas são renderizados no servidor, com canonical, Service/BreadcrumbList, links internos, sitemap e resumo em `/llms.txt`. A chave pública em `/indexnow.txt` permite notificar mudanças aos buscadores participantes via `npm run search:submit -- /caminho-alterado`. Use `--dry-run` para conferir sem enviar. Publique e valide as URLs antes da submissão.
+
+Consulte [SEARCH_ENGINE_SETUP.md](SEARCH_ENGINE_SETUP.md) para a ordem de publicação, Bing/Copilot/DuckDuckGo, Brave, acesso de ChatGPT/Perplexity/Google AI e acompanhamento. Código preparado não significa cadastro externo concluído ou presença confirmada nos índices.
+
+## Verificação de qualidade
 
 ```bash
 npm run test:unit
