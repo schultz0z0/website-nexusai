@@ -45,7 +45,7 @@ test("loads Clarity only with analytics consent, once across navigation, and sto
   ]);
   expect(tagRequests).toBe(1);
 
-  await page.locator('[data-site-navigation="true"] a[href="/contato"]').first().click();
+  await page.locator('footer a[href="/contato"]').click();
   await expect(page).toHaveURL(/\/contato$/);
   await expect(script).toHaveCount(1);
   expect(tagRequests).toBe(1);

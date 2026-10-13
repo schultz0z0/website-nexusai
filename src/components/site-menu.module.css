@@ -1,0 +1,48 @@
+.root { display: flex; align-items: center; gap: 32px; }
+.desktop { display: flex; align-items: center; gap: 30px; }
+.topLink { display: inline-flex; align-items: center; min-height: 44px; color: #c6cbd4; font-size: 14px; transition: color 160ms; }
+.topLink:hover { color: #fff; }
+.serviceEntry { display: flex; align-items: center; gap: 2px; }
+.services { position: relative; }
+.services:not([open]) > .offerPanel, .mobile:not([open]) > .mobilePanel, .mobileOffers:not([open]) > .mobileOfferColumns { display: none; }
+.expand, .menuToggle { display: flex; align-items: center; justify-content: center; width: 36px; height: 44px; cursor: pointer; color: #c6cbd4; list-style: none; border-radius: 6px; }
+.expand::-webkit-details-marker, .menuToggle::-webkit-details-marker { display: none; }
+.expand svg { transition: transform 180ms; }
+.services[open] > .expand svg, .mobileOffers[open] > .expand svg { transform: rotate(180deg); }
+.root a:focus-visible, .root summary:focus-visible { outline: 2px solid #518cff; outline-offset: 4px; border-radius: 4px; }
+.offerPanel { position: absolute; top: calc(100% + 14px); left: -172px; width: 540px; max-height: calc(100dvh - 88px); overflow-y: auto; overscroll-behavior: contain; background: #090e18; border: 1px solid #ffffff16; border-radius: 12px; box-shadow: 0 22px 60px #0008; padding: 28px 30px 0; animation: reveal 180ms ease-out; }
+.offerColumns { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; }
+.group h2 { font-size: 12px; font-weight: 500; color: #8d9ab0; margin-bottom: 12px; }
+.group ul { list-style: none; margin: 0; padding: 0; }
+.group a { display: flex; align-items: center; min-height: 44px; width: fit-content; color: #e0e5ee; font-size: 14px; line-height: 1.45; transition: color 160ms; }
+.group a:hover { color: #82aaff; }
+.allOffers { display: block; border-top: 1px solid #ffffff12; margin-top: 20px; padding: 17px 0; font-size: 12px; color: #a2b4d0; }
+.contact { display: inline-flex; justify-content: center; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 8px; color: #fff; background: linear-gradient(#3e7df5, #2563df); box-shadow: inset 0 1px 1px #ffffff40; font-size: 13px; font-weight: 600; white-space: nowrap; transition: background 160ms; }
+.contact:hover { background: #3979f2; }
+.contactMobile, .mobile { display: none; }
+@keyframes reveal { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 1023px) {
+  .root { gap: 10px; }
+  .desktop, .contactDesktop { display: none; }
+  .contactMobile, .mobile { display: block; }
+  .contact { padding: 0 15px; min-height: 38px; font-size: 12px; }
+  .menuToggle { width: 40px; height: 40px; border: 1px solid #ffffff1c; }
+  .closeIcon { display: none; }
+  .mobile[open] .menuIcon { display: none; }
+  .mobile[open] .closeIcon { display: block; }
+  .mobilePanel { position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100dvh - 72px); overflow-y: auto; overscroll-behavior: contain; background: #090e18; border-bottom: 1px solid #ffffff1c; padding: 16px 24px 24px; box-shadow: 0 24px 40px #0006; animation: reveal 180ms ease-out; }
+  .mobileLink { display: flex; min-height: 48px; align-items: center; font-size: 15px; color: #e0e5ee; }
+  .mobileServices { position: relative; }
+  .mobileServices > a { width: calc(100% - 52px); }
+  .mobileOffers > summary { position: absolute; right: 0; top: 2px; width: 44px; }
+  .mobileOfferColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 16px 0 20px; border-bottom: 1px solid #ffffff12; }
+  .group h2 { margin-bottom: 6px; }
+  .group a { min-height: 46px; }
+}
+@media (max-width: 480px) {
+  .mobileOfferColumns { grid-template-columns: 1fr; gap: 16px; }
+  .mobilePanel { padding-inline: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .root *, .offerPanel, .mobilePanel { animation: none; transition: none; }
+}

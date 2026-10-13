@@ -36,13 +36,13 @@ test("uses the Prometeus wordmark in the desktop navigation", async ({
     cropBox!.x + cropBox!.width + 1,
   );
 
-  await expect(navigation.getByRole("link")).toHaveCount(2);
+  await expect(navigation.getByRole("link")).toHaveCount(5);
   await expect(
-    navigation.getByRole("link", { name: "Falar com a equipe" }),
+    navigation.getByRole("link", { name: "Falar pelo WhatsApp" }),
   ).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Soluções" })).toHaveCount(0);
   await expect(navigation.getByRole("link", { name: "Processo" })).toHaveCount(0);
-  await expect(navigation.getByRole("button")).toHaveCount(0);
+  await expect(navigation.getByLabel("Expandir serviços").first()).toBeVisible();
 
   const geometry = await navigation.evaluate((bar) => {
     const barRect = bar.getBoundingClientRect();
@@ -110,7 +110,7 @@ test("keeps the official wordmark and compact contact action at opposite ends of
 
   const mobileBar = page.locator('[data-site-navigation="true"]');
   const brandLink = mobileBar.getByRole("link", { name: homeLinkName });
-  const contactLink = mobileBar.getByRole("link", { name: "Falar com a equipe" });
+  const contactLink = mobileBar.getByRole("link", { name: "Falar pelo WhatsApp" });
   const wordmark = brandLink.locator('img[alt="Prometeus"]');
 
   await expect(mobileBar).toBeVisible();
@@ -125,14 +125,14 @@ test("keeps the official wordmark and compact contact action at opposite ends of
   expect(mobileWordmarkBox).not.toBeNull();
   expect(mobileWordmarkBox!.height).toBeGreaterThanOrEqual(34);
   await expect(brandLink.locator("svg, span")).toHaveCount(0);
-  await expect(mobileBar.getByRole("button")).toHaveCount(0);
+  await expect(mobileBar.getByLabel("Menu principal", { exact: true })).toBeVisible();
   await expect(mobileBar.getByRole("link")).toHaveCount(2);
 
   const geometry = await mobileBar.evaluate((bar) => {
     const barRect = bar.getBoundingClientRect();
-    const children = [...bar.querySelectorAll<HTMLElement>("a, button")].map(
+    const children = [...bar.querySelectorAll<HTMLElement>("a, button, summary")].map(
       (element) => element.getBoundingClientRect(),
-    );
+    ).filter((rect) => rect.width > 0 && rect.height > 0);
 
     return {
       viewportWidth: document.documentElement.clientWidth,
@@ -153,7 +153,7 @@ test("keeps the official wordmark and compact contact action at opposite ends of
 
   expect(geometry.bar.left).toBe(0);
   expect(geometry.bar.right).toBe(geometry.viewportWidth);
-  expect(geometry.children).toHaveLength(2);
+  expect(geometry.children).toHaveLength(3);
   for (const child of geometry.children) {
     expect(child.left).toBeGreaterThanOrEqual(geometry.bar.left);
     expect(child.right).toBeLessThanOrEqual(geometry.bar.right);

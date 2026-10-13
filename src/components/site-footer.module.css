@@ -1,0 +1,38 @@
+.footer { margin-top: 80px; border-top: 1px solid #ffffff12; }
+.inner { max-width: 1152px; margin: 0 auto; padding: 56px 24px 24px; }
+.columns { display: grid; grid-template-columns: 1.5fr 1fr 1.15fr; gap: 64px; padding-bottom: 42px; }
+.brand { display: flex; flex-direction: column; align-items: flex-start; }
+.logo { display: inline-flex; width: fit-content; opacity: .9; margin-bottom: 22px; }
+.contacts { display: flex; flex-direction: column; align-items: flex-start; color: #a7adba; font-size: 13px; line-height: 1.6; gap: 4px; }
+.contacts a { display: flex; align-items: center; min-height: 32px; }
+.email { overflow-wrap: anywhere; }
+.socials { display: flex; gap: 6px; margin: 14px 0 0 -8px; }
+.social { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; color: #8f97a7; }
+.offers h2 { color: #eef0f5; font-size: 14px; font-weight: 500; margin: 4px 0 16px; }
+.offers ul { margin: 0; padding: 0; list-style: none; }
+.offers a { display: flex; width: fit-content; align-items: center; min-height: 40px; color: #a7adba; font-size: 13px; line-height: 1.5; }
+.footer a, .footer button { transition: color 160ms; }
+.footer a:hover, .footer button:hover { color: #fff; }
+.footer a:focus-visible, .footer button:focus-visible { outline: 2px solid #518cff; outline-offset: 4px; border-radius: 3px; }
+.bottom { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid #ffffff12; padding-top: 20px; color: #8991a0; font-size: 11px; line-height: 1.6; }
+.legal { display: flex; flex-wrap: wrap; align-items: center; column-gap: 22px; }
+.legal a, .legal button { display: flex; align-items: center; min-height: 36px; cursor: pointer; }
+@media (max-width: 1023px) {
+  .columns { gap: 30px; grid-template-columns: 1.4fr 1fr 1fr; }
+  .bottom { align-items: flex-start; flex-direction: column; gap: 8px; }
+}
+@media (max-width: 767px) {
+  .footer { margin-top: 48px; }
+  .inner { padding: 36px 24px 20px; }
+  .columns { grid-template-columns: 1fr 1fr; row-gap: 30px; column-gap: 24px; padding-bottom: 28px; }
+  .brand { grid-column: 1 / -1; }
+  .logo { margin-bottom: 14px; }
+  .offers h2 { margin-bottom: 10px; }
+  .offers a { min-height: 44px; }
+  .legal { column-gap: 20px; }
+  .legal a, .legal button { min-height: 44px; }
+}
+@media (max-width: 359px) {
+  .columns { grid-template-columns: 1fr; row-gap: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .footer * { transition: none; } }

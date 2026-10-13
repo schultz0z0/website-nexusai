@@ -2,15 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { COMPANY } from "@/lib/content";
-import { SERVICES, servicePath } from "@/lib/service-content";
-
-const NAV_ITEMS = [
-  { label: "Início", href: "/" },
-  { label: "Serviços", href: "/servicos" },
-  { label: "Contato", href: "/contato" },
-  { label: "Privacidade", href: "/privacidade" },
-  { label: "Cookies", href: "/cookies" },
-] as const;
+import { OFFER_NAVIGATION } from "@/lib/offer-navigation";
+import { whatsappContact } from "@/lib/commercial-contact";
+import styles from "./site-footer.module.css";
 
 type SocialId = (typeof COMPANY.socials)[number]["id"];
 
@@ -51,53 +45,39 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-12 border-t border-border/40 md:mt-20">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[auto_1fr] md:items-start md:py-14">
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        <div className={styles.columns}>
+        <div className={styles.brand}>
         <Link
           href="/"
           aria-label="Prometeus — voltar ao início"
-          className="inline-flex w-fit items-center rounded-lg opacity-85 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className={styles.logo}
         >
           <Image
             src="/images/logo-secundaria.webp"
             alt="Prometeus"
             width={532}
             height={145}
-            className="h-auto w-[180px] md:w-[200px]"
+            className="h-auto w-[180px]"
           />
         </Link>
 
-        <div className="grid gap-8 md:justify-self-end md:text-right">
-          <nav aria-label="Rodapé" className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground/70 md:justify-end">
-            {NAV_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} className="transition-colors hover:text-foreground">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <nav aria-label="Serviços no rodapé" className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-foreground/70 md:max-w-2xl md:justify-end">
-            {SERVICES.map((service) => (
-              <Link key={service.slug} href={servicePath(service)} className="underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">
-                {service.name}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex flex-col gap-1 text-sm text-foreground/60">
+          <div className={styles.contacts}>
             {COMPANY.emails.map((email) => (
               <a
                 key={email}
                 href={`mailto:${email}`}
                 aria-label={`Enviar email para ${email}`}
-                className="transition-colors hover:text-foreground"
+                className={styles.email}
               >
                 {email}
               </a>
             ))}
+            <a href={whatsappContact()} target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp</a>
           </div>
 
-          <nav aria-label="Redes sociais" className="flex gap-2 md:justify-end">
+          <nav aria-label="Redes sociais" className={styles.socials}>
             {COMPANY.socials.map((social) => (
               <a
                 key={social.id}
@@ -105,7 +85,7 @@ export function SiteFooter() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Prometeus no ${social.label}`}
-                className="inline-flex size-10 items-center justify-center rounded-full border border-border/60 text-foreground/60 transition-colors hover:border-primary/70 hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className={styles.social}
               >
                 <span className="size-[18px]">
                   <SocialIcon id={social.id} />
@@ -113,18 +93,22 @@ export function SiteFooter() {
               </a>
             ))}
           </nav>
-
-          <button
-            type="button"
-            data-cookie-preferences
-            className="w-fit text-left text-xs text-foreground/50 underline-offset-4 transition-colors hover:text-foreground hover:underline md:justify-self-end"
-          >
-            Preferências de cookies
-          </button>
         </div>
-
-        <div className="border-t border-border/40 pt-6 text-xs text-foreground/50 md:col-span-2">
-          © {year} Prometeus. Todos os direitos reservados.
+        {OFFER_NAVIGATION.map((group) => (
+          <nav key={group.label} aria-label={`${group.label} no rodapé`} className={styles.offers}>
+            <h2>{group.label}</h2>
+            <ul>{group.items.map((item) => <li key={item.href}><Link href={item.href}>{item.label}</Link></li>)}</ul>
+          </nav>
+        ))}
+        </div>
+        <div className={styles.bottom}>
+          <p>© {year} Prometeus. Todos os direitos reservados.</p>
+          <nav aria-label="Informações e privacidade" className={styles.legal}>
+            <Link href="/contato">Contato</Link>
+            <Link href="/privacidade">Privacidade</Link>
+            <Link href="/cookies">Cookies</Link>
+            <button type="button" data-cookie-preferences>Preferências de cookies</button>
+          </nav>
         </div>
       </div>
     </footer>

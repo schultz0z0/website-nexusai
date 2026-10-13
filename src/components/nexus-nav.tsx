@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { SiteMenu } from "./site-menu";
+import { OFFER_NAVIGATION } from "@/lib/offer-navigation";
+import { whatsappContact } from "@/lib/commercial-contact";
 
 export function NexusNav() {
   return (
@@ -36,16 +38,7 @@ export function NexusNav() {
           </div>
         </Link>
 
-        <Link
-          href="/contato"
-          data-track-cta="nav_contact"
-          aria-label="Falar com a equipe"
-          className="inline-flex h-10 items-center gap-1.5 rounded-lg bg-gradient-to-b from-primary/90 to-primary px-4 text-xs font-semibold text-primary-foreground shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),0_3px_10px_rgba(0,0,0,0.2)] ring-1 ring-primary/20 transition-transform duration-200 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white active:scale-[0.98] md:px-5 md:text-sm"
-        >
-          <span className="md:hidden">Falar</span>
-          <span className="hidden md:inline">Falar com a equipe</span>
-          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-        </Link>
+        <SiteMenu groups={OFFER_NAVIGATION} contactHref={whatsappContact()} />
       </div>
     </nav>
   );
