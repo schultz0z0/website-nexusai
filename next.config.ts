@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: projectRoot,
   },
+  async redirects() {
+    return [
+      { source: "/servicos/automacao-de-processos", destination: "/servicos/desenvolvimento-sob-medida", permanent: true },
+      { source: "/servicos/integracao-de-sistemas", destination: "/servicos/desenvolvimento-sob-medida", permanent: true },
+      { source: "/servicos/agentes-de-ia", destination: "/servicos/atendimento-ia-whatsapp", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

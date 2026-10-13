@@ -3,20 +3,22 @@ import { COMPANY } from "../../lib/content.ts";
 
 const CONTENT = `# Prometeus
 
-> A Prometeus desenvolve automações, agentes de IA, integrações e soluções digitais sob medida para eliminar tarefas repetitivas, conectar processos e ampliar a capacidade operacional de empresas.
+> A Prometeus oferece plataformas personalizadas para marketing, estoque e vendas, além de atendimento com IA no WhatsApp, software sob medida e criação de sites e lojas virtuais.
 
 ## O que fazemos
 
-- **Automação de Processos & Rotinas**: Automação ponta a ponta de fluxos de trabalho repetitivos, reduzindo retrabalho e tempo manual.
-- **Agentes de IA & Atendimento**: Agentes inteligentes com contexto de negócio, memória operacional e integração direta com canais de comunicação (WhatsApp, e-mail, CRM).
-- **Integração de Sistemas**: Conexão entre ERPs, CRMs, planilhas, bancos de dados e APIs proprietárias sem necessidade de trocar os softwares atuais da empresa.
-- **Ferramentas Internas Sob Medida**: Aplicações web dedicadas para resolução de gargalos operacionais específicos.
+- **Prometeus Copiloto**: CRM, campanhas e IA para organizar a operação de marketing, com apoio a estratégia, planejamento e análise de dados e concorrentes.
+- **Prometeus Rastro**: Gestão de estoque e rastreabilidade de ativos, com registros de movimentação e apoio de IA para consultas.
+- **Prometeus Soft Phone**: Soft phone e CRM em uma plataforma para equipes comerciais.
+- **Atendimento com IA no WhatsApp**: Agente personalizado com fontes aprovadas, triagem e encaminhamento humano.
+- **Software Sob Medida**: Aplicações, ferramentas internas, automações e integrações para os processos da empresa.
+- **Sites, Lojas Virtuais & Presença Digital**: Criação de sites e lojas virtuais com identidade da empresa, design responsivo e preparação com SEO, GEO e AIO para descoberta no Google e em plataformas de IA. Sem garantia de indexação, posição ou recomendação.
 
 ## Como trabalhamos
 
-1. **Diagnóstico**: Localizamos onde o tempo e a eficiência da operação se perdem.
-2. **Automação com Controle**: Construímos soluções com regras claras, limites e supervisão humana.
-3. **Propriedade da Empresa**: Código, dados, acessos e documentação são definidos explicitamente no escopo e na entrega.
+1. **Demonstração e conversa**: Copiloto, Rastro e Soft Phone têm uma base demonstrativa pronta, apresentada em reunião de vendas. As prévias públicas são ilustrativas.
+2. **Personalização**: Adaptamos a base aos fluxos e informações da empresa; as demais soluções são definidas a partir da necessidade.
+3. **Proposta e entrega**: Escopo, prazo, investimento, código, dados, acessos e responsabilidades são definidos explicitamente.
 
 ## Serviços detalhados
 
@@ -25,7 +27,7 @@ ${SERVICES.map((service) => `- [${service.name}](${COMPANY.url}${servicePath(ser
 
 ## Escopo e condições
 
-Atendimento a empresas no Brasil. Viabilidade, investimento, prazo, acessos e responsabilidades são definidos após entender o contexto. Os exemplos nas páginas de serviços são ilustrativos, não resultados de clientes. Código, dados e dependências de terceiros são tratados explicitamente no escopo.
+Atendimento a empresas no Brasil. Nos projetos sob medida, viabilidade, investimento, prazo, acessos e responsabilidades são definidos após entender o contexto. A criação de site e loja virtual custa R$ 1.500, em 10 parcelas de R$ 150 sem juros ou R$ 1.425 no Pix (5% de desconto). Ambos exigem pacote adicional de R$ 50/mês, com hospedagem, domínio, manutenção da infraestrutura e 3 ajustes mensais. O checkout atual é apenas uma simulação e não realiza cobranças. Os exemplos conceituais nas páginas de serviços são ilustrativos. O portfólio de desenvolvimento web apresenta projetos reais: Jotape Publicidade (publicado) e Foxstage (em desenvolvimento). Código, dados e dependências de terceiros são tratados explicitamente no escopo.
 
 ## Páginas Principais
 
@@ -37,6 +39,7 @@ Atendimento a empresas no Brasil. Viabilidade, investimento, prazo, acessos e re
 - **Nome / Marca**: Prometeus
 - **Site Oficial**: https://agenciaprometeus.com.br
 - **E-mail de Contato**: comercial@agenciaprometeus.com.br
+- **WhatsApp comercial**: +55 21 97323-1943. O contato agenda a demonstração dos produtos e a conversa sobre as soluções.
 - **Atendimento**: Brasil (Nacional)
 
 ## Legal

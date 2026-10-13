@@ -1,0 +1,68 @@
+.section { padding: 100px 0; background: #0a1425; border-block: 1px solid #29415f; scroll-margin-top: 96px; }
+.container { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+.heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 90px; margin-bottom: 52px; }
+.heading h2 { margin: 0; max-width: 18ch; font-size: clamp(2rem, 3.8vw, 3.4rem); font-weight: 500; line-height: 1.1; letter-spacing: -.04em; text-wrap: balance; }
+.heading > p { max-width: 52ch; margin: 0; font-size: 1rem; color: #bdcbe1; line-height: 1.75; }
+.offers { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 32px; }
+.offer { padding: 38px; border: 1px solid #3b5579; border-radius: 16px; background: #0f1e34; }
+.offer h3 { margin: 0 0 14px; font-size: 1.6rem; font-weight: 500; letter-spacing: -.035em; }
+.description { max-width: 44ch; min-height: 56px; margin: 0; color: #c2cfe3; font-size: .95rem; line-height: 1.7; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin: 32px 0 8px; font-size: clamp(2.7rem, 4.5vw, 4rem); font-weight: 500; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.price > span { font-size: .75rem; font-weight: 400; letter-spacing: 0; color: #b1c4e0; }
+.installments { margin: 0 0 28px; color: #e1eafd; font-size: 1rem; }
+.installments > span { color: #b1c4e0; }
+.recurring { margin: -16px 0 28px; color: #cfdef6; font-size: .84rem; }
+.pix { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; margin: 0 0 30px; padding: 18px 0; border-block: 1px solid #334b6d; }
+.pix > strong { font-size: 1rem; font-weight: 500; color: #b4d1ff; }
+.pix > span { font-size: .73rem; color: #b9cbe6; }
+.cta { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 50px; padding: 14px 20px; border: 1px solid #6b9eeb; border-radius: 12px; background: linear-gradient(180deg,#1769ed,#0a46c2); color: #f7faff; font-size: .88rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: background .2s; }
+.cta > svg { width: 16px; height: 16px; }
+.cta:hover { background: #2673e9; }
+.cta:active { background: #103f98; }
+.cta:focus-visible { outline: 2px solid #b3d1ff; outline-offset: 5px; }
+.maintenance { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; margin-top: 42px; padding-top: 38px; border-top: 1px solid #425d81; }
+.maintenance h3 { margin: 0; font-size: 1.5rem; font-weight: 500; letter-spacing: -.035em; }
+.monthlyPrice { margin: 15px 0 8px; font-size: 2.9rem; line-height: 1.2; font-weight: 500; letter-spacing: -.04em; }
+.monthlyPrice > span { font-size: 1rem; letter-spacing: 0; color: #b8ccea; }
+.maintenance p:not(.monthlyPrice) { margin: 0; max-width: 44ch; font-size: .84rem; color: #b7c9e4; line-height: 1.75; }
+.maintenance ul { margin: 0; padding: 0; list-style: none; }
+.maintenance li { padding: 14px 0; border-bottom: 1px solid #334d71; color: #d5e4fc; font-size: .94rem; }
+.dialog { position: fixed; margin: auto; max-width: min(600px,calc(100vw - 32px)); max-height: calc(100svh - 40px); width: 100%; padding: 0; border: 1px solid #4c6a94; border-radius: 18px; background: #0e1b30; color: #f5f8ff; overscroll-behavior: contain; }
+.dialog::backdrop { background: rgba(2,5,11,.82); }
+.checkout { padding: 30px; }
+.checkoutHeading { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
+.checkoutHeading h2 { margin: 0; font-size: 1.65rem; line-height: 1.2; font-weight: 500; letter-spacing: -.035em; }
+.close { display: grid; flex-shrink: 0; place-items: center; width: 36px; height: 36px; border: 1px solid #57749b; border-radius: 8px; cursor: pointer; color: #d5e4fc; background: #172f50; }
+.close svg { width: 18px; height: 18px; }
+.close:hover { background: #28486e; }
+.close:active { background: #102743; }
+.close:focus-visible { outline: 2px solid #aecbfa; outline-offset: 4px; }
+.mockNotice { margin: 16px 0 26px; padding: 12px 14px; border: 1px solid #536a8c; border-radius: 8px; font-size: .8rem; color: #cbdbf1; line-height: 1.7; background: #17273f; }
+.checkout h3 { margin: 0 0 22px; font-size: 1.25rem; font-weight: 500; }
+.paymentOptions { margin: 0; padding: 0; border: 0; display: grid; gap: 12px; }
+.paymentOptions legend { margin-bottom: 12px; color: #c4d3e9; font-size: .86rem; }
+.paymentOptions label { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #3c587f; border-radius: 9px; cursor: pointer; background: #102039; }
+.paymentOptions label:has(input:checked) { border-color: #91baff; background: #19365e; }
+.paymentOptions label:has(input:focus-visible) { outline: 2px solid #b6d3ff; outline-offset: 3px; }
+.paymentOptions input { accent-color: #91baff; width: 17px; height: 17px; }
+.paymentOptions span { font-size: .83rem; }
+.paymentOptions strong { display: block; margin-top: 5px; font-size: .88rem; font-weight: 500; color: #d3e4ff; }
+.summary { margin: 26px 0 18px; padding-top: 18px; border-top: 1px solid #3c5477; display: grid; gap: 14px; }
+.summary > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; font-size: .86rem; }
+.summary dt { color: #becfe8; }
+.summary dd { margin: 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.checkoutNote { margin: 0 0 24px; font-size: .77rem; color: #b8cae5; line-height: 1.8; }
+.completed { padding: 16px; border: 1px solid #74a0e1; border-radius: 9px; margin: 0; font-size: .86rem; color: #d7e8ff; background: #19365a; }
+@media (max-width: 760px) {
+  .section { padding-block: 64px; }
+  .container { width: calc(100% - 40px); }
+  .heading, .offers { grid-template-columns: minmax(0,1fr); gap: 24px; }
+  .heading { margin-bottom: 32px; }
+  .offer { padding: 28px 22px; }
+  .maintenance { grid-template-columns: minmax(0,1fr); gap: 24px; }
+  .checkout { padding: 24px 18px; }
+  .checkoutHeading h2 { font-size: 1.35rem; }
+  .description { min-height: 0; }
+}
+@media (max-width: 380px) { .container { width: calc(100% - 32px); } .offer { padding: 24px 18px; } }
+@media (prefers-reduced-motion: reduce) { .cta { transition: none; } }

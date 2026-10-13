@@ -2,7 +2,11 @@ import { defineConfig } from "@playwright/test";
 import { cpSync, existsSync } from "node:fs";
 import path from "node:path";
 
-const baseURL = "http://127.0.0.1:3000";
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 3000);
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  throw new Error("PLAYWRIGHT_PORT must be a valid TCP port.");
+}
+const baseURL = `http://127.0.0.1:${port}`;
 const useProductionBuild = process.env.PLAYWRIGHT_USE_PRODUCTION_BUILD === "1";
 const isPlaywrightWorker = process.env.TEST_WORKER_INDEX !== undefined;
 const standaloneDirectory = path.resolve(".next/standalone");
@@ -24,8 +28,8 @@ if (useProductionBuild && !isPlaywrightWorker) {
 
 const productionServerCommand =
   process.platform === "win32"
-    ? "set HOSTNAME=127.0.0.1&& set PORT=3000&& node .next/standalone/server.js"
-    : "HOSTNAME=127.0.0.1 PORT=3000 node .next/standalone/server.js";
+    ? `set HOSTNAME=127.0.0.1&& set PORT=${port}&& node .next/standalone/server.js`
+    : `HOSTNAME=127.0.0.1 PORT=${port} node .next/standalone/server.js`;
 
 export default defineConfig({
   testDir: "./tests",
@@ -43,9 +47,9 @@ export default defineConfig({
     // Set PLAYWRIGHT_USE_PRODUCTION_BUILD=1 after `npm run build` to serve its standalone output.
     command: useProductionBuild
       ? productionServerCommand
-      : "npm run dev -- --hostname 127.0.0.1",
+      : `npm run dev -- --hostname 127.0.0.1 --port ${port}`,
     url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !process.env.CI && !useProductionBuild,
     timeout: 120_000,
   },
   projects: [

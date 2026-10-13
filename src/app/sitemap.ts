@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/servicos`,
-      lastModified: "2026-10-03",
+      lastModified: "2026-10-13",
       changeFrequency: "monthly",
       priority: 0.9,
     },

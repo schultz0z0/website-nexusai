@@ -1,0 +1,53 @@
+.hero { position: relative; isolation: isolate; min-height: 770px; padding: 116px 0 86px; }
+.backdrop { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.backdrop img { object-fit: cover; object-position: 75% 38%; }
+.backdrop::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg,#06080d 0%,rgba(6,8,13,.9) 28%,rgba(6,8,13,.24) 76%),linear-gradient(180deg,rgba(6,8,13,.12) 45%,#06080d 100%); }
+.heroCopy { max-width: 640px; padding-top: 58px; }
+.heroCopy h1,.closing h2 { margin: 0; max-width: 16ch; font-size: clamp(3rem,5.6vw,5.3rem); font-weight: 500; line-height: 1.03; letter-spacing: -.04em; text-wrap: balance; color: transparent; background: linear-gradient(180deg,#fff 20%,#f3f6fc 65%,#a6b0c2 100%); background-clip: text; -webkit-background-clip: text; }
+.heroCopy > p { max-width: 43ch; margin: 26px 0 0; color: #c5d0e3; font-size: 1.1rem; line-height: 1.7; }
+.heroCopy small { display: block; max-width: 50ch; margin-top: 20px; color: #b3c7e5; font-size: .77rem; line-height: 1.7; }
+.demonstration { display: grid; grid-template-columns: .95fr 1.05fr; gap: 84px; align-items: center; padding-block: 100px; }
+.demoCopy h2,.sectionHead h2,.implementation > h2 { margin: 0; max-width: 18ch; font-size: clamp(2rem,3.6vw,3.3rem); font-weight: 500; line-height: 1.1; letter-spacing: -.04em; text-wrap: balance; }
+.demoCopy > p { max-width: 43ch; margin: 24px 0 0; font-size: 1rem; color: #bacbe4; line-height: 1.8; }
+.demoCopy .note { margin-top: 30px; font-size: .76rem; line-height: 1.7; color: #abc0df; }
+.features { padding-block: 88px; background: #0b1628; }
+.sectionHead { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 84px; margin-bottom: 46px; }
+.sectionHead > p { max-width: 40ch; margin: 0; font-size: 1rem; line-height: 1.75; color: #b7c9e4; }
+.featureList { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 36px; }
+.featureList article { padding-top: 24px; border-top: 1px solid #486284; }
+.featureList h3 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 500; line-height: 1.45; }
+.featureList p { margin: 0; color: #b6c7e0; font-size: .9rem; line-height: 1.75; }
+.implementation { padding-block: 100px 80px; }
+.implementation > h2 { max-width: 22ch; }
+.implementation > p { max-width: 55ch; margin: 24px 0 42px; font-size: 1rem; color: #bbcee8; line-height: 1.8; }
+.implementation ol { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 38px; margin: 0; padding: 0; list-style: none; }
+.implementation li { display: grid; grid-template-columns: 22px 1fr; align-items: start; gap: 14px; padding-top: 24px; border-top: 1px solid #3f5778; }
+.implementation li > span { color: #a4c2ed; font-size: .85rem; padding-top: 3px; }
+.implementation h3 { margin: 0 0 12px; font-size: 1.1rem; font-weight: 500; line-height: 1.4; }
+.implementation li p { margin: 0; color: #b5c8e3; font-size: .85rem; line-height: 1.7; }
+.closing { padding: 90px 0 100px; background: radial-gradient(ellipse at 70% 0%,rgba(35,88,168,.22),transparent 65%),#080f1a; }
+.closing h2 { max-width: 22ch; font-size: clamp(2.5rem,4.8vw,4.5rem); }
+.closing p { max-width: 49ch; margin: 26px 0 30px; color: #bdcde5; font-size: 1rem; line-height: 1.8; }
+.closing small { display: block; margin-top: 20px; color: #a6bedf; font-size: .75rem; line-height: 1.6; }
+.otherOffers { display: flex; flex-wrap: wrap; gap: 20px 28px; padding-block: 48px; }
+.otherOffers a { display: inline-flex; gap: 12px; align-items: center; min-height: 44px; color: #b8cff0; font-size: .82rem; text-decoration: none; }
+.otherOffers a:hover { color: #fff; }
+.otherOffers svg { width: 14px; height: 14px; }
+@media(max-width:760px) {
+ .hero { min-height: 760px; padding: 98px 0 58px; }
+ .heroCopy { padding-top: 215px; }
+ .heroCopy h1 { font-size: clamp(2.6rem,11vw,4.2rem); }
+ .heroCopy > p { font-size: 1rem; }
+ .backdrop { height: 510px; }
+ .backdrop img { object-position: 75% 35%; }
+ .backdrop::after { background: linear-gradient(180deg,rgba(6,8,13,.2),rgba(6,8,13,.12) 35%,#06080d 95%); }
+ .demonstration,.sectionHead,.featureList,.implementation ol { grid-template-columns: minmax(0,1fr); }
+ .demonstration { gap: 38px; padding-block: 64px; }
+ .features { padding-block: 64px; }
+ .sectionHead { gap: 22px; margin-bottom: 36px; }
+ .featureList { gap: 30px; }
+ .implementation { padding-block: 64px 32px; }
+ .implementation ol { gap: 26px; }
+ .closing { padding-block: 62px 70px; }
+ .otherOffers { flex-direction: column; gap: 8px; padding-block: 30px; }
+}

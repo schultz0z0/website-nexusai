@@ -1,0 +1,41 @@
+.preview { min-width: 0; width: 100%; color: #eef4ff; text-align: left; }
+.window { overflow: hidden; border: 1px solid #48678e; border-radius: 14px; background: #0b1728; box-shadow: 0 24px 64px rgba(0,0,0,.35); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid #2d425e; }
+.top strong { font-weight: 500; font-size: .95rem; }
+.top > span { color: #acc5e8; font-size: .65rem; }
+.navigation { display: flex; gap: 22px; padding: 17px 24px; border-bottom: 1px solid #263c5a; }
+.navigation > span { color: #a5bad6; font-size: .72rem; }
+.navigation > span[data-active=true] { color: #f3f7ff; }
+.screen { height: 310px; padding: 28px 24px; overflow: auto; scrollbar-color: #49698f #0b1728; }
+.screen h3 { margin: 0 0 24px; font-size: 1.05rem; font-weight: 500; line-height: 1.4; }
+.table > div { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 16px; padding: 16px 0; border-bottom: 1px solid #2c435f; font-size: .8rem; }
+.table small { font-size: .65rem; color: #abc5e9; }
+.hint { margin: 22px 0 0; font-size: .72rem; line-height: 1.6; color: #a8bfdf; }
+.question { margin: 0 0 16px 28px; padding: 15px 18px; border-radius: 12px 12px 0 12px; background: #234571; font-size: .83rem; line-height: 1.6; }
+.answer { padding: 20px; border: 1px solid #3d5c82; border-radius: 0 12px 12px 12px; }
+.answer strong { font-size: .85rem; font-weight: 500; }
+.answer p,.record p,.call p { margin: 12px 0; color: #bfd0e8; font-size: .8rem; line-height: 1.6; }
+.answer > span { font-size: .64rem; color: #9cb5d9; }
+.record,.call { padding: 20px; border-block: 1px solid #365276; }
+.record > span,.call > span,.next > span { display: block; margin-bottom: 12px; font-size: .7rem; color: #a7c0e2; }
+.record strong,.call strong { font-size: 1.15rem; font-weight: 500; }
+.next { display: flex; flex-direction: column; gap: 2px; padding-top: 20px; }
+.next strong { font-size: .82rem; font-weight: 500; }
+.call { text-align: center; }
+.call .callLabel { display: inline-block; margin: 12px 0 0; font-size: .66rem; line-height: 1.6; }
+.history { margin: 0; padding: 0; list-style: none; }
+.history li { display: flex; flex-direction: column; gap: 7px; padding: 12px 0 12px 16px; border-left: 1px solid #6b99d8; }
+.history span { font-size: .65rem; color: #9eb9de; }
+.history strong { font-size: .85rem; font-weight: 500; }
+.bottom { display: flex; justify-content: space-between; gap: 14px; padding: 14px 24px; border-top: 1px solid #2d425e; color: #9fb8db; font-size: .62rem; }
+.bottom > span { color: #c7dbfa; }
+.controls { padding-top: 22px; }
+.controls p { min-height: 94px; margin: 0 0 16px; }
+.controls p strong { display: block; font-size: .95rem; font-weight: 500; line-height: 1.5; }
+.controls p span { display: block; margin-top: 7px; font-size: .8rem; line-height: 1.7; color: #b6c8e3; }
+.controls button { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 10px 15px; color: #e6f0ff; background: #163251; border: 1px solid #638bbb; border-radius: 8px; font: inherit; font-size: .8rem; cursor: pointer; }
+.controls button svg { width: 14px; height: 14px; }
+.controls button:hover { background: #254a73; }
+.controls button:active { background: #0e2440; }
+.controls button:focus-visible { outline: 2px solid #a6cbff; outline-offset: 5px; }
+@media (max-width:760px) { .top { padding: 16px; } .top strong { font-size: .82rem; } .top > span { font-size: .58rem; } .navigation { padding: 14px 16px; gap: 18px; } .screen { height: 310px; padding: 22px 16px; } .bottom { padding-inline: 16px; } .table > div { grid-template-columns: 1fr; gap: 6px; padding-block: 11px; } .question { margin-left: 14px; padding: 12px; } .answer { padding: 16px; } .controls p { min-height: 122px; } }

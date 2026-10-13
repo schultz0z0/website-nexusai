@@ -11,14 +11,21 @@ Preparação local concluída nesta entrega; publicação, propriedades autentic
 A versão para publicação está na branch `main`. Na VPS, atualize o checkout com `git pull --ff-only origin main` e siga `docs/vps-update.md` para reconstruir e iniciar o container. Depois de publicar, abra estas URLs e confirme HTTP 200:
 
 - `https://agenciaprometeus.com.br/servicos`
-- `https://agenciaprometeus.com.br/servicos/automacao-de-processos`
-- `https://agenciaprometeus.com.br/servicos/agentes-de-ia`
-- `https://agenciaprometeus.com.br/servicos/integracao-de-sistemas`
+
+
+
+- `https://agenciaprometeus.com.br/servicos/prometeus-copiloto`
+- `https://agenciaprometeus.com.br/servicos/prometeus-rastro`
+- `https://agenciaprometeus.com.br/servicos/prometeus-soft-phone`
+- `https://agenciaprometeus.com.br/servicos/atendimento-ia-whatsapp`
 - `https://agenciaprometeus.com.br/servicos/desenvolvimento-sob-medida`
-- `https://agenciaprometeus.com.br/sitemap.xml` — nove URLs canônicas, incluindo as cinco novas.
+- `https://agenciaprometeus.com.br/servicos/desenvolvimento-web`
+- `https://agenciaprometeus.com.br/sitemap.xml` — onze URLs canônicas, incluindo o catálogo e as seis páginas de ofertas.
 - `https://agenciaprometeus.com.br/robots.txt` — `User-Agent: *`, `Allow: /` e o endereço do sitemap.
-- `https://agenciaprometeus.com.br/llms.txt` — links para os quatro serviços.
+- `https://agenciaprometeus.com.br/llms.txt` — links para os seis ofertas.
 - `https://agenciaprometeus.com.br/indexnow.txt` — a mesma chave do arquivo `public/indexnow.txt` deste checkout.
+
+As antigas páginas de automação e integração redirecionam permanentemente para software sob medida; agentes de IA redireciona para atendimento com IA no WhatsApp. Essas URLs antigas não entram no sitemap.
 
 O sitemap omite `lastmod` quando a data editorial antiga não foi confirmada. Para novos conteúdos, mantenha a data real em `src/lib/service-content.ts`. Não substitua datas por `new Date()` em todos os builds.
 
@@ -27,7 +34,7 @@ O sitemap omite `lastmod` quando a data editorial antiga não foi confirmada. Pa
 1. Acesse [Bing Webmaster Tools](https://www.bing.com/webmasters/) com sua conta.
 2. Escolha **Importar do Google Search Console**, autorize a leitura das propriedades e selecione `agenciaprometeus.com.br`. Se não quiser conectar as contas, use a verificação manual descrita abaixo.
 3. Em **Sitemaps**, confirme ou envie `https://agenciaprometeus.com.br/sitemap.xml`.
-4. Em **Inspeção de URL**, verifique a home, `/servicos` e as quatro páginas detalhadas. Solicite indexação onde a interface permitir; acompanhe os erros até serem resolvidos.
+4. Em **Inspeção de URL**, verifique a home, `/servicos` e as seis páginas detalhadas. Solicite indexação onde a interface permitir; acompanhe os erros até serem resolvidos.
 5. Confira **Search Performance** para impressões/cliques e **AI Performance**, quando disponível, para citações no Copilot, Bing e experiências parceiras compatíveis.
 6. Guarde a data de envio e a situação de cada URL. Propriedade verificada, sitemap recebido e página indexada são estados diferentes.
 
@@ -42,19 +49,19 @@ O protocolo usa uma chave pública de comprovação de domínio, já criada em `
 Antes do deploy, é possível conferir a simulação no checkout local:
 
 ```bash
-npm run search:submit -- --dry-run / /servicos /servicos/automacao-de-processos /servicos/agentes-de-ia /servicos/integracao-de-sistemas /servicos/desenvolvimento-sob-medida
+npm run search:submit -- --dry-run / /servicos /servicos/prometeus-copiloto /servicos/prometeus-rastro /servicos/prometeus-soft-phone /servicos/atendimento-ia-whatsapp /servicos/desenvolvimento-sob-medida /servicos/desenvolvimento-web
 ```
 
 Depois de publicar e conferir as páginas, envie uma vez as URLs criadas/alteradas nesta entrega:
 
 ```bash
-npm run search:submit -- / /servicos /servicos/automacao-de-processos /servicos/agentes-de-ia /servicos/integracao-de-sistemas /servicos/desenvolvimento-sob-medida
+npm run search:submit -- / /servicos /servicos/prometeus-copiloto /servicos/prometeus-rastro /servicos/prometeus-soft-phone /servicos/atendimento-ia-whatsapp /servicos/desenvolvimento-sob-medida /servicos/desenvolvimento-web
 ```
 
 Pode executar no checkout local com Node.js 22 ou superior. Na VPS, a imagem Docker também inclui o script; use:
 
 ```bash
-docker compose exec -T website node --experimental-strip-types scripts/indexnow.mts / /servicos /servicos/automacao-de-processos /servicos/agentes-de-ia /servicos/integracao-de-sistemas /servicos/desenvolvimento-sob-medida
+docker compose exec -T website node --experimental-strip-types scripts/indexnow.mts / /servicos /servicos/prometeus-copiloto /servicos/prometeus-rastro /servicos/prometeus-soft-phone /servicos/atendimento-ia-whatsapp /servicos/desenvolvimento-sob-medida /servicos/desenvolvimento-web
 ```
 
 O script verifica a chave no domínio publicado antes do envio. Se ela não corresponder, interrompe. As URLs precisam pertencer ao domínio oficial, sem UTMs, fragmentos ou credenciais. O envio é feito ao endpoint oficial, que compartilha os avisos com os buscadores participantes.

@@ -6,10 +6,22 @@ import { COMPANY } from "../src/lib/content.ts";
 import { GET } from "../src/app/llms.txt/route.ts";
 
 test("publishes distinct services and never resolves an unknown service", () => {
-  assert.equal(new Set(SERVICES.map((service) => service.slug)).size, 4);
+  assert.equal(new Set(SERVICES.map((service) => service.slug)).size, 6);
   assert.equal(getService("missing"), undefined);
   assert.equal(getService("toString"), undefined);
-  assert.equal(getService("agentes-de-ia")?.name, "Agentes de IA para empresas");
+  assert.equal(getService("atendimento-ia-whatsapp")?.name, "Atendimento com IA no WhatsApp");
+  assert.deepEqual(SERVICES.filter(service => service.kind === "product").map(service => service.name), ["Prometeus Copiloto", "Prometeus Rastro", "Prometeus Soft Phone"]);
+  for (const legacy of ["agentes-de-ia", "automacao-de-processos", "integracao-de-sistemas"]) assert.equal(getService(legacy), undefined);
+});
+
+test("publishes web development as a distinct website and Google presence service", () => {
+  const service = getService("desenvolvimento-web");
+  assert.ok(service);
+  assert.equal(service.shortName, "Desenvolvimento Web");
+  assert.match(service.description, /sites/i);
+  assert.match(service.description, /Google/);
+  assert.ok(service.applications.some((application) => /Landing pages/.test(application.title)));
+  assert.ok(service.faqs.some((faq) => /Google/.test(faq.question)));
 });
 
 test("keeps service schema aligned with visible editorial content", () => {

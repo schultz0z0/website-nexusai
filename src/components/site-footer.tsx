@@ -79,7 +79,7 @@ export function SiteFooter() {
           <nav aria-label="Serviços no rodapé" className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-foreground/70 md:max-w-2xl md:justify-end">
             {SERVICES.map((service) => (
               <Link key={service.slug} href={servicePath(service)} className="underline-offset-4 hover:text-foreground hover:underline focus-visible:outline-2 focus-visible:outline-offset-4">
-                {service.shortName}
+                {service.name}
               </Link>
             ))}
           </nav>

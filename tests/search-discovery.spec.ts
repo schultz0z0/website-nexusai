@@ -13,7 +13,7 @@ test("publishes discovery files and the IndexNow ownership key", async ({ reques
   const sitemap = await request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
   const xml = await sitemap.text();
-  expect(xml.match(/<loc>/g)).toHaveLength(9);
+  expect(xml.match(/<loc>/g)).toHaveLength(5 + SERVICES.length);
   for (const service of SERVICES) expect(xml).toContain(`${origin}${servicePath(service)}`);
   expect(xml).not.toMatch(/<loc>[^<]*\/(solucoes|processo)<\/loc>/);
   const key = await request.get("/indexnow.txt");
@@ -74,7 +74,7 @@ for (const width of [320, 390, 1440]) {
       await page.goto(path);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await assertNoHorizontalOverflow(page);
-      if (path === "/servicos/automacao-de-processos" && width !== 390) {
+      if (path === "/servicos/prometeus-copiloto" && width !== 390) {
         await page.screenshot({ path: testInfo.outputPath(`services-${width}.png`), fullPage: true });
       }
     }

@@ -1,5 +1,8 @@
+import { SPECIALIZED_OFFERS } from "./solution-content.ts";
+
 export interface ServiceContent {
   slug: string;
+  kind?: "product" | "solution";
   name: string;
   shortName: string;
   description: string;
@@ -14,114 +17,39 @@ export interface ServiceContent {
   faqs: Array<{ question: string; answer: string }>;
 }
 
-// Atualize a data somente quando houver uma mudança editorial substancial.
+// Datas editoriais mudam somente quando o conteúdo muda.
 export const SERVICES: ServiceContent[] = [
+  ...SPECIALIZED_OFFERS,
   {
-    slug: "automacao-de-processos",
-    name: "Automação de processos para empresas",
-    shortName: "Automação de processos",
-    description: "Automação de rotinas administrativas, comerciais e operacionais sob medida, com integração aos sistemas existentes e aprovações humanas.",
-    updatedAt: "2026-10-03",
-    image: "/images/capabilities/automate.webp",
-    intro: "A Prometeus desenvolve automações para rotinas que repetem as mesmas etapas: receber dados, conferir informações, atualizar sistemas e encaminhar tarefas. O projeto começa no processo da empresa e define quais atividades podem ser executadas por software e quais continuam com a equipe.",
-    applications: [
-      { title: "Rotinas administrativas", text: "Organizar solicitações, conferir campos obrigatórios e encaminhar documentos para revisão. Exceções seguem para uma pessoa responsável, com o contexto necessário para decidir." },
-      { title: "Operação comercial", text: "Distribuir contatos, atualizar etapas no CRM e avisar a equipe sobre pendências. Critérios de prioridade e momentos de intervenção humana são definidos no projeto." },
-      { title: "Relatórios e acompanhamento", text: "Reunir dados disponíveis, preparar relatórios recorrentes e sinalizar divergências. A origem dos dados e a frequência de atualização precisam ser confirmadas antes da implementação." },
-    ],
-    steps: [
-      { title: "Mapear a rotina", text: "Identificamos entradas, volume, responsáveis, regras e exceções. Essa leitura ajuda a escolher um processo com impacto operacional e condições reais de automação." },
-      { title: "Construir e validar", text: "Implementamos o fluxo com dados de teste, acessos definidos e caminhos de aprovação. A equipe valida o comportamento em cenários previstos e em situações de falha." },
-      { title: "Acompanhar a operação", text: "Definimos como observar execuções, corrigir erros e comparar o trabalho antes e depois. Monitoramento, manutenção e suporte são acordados no escopo." },
-    ],
-    requirements: ["Uma descrição da rotina e das exceções mais comuns.", "Os sistemas envolvidos e as possibilidades de acesso aos dados.", "Um responsável por validar regras e aprovar mudanças no processo.", "Uma referência do volume, do tempo manual e dos erros atuais."],
-    limits: "Automatizar um processo não resolve, por si só, dados incompletos ou regras indefinidas. Atividades que exigem julgamento podem continuar humanas. A viabilidade depende dos acessos disponíveis e do comportamento dos sistemas envolvidos.",
-    example: { title: "Da solicitação à aprovação", before: "Uma equipe recebe pedidos por formulário, copia informações para uma planilha e procura a pessoa que deve aprovar cada caso.", after: "Um fluxo poderia validar os campos, registrar o pedido e encaminhá-lo ao responsável. A aprovação continuaria humana e as informações faltantes seriam devolvidas para correção." },
-    faqs: [
-      { question: "Preciso trocar os sistemas que já uso?", answer: "O diagnóstico começa pelos sistemas atuais. Quando houver acesso adequado, a automação pode conectá-los. Limitações de API, permissões ou formato dos dados podem exigir adaptações, definidas antes da proposta." },
-      { question: "Como saber se uma rotina vale a pena automatizar?", answer: "Observe frequência, volume, tempo manual, erros e custo de manutenção. Um processo repetitivo com regras claras costuma ser um bom candidato. A conversa inicial avalia esses fatores antes de recomendar uma construção." },
-      { question: "Como vocês medem o resultado?", answer: "Podemos comparar tempo gasto, execuções concluídas, exceções e retrabalho, conforme os dados disponíveis. A referência inicial e as métricas são combinadas no projeto; o resultado não é presumido." },
-    ],
-  },
-  {
-    slug: "agentes-de-ia",
-    name: "Agentes de IA para empresas",
-    shortName: "Agentes de IA",
-    description: "Agentes de IA sob medida para atendimento e rotinas internas, com contexto do negócio, integrações e encaminhamento para a equipe humana.",
-    updatedAt: "2026-10-03",
-    image: "/images/capabilities/decide.webp",
-    intro: "Um agente de IA combina informações do negócio com ferramentas e regras para apoiar uma tarefa definida. Na Prometeus, o desenho parte do contexto: quem vai usar, quais informações podem ser consultadas, quais ações são permitidas e quando uma pessoa precisa assumir.",
-    applications: [
-      { title: "Atendimento e triagem", text: "Responder dúvidas com base em informações aprovadas, coletar contexto e encaminhar solicitações para a equipe. Canais como WhatsApp, e-mail e CRM dependem das contas e integrações disponíveis." },
-      { title: "Consulta a conhecimento interno", text: "Ajudar uma equipe a localizar procedimentos e documentos autorizados. Permissões, fontes e atualização do conteúdo precisam acompanhar o uso do agente." },
-      { title: "Apoio a tarefas operacionais", text: "Preparar resumos, classificar solicitações ou sugerir próximos passos. Ações sobre sistemas e dados ficam sujeitas a limites e aprovações definidos no projeto." },
-    ],
-    steps: [
-      { title: "Definir tarefa e limites", text: "Escolhemos o objetivo do agente, os usuários, os canais e as decisões que permanecem humanas. Também identificamos informações que não devem ser acessadas ou expostas." },
-      { title: "Preparar contexto e ferramentas", text: "Organizamos as fontes aprovadas e as integrações necessárias. Regras de acesso e critérios para encaminhar situações à equipe fazem parte da construção." },
-      { title: "Avaliar antes de operar", text: "Testamos perguntas representativas, respostas incorretas, informações ausentes e tentativas de executar ações não permitidas. Os critérios de revisão e acompanhamento são combinados com a empresa." },
-    ],
-    requirements: ["Uma tarefa concreta e um público definido para o agente.", "Informações do negócio revisadas e fontes que podem ser utilizadas.", "Acesso autorizado aos canais e sistemas envolvidos.", "Um responsável pelo encaminhamento humano e pela atualização do conteúdo."],
-    limits: "Modelos de IA podem produzir respostas incorretas. Por isso, o agente precisa de fontes, testes, limites e supervisão proporcionais ao uso. Não deve prometer condições comerciais nem tomar decisões sensíveis fora das regras aprovadas. Custos de modelos e canais são considerados no escopo.",
-    example: { title: "Uma dúvida que chega ao atendimento", before: "Uma pessoa pergunta sobre um serviço e a equipe precisa reunir informações básicas antes de encaminhar a conversa.", after: "Um agente poderia consultar informações aprovadas, perguntar o contexto da solicitação e preparar um resumo para a equipe. Uma condição não documentada seria encaminhada para confirmação humana." },
-    faqs: [
-      { question: "Um agente de IA pode atender pelo WhatsApp?", answer: "Pode fazer parte do projeto quando a empresa tiver acesso a uma integração adequada. Configuração da conta, regras do canal, custos e encaminhamento humano precisam ser avaliados. Não presumimos que toda conta ou fluxo permita a mesma integração." },
-      { question: "Qual é a diferença entre um chatbot e um agente?", answer: "Chatbots podem seguir fluxos de conversa e responder perguntas. Um agente pode também consultar fontes e executar ações por ferramentas, dentro de permissões definidas. O nome importa menos que a tarefa, os limites e a qualidade da operação." },
-      { question: "O agente substitui toda a equipe de atendimento?", answer: "O projeto define as tarefas que fazem sentido apoiar ou automatizar. Negociações, exceções e decisões sensíveis podem continuar com pessoas. O encaminhamento humano precisa ser desenhado desde o início." },
-    ],
-  },
-  {
-    slug: "integracao-de-sistemas",
-    name: "Integração de sistemas para empresas",
-    shortName: "Integração de sistemas",
-    description: "Integrações sob medida entre CRM, ERP, planilhas e APIs para conectar dados e processos, com validação, registros e tratamento de falhas.",
-    updatedAt: "2026-10-03",
-    image: "/images/capabilities/connect.webp",
-    intro: "Integrar sistemas é fazer informações circularem entre ferramentas com regras claras. A Prometeus analisa os softwares que a empresa já utiliza e constrói conexões para reduzir transferências manuais, respeitando permissões, formatos e limites de cada sistema.",
-    applications: [
-      { title: "CRM e operação", text: "Levar informações de uma oportunidade aprovada para o sistema que organiza a entrega. O mapeamento define quais campos são necessários e como tratar registros incompletos ou duplicados." },
-      { title: "Planilhas e sistemas de gestão", text: "Conectar dados usados pela equipe a uma fonte definida, quando houver acesso adequado. O fluxo precisa indicar qual sistema é responsável pela informação e como resolver conflitos." },
-      { title: "APIs e eventos", text: "Conectar sistemas por APIs, eventos ou trocas de arquivos, conforme os recursos disponíveis. Frequência, limites de requisição e formato das mensagens orientam a implementação." },
-    ],
-    steps: [
-      { title: "Identificar fontes e acessos", text: "Conferimos documentação, permissões e mecanismos de integração. Definimos a origem de cada dado e as condições em que ele deve circular." },
-      { title: "Mapear e testar dados", text: "Estabelecemos correspondência entre campos, validações e identificação de registros. Testes incluem ausência de dados, duplicidade e indisponibilidade de um sistema." },
-      { title: "Operar com rastreabilidade", text: "Definimos registros, alertas e formas de repetir uma transferência com segurança. A equipe precisa entender como acompanhar o fluxo e resolver exceções." },
-    ],
-    requirements: ["Os nomes e as versões dos sistemas envolvidos.", "Documentação de APIs ou outros mecanismos disponíveis de troca de dados.", "Permissões concedidas pelos responsáveis pelas ferramentas.", "Regras sobre origem dos dados, frequência e resolução de divergências."],
-    limits: "A integração depende dos recursos oferecidos pelos fornecedores. Um software sem API pode exigir outro caminho ou tornar o projeto inviável. Limites de acesso, mudanças de versão e custos de terceiros precisam ser considerados. Sincronização em tempo real só é proposta quando a infraestrutura permite.",
-    example: { title: "Uma venda aprovada chega à operação", before: "Depois de concluir uma oportunidade no CRM, a equipe digita os mesmos dados em outra ferramenta para iniciar o atendimento.", after: "Uma integração poderia encaminhar os dados autorizados após a aprovação, validar o registro e avisar quando faltasse informação. O sistema de destino continuaria responsável pela etapa operacional." },
-    faqs: [
-      { question: "Vocês conseguem integrar qualquer ERP ou CRM?", answer: "A possibilidade depende da documentação, das permissões e dos recursos disponíveis em cada ferramenta. A avaliação técnica acontece antes de confirmar a integração e o escopo." },
-      { question: "O que acontece quando um sistema fica fora do ar?", answer: "O desenho pode incluir registros de falha, alertas e tentativas controladas de reprocessamento. A estratégia depende da tarefa e do risco de duplicar uma operação; esses critérios são definidos no projeto." },
-      { question: "Como evitar dados duplicados?", answer: "É necessário definir identificadores, regras de atualização e uma origem para cada informação. Quando o sistema permite, o fluxo verifica se uma operação já foi aplicada antes de repeti-la." },
-    ],
-  },
-  {
-    slug: "desenvolvimento-sob-medida",
-    name: "Desenvolvimento de software sob medida",
-    shortName: "Software sob medida",
-    description: "Desenvolvimento de ferramentas internas, dashboards e aplicações web para os processos da sua empresa, com escopo, integrações e documentação definidos.",
-    updatedAt: "2026-10-03",
+    slug: "desenvolvimento-web",
+    name: "Criação de sites e lojas virtuais",
+    shortName: "Desenvolvimento Web",
+    description: "Criação de sites e lojas virtuais com SEO, GEO e AIO para presença no Google e em plataformas de IA. R$ 1.500 pela criação e pacote obrigatório de R$ 50/mês.",
+    updatedAt: "2026-10-12",
     image: "/images/capabilities/build.webp",
-    intro: "Software sob medida faz sentido quando o processo da empresa exige algo que as ferramentas atuais não atendem. A Prometeus desenvolve aplicações web e ferramentas internas a partir do trabalho dos usuários, das informações disponíveis e das decisões que precisam tomar.",
+    intro: "Seu site preparado para buscas no Google e respostas de IA. Da descoberta ao primeiro contato.",
     applications: [
-      { title: "Ferramentas internas", text: "Organizar solicitações, aprovações e etapas de trabalho em uma interface adequada à equipe. Perfis de acesso e responsabilidades fazem parte do desenho da aplicação." },
-      { title: "Dashboards operacionais", text: "Reunir indicadores e destacar situações que exigem atenção. As definições das métricas e a qualidade das fontes precisam ser validadas para que o painel apoie decisões." },
-      { title: "Aplicações para um novo fluxo", text: "Construir uma experiência para um processo ou produto digital específico. O projeto define uma primeira entrega útil e o que pode evoluir depois da validação com usuários." },
+      { title: "Sites institucionais", text: "Apresentar a empresa e seus serviços com páginas próprias, conteúdo claro e caminhos para entrar em contato. A estrutura acompanha a identidade da marca e as dúvidas de quem está conhecendo o negócio." },
+      { title: "Landing pages", text: "Criar uma página focada em um serviço ou campanha, com mensagem, exemplos e um próximo passo definido. Formulários e contato por WhatsApp podem fazer parte da entrega, conforme o objetivo." },
+      { title: "Lojas virtuais", text: "Apresentar seus produtos e organizar uma experiência de compra pela internet. A configuração da loja considera o catálogo, os meios de pagamento e a forma como sua empresa recebe e atende os pedidos." },
+      { title: "Presença digital no Google", text: "Preparar títulos, descrições, links, sitemap e dados estruturados coerentes com o conteúdo. Configuração do Google Search Console e orientação sobre o Perfil da Empresa, quando elegível, podem compor o escopo." },
     ],
     steps: [
-      { title: "Entender usuários e decisões", text: "Mapeamos o trabalho atual e o objetivo de cada pessoa. Essa análise orienta o escopo e ajuda a evitar funções que não resolvem uma necessidade concreta." },
-      { title: "Desenhar e construir", text: "Organizamos telas, dados, acessos e integrações. A empresa acompanha a validação das funções previstas e dos critérios de aceite." },
-      { title: "Preparar entrega e evolução", text: "Documentação, acessos, hospedagem e responsabilidades de manutenção são tratados no escopo. Depois da entrega, novas necessidades podem orientar etapas futuras." },
+      { title: "Definir mensagem e estrutura", text: "Entendemos a empresa, os serviços, o público e a ação que o site precisa facilitar. Organizamos as páginas e os conteúdos necessários antes de desenhar a experiência." },
+      { title: "Desenhar e desenvolver", text: "Construímos o visual com a identidade da marca e validamos navegação, conteúdo, formulários e comportamento em celular e desktop. Imagens e carregamento fazem parte da preparação." },
+      { title: "Publicar e preparar a descoberta", text: "Conectamos domínio e hospedagem, conferimos HTTPS e a estrutura de SEO. A configuração de ferramentas de busca e medição, com os acessos autorizados, é definida no escopo da entrega." },
     ],
-    requirements: ["Uma descrição do problema e das pessoas que usarão a ferramenta.", "Exemplos de tarefas, dados e decisões que a aplicação precisa apoiar.", "Critérios para validar a primeira entrega.", "Definições sobre acesso, infraestrutura, manutenção e propriedade."],
-    limits: "Construir uma aplicação também exige manter infraestrutura, dependências e integrações ao longo do tempo. Uma ferramenta pronta pode ser mais adequada quando já atende ao processo. Prazo e investimento dependem do escopo, das fontes de dados e dos requisitos de operação.",
-    example: { title: "Solicitações acompanhadas em um só lugar", before: "Uma equipe acompanha pedidos em conversas e planilhas, sem uma visão comum de responsáveis e pendências.", after: "Uma ferramenta interna poderia reunir solicitações, responsáveis e aprovações em um fluxo definido. O que cada usuário pode consultar ou alterar seria determinado por seu perfil." },
+    requirements: ["Objetivo do site, público e serviços que precisam ser apresentados.", "Identidade visual, textos, imagens e um responsável por aprovar o conteúdo.", "Domínio, hospedagem e acesso autorizado às contas necessárias.", "Canais de contato e definições sobre atualização, manutenção e medição."],
+    limits: "Publicar um site e preparar seu SEO não garante indexação, posição nas buscas ou volume de contatos. A descoberta depende também do conteúdo, da concorrência e das decisões dos buscadores. Domínio, hospedagem, produção de conteúdo e manutenção precisam ter responsabilidades definidas. O Perfil da Empresa no Google depende da elegibilidade e da verificação do negócio; mídia paga é um escopo separado.",
+    example: { title: "Da indicação ao primeiro contato", before: "Uma pessoa recebe uma indicação, procura a empresa e encontra informações dispersas, sem uma página que explique o serviço e facilite o contato.", after: "Um site poderia reunir a apresentação da empresa, páginas de serviços e um caminho direto para conversar. A estrutura técnica seria preparada para as buscas e acompanhada nas ferramentas definidas no projeto." },
     faqs: [
-      { question: "Quando escolher software sob medida em vez de uma ferramenta pronta?", answer: "Compare o ajuste ao processo, o esforço de adaptação, as integrações e o custo de manter cada opção. Se uma ferramenta existente já atende à necessidade, construir outra pode não fazer sentido." },
-      { question: "Quem fica com o código, os dados e os acessos?", answer: "Esses pontos são definidos de forma explícita no escopo e na entrega, incluindo dependências de terceiros. A empresa deve saber o que recebe, o que controla e quais serviços precisam ser mantidos." },
-      { question: "Vocês desenvolvem dashboards?", answer: "Dashboards e painéis operacionais podem fazer parte do projeto. Antes da construção, definimos as fontes, as métricas, a frequência de atualização e as decisões que o painel precisa apoiar." },
+      { question: "Quanto custa criar um site ou uma loja virtual?", answer: "O valor da criação é R$ 1.500 para o site e para a loja virtual. Você pode parcelar em 10 vezes de R$ 150 sem juros ou pagar R$ 1.425 no Pix, com 5% de desconto. Além da criação, há o pacote obrigatório de R$ 50/mês." },
+      { question: "O que está incluído nos R$ 50 mensais?", answer: "O pacote obrigatório inclui hospedagem do site, domínio, manutenção da infraestrutura e 3 ajustes mensais para manter o site atualizado. Vale tanto para sites quanto para lojas virtuais e é cobrado separadamente do valor da criação." },
+      { question: "SEO, GEO e AIO garantem que minha empresa será recomendada?", answer: "A preparação ajuda buscadores e plataformas de IA a descobrir e compreender o conteúdo. Indexação, posição e citações dependem das decisões dessas plataformas e de outros fatores. Não garantimos uma posição no Google nem uma recomendação específica de uma IA." },
+      { question: "O site já fica preparado para aparecer no Google?", answer: "A entrega pode incluir SEO técnico, sitemap, títulos, descrições e configuração do Search Console. Isso ajuda os buscadores a descobrir e compreender as páginas. Indexação e posição são decisões do Google; não prometemos um lugar específico nos resultados." },
+      { question: "Vocês também ajudam com o Perfil da Empresa no Google?", answer: "A configuração ou revisão do perfil pode fazer parte do escopo quando o negócio atende aos critérios do Google. A conta deve ficar sob controle da empresa, e a verificação pode exigir participação do responsável. Negócios exclusivamente online não são elegíveis para esse perfil." },
+      { question: "Qual é a diferença entre um site e uma landing page?", answer: "Um site pode reunir várias páginas para apresentar a empresa e seus serviços. Uma landing page concentra a mensagem em uma oferta ou campanha. A escolha depende do que a pessoa precisa entender e da ação que você quer facilitar." },
+      { question: "Quem cuida do domínio, da hospedagem e das atualizações?", answer: "A Prometeus cuida da hospedagem, do domínio e da manutenção da infraestrutura no pacote obrigatório de R$ 50/mês. O pacote também contempla 3 ajustes mensais para atualizar o site. A escolha do domínio e os acessos são organizados na preparação do projeto." },
     ],
   },
 ];

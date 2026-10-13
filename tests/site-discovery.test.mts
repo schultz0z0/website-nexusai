@@ -8,7 +8,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../src/lib/site-metadata.ts";
 test("publishes only canonical public routes in the sitemap", () => {
   assert.deepEqual(
     sitemap().map((entry) => new URL(entry.url).pathname),
-    ["/", "/contato", "/privacidade", "/cookies", "/servicos", "/servicos/automacao-de-processos", "/servicos/agentes-de-ia", "/servicos/integracao-de-sistemas", "/servicos/desenvolvimento-sob-medida"],
+    ["/", "/contato", "/privacidade", "/cookies", "/servicos", "/servicos/prometeus-copiloto", "/servicos/prometeus-rastro", "/servicos/prometeus-soft-phone", "/servicos/atendimento-ia-whatsapp", "/servicos/desenvolvimento-sob-medida", "/servicos/desenvolvimento-web"],
   );
 });
 
