@@ -28,7 +28,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "prometeus-rastro", kind: "product", name: "Prometeus Rastro", shortName: "Prometeus Rastro",
     description: "Organize seu estoque e saiba onde está cada item, quem está responsável e o histórico das movimentações. Conheça o Prometeus Rastro em uma demonstração personalizada.",
-    updatedAt: "2026-10-14", image: "/images/rastro/hero-operacao.webp",
+    updatedAt: "2026-10-14", image: "/images/rastro/hero-operacao-hq.webp",
     intro: "Organize seu estoque, acompanhe responsáveis e consulte o histórico das movimentações. Uma plataforma personalizada para a operação da sua empresa.",
     applications: [
       { title: "Encontre o que precisa", text: "Itens organizados e pesquisáveis, com as informações que sua equipe precisa consultar." },

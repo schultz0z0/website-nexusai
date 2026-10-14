@@ -15,9 +15,9 @@ Direção aprovada pelo usuário em 14/10/2026. Rastro atende diferentes operaç
 
 Fonte fornecida pelo usuário: `Prometeus_Rastro_Apresentacao.pdf`, 15 páginas. Material de demonstração, com preparação de produção ainda em evolução; não é oferecido acesso imediato a uma versão pronta para produção.
 
-As imagens `demo-inventory.webp`, `demo-movement.webp` e `demo-history.webp` foram extraídas das imagens originais das páginas 5, 7 e 8, respectivamente, e convertidas em WebP sem alterar o conteúdo. A legenda indica telas reais do demonstrativo e dados de exemplo. Nenhum PDF privado é publicado.
+As imagens `demo-inventory-original.webp`, `demo-movement-original.webp` e `demo-history-original.webp` foram extraídas das imagens originais das páginas 5, 7 e 8, respectivamente, e convertidas em WebP sem perda, com pixels idênticos aos PNGs originais e resolução 1920×1080. A legenda indica telas reais do demonstrativo e dados de exemplo. Nenhum PDF privado é publicado.
 
-`hero-operacao.webp`: fotografia criada com Imagegen nativo para esta página. Cena de estoque com equipamentos, ferramentas e pessoas em atividade, com espaço escuro para o texto, iluminação azul e luz de trabalho neutra. Não representa um cliente real. A segunda foto reutiliza a imagem ilustrativa do catálogo em `/images/offers/prometeus-rastro.webp`.
+`hero-operacao-hq.webp`: fotografia criada com Imagegen nativo para esta página. Cena de estoque com equipamentos, ferramentas e pessoas em atividade, com espaço escuro para o texto, iluminação azul e luz de trabalho neutra. Não representa um cliente real. A segunda foto, `operacao-estoque-hq.webp`, é uma versão em resolução original da imagem ilustrativa do catálogo. As fotos usam qualidade 95. As cinco imagens são entregues diretamente com `unoptimized`, evitando nova compressão e variantes pequenas para os recortes verticais; as capturas ampliadas preservam seus 1920 pixels.
 
 ## Experiência
 

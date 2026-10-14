@@ -10,6 +10,7 @@ for (const width of [1440, 320, 390]) {
     const hero = page.locator("main header").first();
     await expect(hero).toContainText("Saiba onde está cada item.");
     await expect(hero.locator("img")).toHaveAttribute("src", /hero-operacao/);
+    await expect(hero.locator("img")).not.toHaveAttribute("src", /_next\/image/);
     const contact = new URL(await hero.getByRole("link", { name: "Agendar demonstração" }).getAttribute("href") ?? "");
     expect(contact.pathname).toBe("/5521973231943");
     expect(contact.searchParams.get("text")).toContain("Prometeus Rastro");
@@ -17,6 +18,10 @@ for (const width of [1440, 320, 390]) {
     await expect(page.getByRole("heading", { name: "Patrimônio da empresa" })).toBeVisible();
     const demo = page.locator("#rastro-em-acao");
     await expect(demo).toContainText("Telas reais do demonstrativo. Dados de exemplo.");
+    await expect(demo.locator("figure img")).toHaveAttribute("src", "/images/rastro/demo-inventory-original.webp");
+    await demo.locator("figure img").scrollIntoViewIfNeeded();
+    await demo.locator("figure img").evaluate((image: HTMLImageElement) => image.decode());
+    expect(await demo.locator("figure img").evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(1920);
     await demo.getByRole("button", { name: /Movimentação/ }).focus();
     await page.keyboard.press("Enter");
     await expect(demo.locator("figure img")).toHaveAttribute("src", /demo-movement/);
