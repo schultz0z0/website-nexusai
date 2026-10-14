@@ -40,17 +40,23 @@ Se houver qualquer saída, pare e preserve essas alterações antes de atualizar
 git switch main
 COMMIT_ANTERIOR="$(git rev-parse HEAD)"
 printf "Commit anterior: %s\n" "$COMMIT_ANTERIOR"
+IMAGEM_ANTERIOR="$(docker inspect prometeus-website --format '{{.Image}}')"
+docker image tag "$IMAGEM_ANTERIOR" "prometeus-site-website:rollback-$COMMIT_ANTERIOR"
 git fetch origin
 git pull --ff-only origin main
 git rev-parse HEAD
 docker compose config --quiet
 docker compose build --pull website
-docker compose up -d --no-deps website
+docker compose up -d --no-deps --no-build --wait --wait-timeout 120 website
 ```
 
-Guarde `COMMIT_ANTERIOR` até concluir a validação. O SHA final mostrado por `git rev-parse HEAD` identifica exatamente a versão publicada.
+Guarde `COMMIT_ANTERIOR` até concluir a validação. A tag `rollback-$COMMIT_ANTERIOR` preserva a imagem que estava em execução antes de reconstruir. O SHA final mostrado por `git rev-parse HEAD` identifica exatamente a versão publicada. Execute cada comando somente se o anterior tiver terminado sem erro.
 
 ## Verificação imediata
+
+O Compose agora verifica o HTTP da aplicação dentro do container. O comando `up --wait` só conclui com o serviço saudável; isso não substitui os checks HTTPS pelo domínio e pelo Traefik abaixo. Se sua versão do Compose não reconhecer `--wait`, atualize o plugin ou use `up -d --no-deps --no-build website` e confira `docker inspect prometeus-website --format '{{.State.Health.Status}}'` até retornar `healthy`.
+
+O Clarity é carregado globalmente pelo layout, inclusive nas seis ofertas, após consentimento de Analytics. O ID público padrão é `yjrsmq8w37`. Como `NEXT_PUBLIC_*` é definido no build, um `NEXT_PUBLIC_CLARITY_ID=` vazio em `.env` desativa a integração e exige novo build para reativar. Para usar o projeto confirmado, mantenha `NEXT_PUBLIC_CLARITY_ID=yjrsmq8w37` na configuração de build da VPS, ou deixe a variável ausente para usar o padrão. Não basta mudar o ambiente de um container já construído.
 
 ```bash
 docker compose ps website
@@ -77,12 +83,13 @@ Após validar a publicação, siga `docs/search-production-release.md` e `SEARCH
 
 ## Rollback recuperável
 
-Se a nova versão falhar, use o valor de `COMMIT_ANTERIOR` sem apagar histórico:
+Se a nova versão falhar, use a imagem preservada e o valor de `COMMIT_ANTERIOR` sem apagar histórico nem depender de outro build:
 
 ```bash
+docker image inspect "prometeus-site-website:rollback-$COMMIT_ANTERIOR" --format '{{.Id}}'
 git switch --detach "$COMMIT_ANTERIOR"
-docker compose build website
-docker compose up -d --no-deps website
+docker image tag "prometeus-site-website:rollback-$COMMIT_ANTERIOR" prometeus-site-website:latest
+docker compose up -d --no-deps --no-build --force-recreate --wait --wait-timeout 120 website
 docker compose ps website
 docker compose logs --tail=100 website
 ```

@@ -2,7 +2,7 @@
 
 Domínio canônico: `https://agenciaprometeus.com.br`
 
-**Atualização 14/10/2026:** comece pelo [roteiro pós-deploy desta auditoria](docs/search-production-release.md), com as 11 URLs, verificações públicas, envio por plataforma e medição de palavras-chave. A entrega está na branch temporária; integre a versão aprovada em `main` antes de atualizar a VPS.
+**Atualização 14/10/2026:** comece pelo [roteiro pós-deploy desta auditoria](docs/search-production-release.md), com as 11 URLs, verificações públicas, envio por plataforma e medição de palavras-chave. A versão final está preparada para integração em `main` e publicação na VPS; confirme o SHA enviado ao GitHub antes de atualizar.
 
 ## Roteiro desta entrega — SEO, GEO e AIO
 

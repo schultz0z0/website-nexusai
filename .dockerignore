@@ -13,3 +13,7 @@ README.md
 npm-debug.log
 .DS_Store
 .env*
+output
+docs
+tests
+coverage

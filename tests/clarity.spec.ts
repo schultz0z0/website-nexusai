@@ -1,4 +1,32 @@
 import { expect, test } from "@playwright/test";
+import { SERVICES, servicePath } from "../src/lib/service-content";
+
+test("restores analytics consent and loads Clarity on every public page including new offers", async ({ page }) => {
+  // Eleven complete document loads share this case; allow for parallel CI workers.
+  test.setTimeout(90_000);
+  const requests: string[] = [];
+  await page.route("https://www.clarity.ms/tag/**", async route => {
+    requests.push(route.request().url());
+    // No production recordings or external requests during this verification.
+    await route.fulfill({ contentType: "application/javascript", body: "window.clarity = window.clarity || function() {};" });
+  });
+  await page.goto("/");
+  await expect(page.locator('[data-consent-manager]')).toHaveAttribute("data-hydrated", "true");
+  await expect(page.locator('script[data-nexus-tracking="clarity"]')).toHaveCount(0);
+  await page.getByRole("button", { name: "Gerenciar cookies" }).click();
+  await page.getByRole("checkbox", { name: "Permitir cookies de analytics" }).check();
+  await page.getByRole("button", { name: "Salvar preferências" }).click();
+  await expect(page.locator('script[data-nexus-tracking="clarity"]')).toHaveCount(1);
+  await expect.poll(() => requests.length).toBe(1);
+  let expectedRequests = 1;
+  for (const path of ["/servicos", ...SERVICES.map(servicePath), "/contato", "/privacidade", "/cookies"]) {
+    const response = await page.goto(path);
+    expect(response?.status()).toBe(200);
+    await expect(page.locator('script[data-nexus-tracking="clarity"]')).toHaveCount(1);
+    await expect.poll(() => requests.length).toBe(++expectedRequests);
+    expect(requests.at(-1)).toBe("https://www.clarity.ms/tag/yjrsmq8w37");
+  }
+});
 
 test("loads Clarity only with analytics consent, once across navigation, and stops on revocation", async ({ page }) => {
   let tagRequests = 0;

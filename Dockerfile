@@ -8,10 +8,7 @@ WORKDIR /app
 
 # Copy package lock & manifests
 COPY package.json package-lock.json ./
-# Usa `npm install` em vez de `npm ci` para tolerar pequenas divergências entre
-# package.json e package-lock.json em ambientes de produção. `npm ci` é estrito
-# e quebra o build sempre que alguém instala uma dependência nova e esquece de
-# commitar o lockfile atualizado.
+# Instala exatamente as versões do lockfile; divergências devem ser corrigidas antes do deploy.
 RUN npm ci --no-audit --no-fund
 
 # 2. Rebuild the source code only when needed
