@@ -55,17 +55,33 @@ export function SiteMenu({ groups, contactHref }: { groups: OfferGroup[]; contac
   return (
     <div ref={root} className={styles.root}>
       <div className={styles.desktop}>
-        <Link className={styles.topLink} href="/">Início</Link>
-        <div className={styles.serviceEntry}>
-          <Link className={styles.topLink} href="/servicos" onClick={closeMenus}>Serviços</Link>
-          <details className={styles.services} onBlur={onBlur}>
-            <summary aria-label="Expandir serviços" className={styles.expand}><ChevronDown size={16} aria-hidden="true" /></summary>
+          <details
+            className={styles.services}
+            onBlur={onBlur}
+            onPointerEnter={(event) => {
+              if (event.pointerType === "mouse") event.currentTarget.open = true;
+            }}
+            onPointerLeave={(event) => {
+              if (event.pointerType === "mouse" && !event.currentTarget.querySelector('[role="region"]')?.contains(document.activeElement)) event.currentTarget.open = false;
+            }}
+          >
+            <summary
+              aria-label="Expandir serviços"
+              className={`${styles.expand} ${styles.serviceTrigger}`}
+              onClick={(event) => {
+                // Hover may have opened the panel before a mouse click; keep it open.
+                // Keyboard activation keeps the native disclosure toggle.
+                if (event.detail > 0) {
+                  event.preventDefault();
+                  event.currentTarget.closest("details")!.open = true;
+                }
+              }}
+            >Serviços<ChevronDown size={16} aria-hidden="true" /></summary>
             <div aria-label="Opções de serviços" role="region" className={styles.offerPanel}>
               <div className={styles.offerColumns}>{offerings()}</div>
               <Link href="/servicos" className={styles.allOffers} onClick={closeMenus}>Ver todas as ofertas</Link>
             </div>
           </details>
-        </div>
         <Link className={styles.topLink} href="/#como-trabalhamos">Como trabalhamos</Link>
       </div>
 
@@ -76,14 +92,13 @@ export function SiteMenu({ groups, contactHref }: { groups: OfferGroup[]; contac
       <details className={styles.mobile} onBlur={onBlur}>
         <summary aria-label="Menu principal" className={styles.menuToggle}><Menu className={styles.menuIcon} size={20} aria-hidden="true" /><X className={styles.closeIcon} size={20} aria-hidden="true" /></summary>
         <div role="region" aria-label="Navegação no celular" className={styles.mobilePanel}>
-          <Link href="/" className={styles.mobileLink} onClick={closeMenus}>Início</Link>
-          <div className={styles.mobileServices}>
-            <Link href="/servicos" className={styles.mobileLink} onClick={closeMenus}>Serviços</Link>
             <details className={styles.mobileOffers}>
-              <summary aria-label="Expandir serviços" className={styles.expand}><ChevronDown size={18} aria-hidden="true" /></summary>
-              <div className={styles.mobileOfferColumns}>{offerings()}</div>
+              <summary aria-label="Expandir serviços" className={`${styles.expand} ${styles.serviceTrigger}`}>Serviços<ChevronDown size={18} aria-hidden="true" /></summary>
+              <div className={styles.mobileOfferColumns}>
+                {offerings()}
+                <Link href="/servicos" className={styles.allOffers} onClick={closeMenus}>Ver todas as ofertas</Link>
+              </div>
             </details>
-          </div>
           <Link href="/#como-trabalhamos" className={styles.mobileLink} onClick={closeMenus}>Como trabalhamos</Link>
         </div>
       </details>

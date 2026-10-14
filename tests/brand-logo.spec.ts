@@ -36,7 +36,7 @@ test("uses the Prometeus wordmark in the desktop navigation", async ({
     cropBox!.x + cropBox!.width + 1,
   );
 
-  await expect(navigation.getByRole("link")).toHaveCount(5);
+  await expect(navigation.getByRole("link")).toHaveCount(3);
   await expect(
     navigation.getByRole("link", { name: "Falar pelo WhatsApp" }),
   ).toBeVisible();

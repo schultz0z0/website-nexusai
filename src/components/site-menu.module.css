@@ -2,15 +2,16 @@
 .desktop { display: flex; align-items: center; gap: 30px; }
 .topLink { display: inline-flex; align-items: center; min-height: 44px; color: #c6cbd4; font-size: 14px; transition: color 160ms; }
 .topLink:hover { color: #fff; }
-.serviceEntry { display: flex; align-items: center; gap: 2px; }
 .services { position: relative; }
+.services[open]::before { content: ""; position: absolute; top: 100%; left: -100px; width: 540px; height: 14px; }
 .services:not([open]) > .offerPanel, .mobile:not([open]) > .mobilePanel, .mobileOffers:not([open]) > .mobileOfferColumns { display: none; }
 .expand, .menuToggle { display: flex; align-items: center; justify-content: center; width: 36px; height: 44px; cursor: pointer; color: #c6cbd4; list-style: none; border-radius: 6px; }
 .expand::-webkit-details-marker, .menuToggle::-webkit-details-marker { display: none; }
+.serviceTrigger { width: auto; justify-content: space-between; gap: 8px; font-size: 14px; }
 .expand svg { transition: transform 180ms; }
 .services[open] > .expand svg, .mobileOffers[open] > .expand svg { transform: rotate(180deg); }
 .root a:focus-visible, .root summary:focus-visible { outline: 2px solid #518cff; outline-offset: 4px; border-radius: 4px; }
-.offerPanel { position: absolute; top: calc(100% + 14px); left: -172px; width: 540px; max-height: calc(100dvh - 88px); overflow-y: auto; overscroll-behavior: contain; background: #090e18; border: 1px solid #ffffff16; border-radius: 12px; box-shadow: 0 22px 60px #0008; padding: 28px 30px 0; animation: reveal 180ms ease-out; }
+.offerPanel { position: absolute; top: calc(100% + 14px); left: -100px; width: 540px; max-height: calc(100dvh - 88px); overflow-y: auto; overscroll-behavior: contain; background: #090e18; border: 1px solid #ffffff16; border-radius: 12px; box-shadow: 0 22px 60px #0008; padding: 28px 30px 0; animation: reveal 180ms ease-out; }
 .offerColumns { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; }
 .group h2 { font-size: 12px; font-weight: 500; color: #8d9ab0; margin-bottom: 12px; }
 .group ul { list-style: none; margin: 0; padding: 0; }
@@ -32,12 +33,11 @@
   .mobile[open] .closeIcon { display: block; }
   .mobilePanel { position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100dvh - 72px); overflow-y: auto; overscroll-behavior: contain; background: #090e18; border-bottom: 1px solid #ffffff1c; padding: 16px 24px 24px; box-shadow: 0 24px 40px #0006; animation: reveal 180ms ease-out; }
   .mobileLink { display: flex; min-height: 48px; align-items: center; font-size: 15px; color: #e0e5ee; }
-  .mobileServices { position: relative; }
-  .mobileServices > a { width: calc(100% - 52px); }
-  .mobileOffers > summary { position: absolute; right: 0; top: 2px; width: 44px; }
+  .mobileOffers > summary { width: 100%; min-height: 48px; font-size: 15px; color: #e0e5ee; }
   .mobileOfferColumns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 16px 0 20px; border-bottom: 1px solid #ffffff12; }
   .group h2 { margin-bottom: 6px; }
   .group a { min-height: 46px; }
+  .mobileOfferColumns > .allOffers { grid-column: 1 / -1; margin-top: 0; padding-bottom: 0; }
 }
 @media (max-width: 480px) {
   .mobileOfferColumns { grid-template-columns: 1fr; gap: 16px; }

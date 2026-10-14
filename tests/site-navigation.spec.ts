@@ -1,16 +1,17 @@
 import { expect, test } from "@playwright/test";
 
-test("keeps the catalog link separate from an accessible services disclosure", async ({ page }) => {
+test("opens services on click and keyboard with the catalog link inside", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/servicos");
   const nav = page.getByRole("navigation", { name: "Navegação principal", exact: true });
   const expand = nav.getByLabel("Expandir serviços", { exact: true }).first();
-  await expect(nav.getByRole("link", { name: "Serviços", exact: true }).first()).toHaveAttribute("href", "/servicos");
+  await expect(nav.getByRole("link", { name: "Início", exact: true })).toHaveCount(0);
   await expand.focus();
   await page.keyboard.press("Enter");
   const panel = nav.getByLabel("Opções de serviços", { exact: true });
   await expect(panel).toBeVisible();
   await expect(panel.getByRole("link")).toHaveCount(7);
+  await expect(panel.getByRole("link", { name: "Ver todas as ofertas" })).toHaveAttribute("href", "/servicos");
   await expect(panel.getByRole("heading", { name: "Produtos" })).toBeVisible();
   await expect(panel.getByRole("heading", { name: "Soluções" })).toBeVisible();
   await page.keyboard.press("Tab");
@@ -28,6 +29,30 @@ test("keeps the catalog link separate from an accessible services disclosure", a
   await expect(nav.getByRole("link", { name: "Falar pelo WhatsApp" })).toHaveAttribute("href", /^https:\/\/wa.me\/5521973231943\?/);
 });
 
+test("opens services on hover and stays open while moving into the submenu", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/servicos");
+  const nav = page.getByRole("navigation", { name: "Navegação principal", exact: true });
+  const trigger = nav.getByLabel("Expandir serviços", { exact: true }).first();
+  const panel = nav.getByLabel("Opções de serviços", { exact: true });
+  await trigger.hover();
+  await expect(panel).toBeVisible();
+  await trigger.click();
+  await expect(panel).toBeVisible();
+  const triggerBox = (await trigger.boundingBox())!;
+  const panelBox = (await panel.boundingBox())!;
+  await page.mouse.move(triggerBox.x + triggerBox.width / 2, (triggerBox.y + triggerBox.height + panelBox.y) / 2);
+  await expect(panel).toBeVisible();
+  await panel.getByRole("link", { name: "Copiloto", exact: true }).hover();
+  await expect(panel).toBeVisible();
+  await page.locator("h1").hover();
+  await expect(panel).not.toBeVisible();
+  await trigger.hover();
+  await panel.getByRole("link", { name: "Ver todas as ofertas" }).click();
+  await expect(page).toHaveURL(/\/servicos$/);
+  await expect(panel).not.toBeVisible();
+});
+
 test("keeps the expanded desktop panel usable in a short viewport", async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 320 });
   await page.goto("/servicos");
@@ -40,6 +65,29 @@ test("keeps the expanded desktop panel usable in a short viewport", async ({ pag
   await page.keyboard.press("Tab");
   await expect(nav.getByRole("link", { name: "Como trabalhamos", exact: true })).toBeFocused();
   await expect(panel).not.toBeVisible();
+});
+
+test("scrolls smoothly from the home menu to how we work", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.evaluate(() => {
+    const samples: number[] = [];
+    (window as unknown as { scrollSamples: number[] }).scrollSamples = samples;
+    window.addEventListener("scroll", () => samples.push(window.scrollY));
+  });
+  const nav = page.getByRole("navigation", { name: "Navegação principal", exact: true });
+  await nav.getByRole("link", { name: "Como trabalhamos", exact: true }).click();
+  await expect(page).toHaveURL(/#como-trabalhamos$/);
+  await expect.poll(() => page.locator("#como-trabalhamos").evaluate((el) => Math.abs(el.getBoundingClientRect().top - 88))).toBeLessThan(3);
+  const samples = await page.evaluate(() => (window as unknown as { scrollSamples: number[] }).scrollSamples);
+  expect(samples.filter((position) => position > 0 && position < samples.at(-1)! - 10).length).toBeGreaterThan(2);
+});
+
+test("respects reduced motion for anchor navigation", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe("auto");
 });
 
 for (const width of [320, 390, 768]) {
