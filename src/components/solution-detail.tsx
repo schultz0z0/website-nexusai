@@ -17,7 +17,7 @@ export function SolutionDetail({ service }: { service: ServiceContent }) {
   const label = presentation.ctaLabel ?? "Conversar sobre meu projeto";
   return <main className={shared.page}><ServiceMotion>
     <header className={styles.hero}>
-      <div className={styles.backdrop} aria-hidden="true" data-service-artwork><Image src={service.image} alt="" fill sizes="100vw" loading="eager" fetchPriority="high" data-service-photo /></div>
+      <div className={styles.backdrop} aria-hidden="true" data-service-artwork><Image src={service.image} alt="" fill sizes="(max-width: 760px) 765px, max(100vw, 1155px)" quality={90} loading="eager" fetchPriority="high" data-service-photo /></div>
       <div className={shared.container}>
         <nav aria-label="Caminho da página" className={shared.breadcrumbs}><Link href="/">Início</Link><span aria-hidden="true">/</span><Link href="/servicos">Serviços</Link><span aria-hidden="true">/</span><span aria-current="page">{service.shortName}</span></nav>
         <div className={styles.heroCopy}><h1>{service.name}</h1><p>{presentation.lead}</p>

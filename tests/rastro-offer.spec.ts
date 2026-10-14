@@ -10,7 +10,7 @@ for (const width of [1440, 320, 390]) {
     const hero = page.locator("main header").first();
     await expect(hero).toContainText("Saiba onde está cada item.");
     await expect(hero.locator("img")).toHaveAttribute("src", /hero-operacao/);
-    await expect(hero.locator("img")).not.toHaveAttribute("src", /_next\/image/);
+    await expect(hero.locator("img")).toHaveAttribute("srcset", /w=|\d+w/);
     const contact = new URL(await hero.getByRole("link", { name: "Agendar demonstração" }).getAttribute("href") ?? "");
     expect(contact.pathname).toBe("/5521973231943");
     expect(contact.searchParams.get("text")).toContain("Prometeus Rastro");

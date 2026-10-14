@@ -6,7 +6,7 @@ export function WebDiscovery({ intro }: { intro: string }) {
   return (
     <section id="presenca-digital" className={styles.section} aria-labelledby="web-discovery-title">
       <div className={styles.scene} aria-hidden="true" data-service-artwork>
-        <Image src="/images/cinematic/home-hero-touch-desktop.webp" alt="" fill sizes="100vw" data-service-photo />
+        <Image src="/images/cinematic/home-hero-touch-desktop.webp?v=20261014" alt="" fill sizes="(max-width: 760px) max(220vw, 750px), max(100vw, 1070px)" quality={90} data-service-photo />
       </div>
       <div className={styles.copy}>
         <h2 id="web-discovery-title">Quem procura o que você faz precisa encontrar você.</h2>

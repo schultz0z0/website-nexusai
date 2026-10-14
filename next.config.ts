@@ -8,7 +8,13 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   images: {
-    qualities: [75, 90],
+    // Responsive photos use restored masters: 85 for cards, 90 for cinematic heroes.
+    // Logos and readable product screenshots opt out individually.
+    qualities: [85, 90],
+    localPatterns: [
+      { pathname: "/images/**", search: "" },
+      { pathname: "/images/**", search: "?v=20261014" },
+    ],
   },
   turbopack: {
     root: projectRoot,

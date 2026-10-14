@@ -30,19 +30,19 @@ const ICONS: Record<(typeof HOME_CAPABILITIES)[number]["id"], LucideIcon> = {
 
 const CAPABILITY_IMAGES = {
   automate: {
-    src: "/images/capabilities/automate.webp",
+    src: "/images/capabilities/automate.webp?v=20261014",
     alt: "Equipe organizando uma rotina operacional repetitiva.",
   },
   connect: {
-    src: "/images/capabilities/connect.webp",
+    src: "/images/capabilities/connect.webp?v=20261014",
     alt: "Equipe conectando sistemas e etapas de uma operação.",
   },
   decide: {
-    src: "/images/capabilities/decide.webp",
+    src: "/images/capabilities/decide.webp?v=20261014",
     alt: "Profissionais analisando contexto para tomar uma decisão.",
   },
   build: {
-    src: "/images/capabilities/build.webp",
+    src: "/images/capabilities/build.webp?v=20261014",
     alt: "Equipe criando uma ferramenta digital sob medida.",
   },
 } as const;
@@ -138,6 +138,7 @@ export function CustomCapabilities() {
                   alt={index === activeIndex ? CAPABILITY_IMAGES[item.id].alt : ""}
                   fill
                   sizes="(min-width: 900px) 54vw, 100vw"
+                  quality={85}
                   className={styles.mediaImage}
                   data-capability-image={item.id}
                   data-active={index === activeIndex}
@@ -178,6 +179,7 @@ export function CustomCapabilities() {
                       alt={CAPABILITY_IMAGES[item.id].alt}
                       fill
                       sizes="(max-width: 899px) 100vw, 1px"
+                      quality={85}
                     />
                   </div>
                   <span className={styles.stepNumber}>

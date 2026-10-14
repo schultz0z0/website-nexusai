@@ -32,6 +32,7 @@ export function NexusNav() {
               alt="Prometeus"
               width={322}
               height={88}
+              unoptimized
               priority
               className="h-[38px] w-auto md:h-[44px]"
             />

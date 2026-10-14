@@ -26,7 +26,7 @@ export const SERVICES: ServiceContent[] = [
     shortName: "Desenvolvimento Web",
     description: "Criação de sites e lojas virtuais com SEO, GEO e AIO para presença no Google e em plataformas de IA. R$ 1.500 pela criação e pacote obrigatório de R$ 50/mês.",
     updatedAt: "2026-10-12",
-    image: "/images/capabilities/build.webp",
+    image: "/images/capabilities/build.webp?v=20261014",
     intro: "Seu site preparado para buscas no Google e respostas de IA. Da descoberta ao primeiro contato.",
     applications: [
       { title: "Sites institucionais", text: "Apresentar a empresa e seus serviços com páginas próprias, conteúdo claro e caminhos para entrar em contato. A estrutura acompanha a identidade da marca e as dúvidas de quem está conhecendo o negócio." },

@@ -5,7 +5,7 @@
   color: #f7f9ff;
   background-image:
     linear-gradient(90deg, rgba(3, 6, 12, 0.96) 0%, rgba(3, 6, 12, 0.8) 42%, rgba(3, 6, 12, 0.24) 73%, rgba(3, 6, 12, 0.5) 100%),
-    url("/images/cinematic/contact-hero-mobile.webp");
+    url("/images/cinematic/contact-hero-mobile.webp?v=20261014");
   background-position: center;
   background-size: cover;
   isolation: isolate;
@@ -190,7 +190,7 @@
     min-height: min(100svh, 940px);
     background-image:
       linear-gradient(90deg, rgba(3, 6, 12, 0.95) 0%, rgba(3, 6, 12, 0.74) 42%, rgba(3, 6, 12, 0.14) 72%, rgba(3, 6, 12, 0.38) 100%),
-      url("/images/cinematic/contact-hero-desktop.webp");
+      url("/images/cinematic/contact-hero-desktop.webp?v=20261014");
     background-position: center;
   }
 

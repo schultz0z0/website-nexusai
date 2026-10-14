@@ -23,7 +23,7 @@ export function RastroDetail({ service }: { service: ServiceContent }) {
   const contact = whatsappContact(service.name, true);
   return <main className={`${shared.page} ${styles.page}`}><ServiceMotion>
     <header className={styles.hero}>
-      <div className={styles.heroPhoto} aria-hidden="true" data-service-artwork><Image src={service.image} alt="" fill unoptimized loading="eager" fetchPriority="high" data-service-photo /></div>
+      <div className={styles.heroPhoto} aria-hidden="true" data-service-artwork><Image src={service.image} alt="" fill sizes="(max-width: 760px) 960px, max(100vw, 1640px)" quality={90} loading="eager" fetchPriority="high" data-service-photo /></div>
       <div className={shared.container}>
         <nav className={shared.breadcrumbs} aria-label="Caminho da página"><Link href="/">Início</Link><span aria-hidden="true">/</span><Link href="/servicos">Serviços</Link><span aria-hidden="true">/</span><span aria-current="page">Rastro</span></nav>
         <div className={styles.heroCopy}>
@@ -56,7 +56,7 @@ export function RastroDetail({ service }: { service: ServiceContent }) {
     </section>
 
     <section className={styles.operations} aria-labelledby="rastro-operations-title">
-      <div className={styles.operationPhoto} aria-hidden="true" data-service-artwork><Image src="/images/rastro/operacao-estoque-hq.webp" alt="" fill unoptimized data-service-photo /></div>
+      <div className={styles.operationPhoto} aria-hidden="true" data-service-artwork><Image src="/images/rastro/operacao-estoque-hq.webp?v=20261014" alt="" fill sizes="max(100vw, 975px)" quality={90} data-service-photo /></div>
       <div className={`${shared.container} ${styles.operationCopy}`}><h2 id="rastro-operations-title">O que você acompanha muda.<br />A necessidade de controle continua.</h2><p>Ferramentas, equipamentos, patrimônio. O Rastro é personalizado para os itens e os movimentos que fazem parte do seu negócio.</p></div>
     </section>
     <section className={`${shared.container} ${styles.useCases}`} aria-label="Aplicações do Rastro em diferentes operações">{uses.map(item => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}</section>

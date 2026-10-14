@@ -71,7 +71,7 @@
     opacity: 0.3;
     background:
       linear-gradient(rgba(2, 5, 12, 0.42), rgba(2, 5, 12, 0.66)),
-      url("/images/cinematic/home-hero-touch-desktop.webp") center / cover no-repeat;
+      url("/images/cinematic/home-hero-touch-desktop.webp?v=20261014") center / cover no-repeat;
     filter: blur(30px) saturate(0.72);
     transform: translateY(-1.5rem) scale(1.04);
   }

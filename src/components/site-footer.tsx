@@ -59,6 +59,7 @@ export function SiteFooter() {
             alt="Prometeus"
             width={532}
             height={145}
+            unoptimized
             className="h-auto w-[180px]"
           />
         </Link>

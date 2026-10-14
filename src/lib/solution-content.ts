@@ -4,7 +4,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "prometeus-copiloto", kind: "product", name: "Prometeus Copiloto", shortName: "Prometeus Copiloto",
     description: "CRM, campanhas e IA em uma plataforma de marketing personalizada para sua empresa. Solicite uma demonstração do Prometeus Copiloto pelo WhatsApp.",
-    updatedAt: "2026-10-13", image: "/images/capabilities/decide.webp",
+    updatedAt: "2026-10-13", image: "/images/capabilities/decide.webp?v=20261014",
     intro: "Organize campanhas, reúna informações do CRM e use IA para apoiar estratégias, planejamento e análise de dados e concorrentes.",
     applications: [
       { title: "Campanhas organizadas", text: "Planejamento, etapas e responsáveis em uma visão comum para sua equipe." },
@@ -28,7 +28,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "prometeus-rastro", kind: "product", name: "Prometeus Rastro", shortName: "Prometeus Rastro",
     description: "Organize seu estoque e saiba onde está cada item, quem está responsável e o histórico das movimentações. Conheça o Prometeus Rastro em uma demonstração personalizada.",
-    updatedAt: "2026-10-14", image: "/images/rastro/hero-operacao-hq.webp",
+    updatedAt: "2026-10-14", image: "/images/rastro/hero-operacao-hq.webp?v=20261014",
     intro: "Organize seu estoque, acompanhe responsáveis e consulte o histórico das movimentações. Uma plataforma personalizada para a operação da sua empresa.",
     applications: [
       { title: "Encontre o que precisa", text: "Itens organizados e pesquisáveis, com as informações que sua equipe precisa consultar." },
@@ -56,7 +56,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "prometeus-soft-phone", kind: "product", name: "Prometeus Soft Phone", shortName: "Prometeus Soft Phone",
     description: "Soft phone e CRM para equipes comerciais, em uma plataforma personalizada para sua operação. Solicite uma demonstração do Prometeus Soft Phone.",
-    updatedAt: "2026-10-13", image: "/images/capabilities/automate.webp",
+    updatedAt: "2026-10-13", image: "/images/capabilities/automate.webp?v=20261014",
     intro: "Aproxime ligações, contatos e acompanhamento comercial. Uma plataforma personalizada para o jeito que sua equipe atende e vende.",
     applications: [
       { title: "Ligações na plataforma", text: "Telefonia próxima das informações que o vendedor precisa consultar." },
@@ -80,7 +80,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "atendimento-ia-whatsapp", kind: "solution", name: "Atendimento com IA no WhatsApp", shortName: "IA no WhatsApp",
     description: "Agente de IA para atendimento no WhatsApp, com informações do seu negócio, triagem e encaminhamento para a equipe. Implantação sob medida pela Prometeus.",
-    updatedAt: "2026-10-13", image: "/images/cinematic/contact-hero-desktop.webp",
+    updatedAt: "2026-10-13", image: "/images/cinematic/contact-hero-desktop.webp?v=20261014",
     intro: "Um agente para responder dúvidas, reunir o contexto da solicitação e encaminhar a conversa para sua equipe quando necessário.",
     applications: [
       { title: "Dúvidas respondidas", text: "Respostas apoiadas nas informações que sua empresa aprova." },
@@ -104,7 +104,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "desenvolvimento-sob-medida", kind: "solution", name: "Software sob medida", shortName: "Software sob medida",
     description: "Ferramentas internas, dashboards e aplicações web construídos para a operação da sua empresa, com integrações e perfis de acesso definidos.",
-    updatedAt: "2026-10-13", image: "/images/capabilities/build.webp",
+    updatedAt: "2026-10-13", image: "/images/capabilities/build.webp?v=20261014",
     intro: "Desenvolvemos aplicações para organizar o trabalho, os dados e as decisões que suas ferramentas atuais não atendem.",
     applications: [
       { title: "Ferramentas internas", text: "Solicitações, responsáveis e aprovações em uma experiência feita para sua equipe." },
