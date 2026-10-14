@@ -1,7 +1,9 @@
+import { SITE_URL } from "./site-metadata.ts";
+
 export const COMPANY = {
   name: "Prometeus",
   legalName: "Prometeus",
-  url: "https://agenciaprometeus.com.br",
+  url: SITE_URL,
   emails: ["comercial@agenciaprometeus.com.br"],
   email: "comercial@agenciaprometeus.com.br",
   socials: [
@@ -74,7 +76,7 @@ export const HOME_COPY = {
   demos: {
     eyebrow: "DA IDEIA À OPERAÇÃO",
     title: "Dois exemplos. Não um catálogo.",
-    body: "Stock e Copilot mostram como a Prometeus transforma contextos diferentes em soluções funcionais. O próximo projeto começa no problema da sua empresa.",
+    body: "Dois exemplos conceituais de estoque e marketing. Conheça também os produtos Prometeus para essas operações; cada proposta é definida para a sua empresa.",
   },
   assurances: {
     eyebrow: "PERSONALIZADO, NÃO IMPROVISADO",
@@ -116,7 +118,7 @@ export const HOME_CAPABILITIES = [
 export const HOME_DEMOS = [
   {
     id: "stock",
-    label: "Demonstração funcional",
+    label: "Exemplo conceitual de estoque",
     name: "Stock",
     context:
       "Uma operação de estoque precisa reunir demanda, disponibilidade e reposição sem depender de conferências espalhadas.",
@@ -124,11 +126,11 @@ export const HOME_DEMOS = [
       "Um painel que organiza os sinais da operação, destaca exceções e apoia o planejamento de compra por item.",
     humanDecision:
       "Prioridade, quantidade de compra e aprovação continuam com a equipe responsável.",
-    cta: { href: "/contato", label: "Falar sobre algo parecido" },
+    cta: { href: "/servicos/prometeus-rastro", label: "Conhecer o Prometeus Rastro" },
   },
   {
     id: "copilot",
-    label: "Demonstração funcional",
+    label: "Exemplo conceitual de marketing",
     name: "Copilot",
     context:
       "Um time de marketing precisa transformar pesquisa, briefing e produção em um fluxo mais conectado e revisável.",
@@ -136,7 +138,7 @@ export const HOME_DEMOS = [
       "Um ambiente que organiza referências, gera pontos de partida e concentra a revisão das peças antes da publicação.",
     humanDecision:
       "Estratégia, direção criativa, aprovação e publicação continuam humanas.",
-    cta: { href: "/contato", label: "Falar sobre algo parecido" },
+    cta: { href: "/servicos/prometeus-copiloto", label: "Conhecer o Prometeus Copiloto" },
   },
 ] as const;
 

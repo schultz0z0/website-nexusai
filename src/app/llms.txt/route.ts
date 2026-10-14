@@ -8,7 +8,7 @@ const CONTENT = `# Prometeus
 ## O que fazemos
 
 - **Prometeus Copiloto**: CRM, campanhas e IA para organizar a operação de marketing, com apoio a estratégia, planejamento e análise de dados e concorrentes.
-- **Prometeus Rastro**: Gestão de estoque e rastreabilidade de ativos, com registros de movimentação e apoio de IA para consultas.
+- **Prometeus Rastro**: Controle de estoque e rastreabilidade de ativos em diferentes setores, com local, responsável e histórico de movimentações registradas. O demonstrativo tem apoio à preparação de rascunhos de atendimento; outros usos de IA dependem da personalização.
 - **Prometeus Soft Phone**: Soft phone e CRM em uma plataforma para equipes comerciais.
 - **Atendimento com IA no WhatsApp**: Agente personalizado com fontes aprovadas, triagem e encaminhamento humano.
 - **Software Sob Medida**: Aplicações, ferramentas internas, automações e integrações para os processos da empresa.
@@ -16,14 +16,14 @@ const CONTENT = `# Prometeus
 
 ## Como trabalhamos
 
-1. **Demonstração e conversa**: Copiloto, Rastro e Soft Phone têm uma base demonstrativa pronta, apresentada em reunião de vendas. As prévias públicas são ilustrativas.
+1. **Demonstração e conversa**: Copiloto, Rastro e Soft Phone têm uma base demonstrativa pronta, apresentada em reunião de vendas. O Rastro apresenta capturas reais do demonstrativo com dados de exemplo; as demais prévias são ilustrativas.
 2. **Personalização**: Adaptamos a base aos fluxos e informações da empresa; as demais soluções são definidas a partir da necessidade.
 3. **Proposta e entrega**: Escopo, prazo, investimento, código, dados, acessos e responsabilidades são definidos explicitamente.
 
 ## Serviços detalhados
 
 - [Todos os serviços](${COMPANY.url}/servicos): Aplicações, requisitos e limites dos serviços.
-${SERVICES.map((service) => `- [${service.name}](${COMPANY.url}${servicePath(service)}): ${service.description}`).join("\n")}
+${SERVICES.map((service) => `- [${service.name} — ${service.category}](${COMPANY.url}${servicePath(service)}): ${service.description}`).join("\n")}
 
 ## Escopo e condições
 
@@ -32,7 +32,7 @@ Atendimento a empresas no Brasil. Nos projetos sob medida, viabilidade, investim
 ## Páginas Principais
 
 - [Início](https://agenciaprometeus.com.br): Apresentação da empresa, proposta de valor, garantias e fluxo de trabalho.
-- [Diagnóstico / Contato](https://agenciaprometeus.com.br/contato): Solicitação de diagnóstico e contato com a equipe comercial.
+- [Contato e demonstrações](https://agenciaprometeus.com.br/contato): Agendamento e conversa sobre produtos, software sob medida, sites e lojas virtuais.
 
 ## Informações Corporativas
 

@@ -25,8 +25,8 @@ const viewports = [
 ] as const;
 
 const publicRoutes = [
-  { path: "/", title: /Prometeus \| Automação e IA sob medida para empresas/i },
-  { path: "/contato", title: /Diagnóstico de automação com IA \| Prometeus/i },
+  { path: "/", title: /Prometeus \| Software sob medida, automação e IA/i },
+  { path: "/contato", title: /Contato e demonstração de soluções para empresas \| Prometeus/i },
   { path: "/privacidade", title: /Política de Privacidade/i },
   { path: "/cookies", title: /Política de Cookies/i },
 ] as const;

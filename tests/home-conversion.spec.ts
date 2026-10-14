@@ -61,10 +61,11 @@ test("presents two demonstrations instead of a product catalog", async ({
 
   const demos = page.locator("#demonstracoes");
   await expect(demos).toBeVisible();
-  await expect(demos.getByText("Demonstração funcional", { exact: true })).toHaveCount(2);
+  await expect(demos.getByText(/Exemplo conceitual de (estoque|marketing)/)).toHaveCount(2);
   await expect(demos.getByRole("heading", { name: "Stock" })).toBeVisible();
   await expect(demos.getByRole("heading", { name: "Copilot" })).toBeVisible();
-  await expect(demos.getByRole("link", { name: "Falar sobre algo parecido" })).toHaveCount(2);
+  await expect(demos.getByRole("link", { name: "Conhecer o Prometeus Rastro" })).toHaveAttribute("href", "/servicos/prometeus-rastro");
+  await expect(demos.getByRole("link", { name: "Conhecer o Prometeus Copiloto" })).toHaveAttribute("href", "/servicos/prometeus-copiloto");
   await expect(demos.locator('a[href="/solucoes"]')).toHaveCount(0);
 });
 

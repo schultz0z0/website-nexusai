@@ -1,6 +1,8 @@
 # Prometeus — website institucional
 
-Site Next.js da Prometeus, com experiências cinematográficas responsivas nas rotas Home, Soluções, Processo e Contato. O domínio canônico oficial é `https://agenciaprometeus.com.br`.
+Site Next.js da Prometeus, com home, catálogo, seis páginas de ofertas, contato e políticas. Soluções e Processo redirecionam para seções da home. O domínio canônico oficial é `https://agenciaprometeus.com.br`.
+
+Publicação e descoberta: [roteiro pós-deploy](docs/search-production-release.md), [auditoria de SEO/GEO/AIO](docs/audits/2026-10-14-search-production.md) e [atualização da VPS](docs/vps-update.md).
 
 ## Requisitos
 

@@ -5,6 +5,8 @@ export interface ServiceContent {
   kind?: "product" | "solution";
   name: string;
   shortName: string;
+  seoTitle: string;
+  category: string;
   description: string;
   updatedAt: string;
   image: string;
@@ -24,10 +26,12 @@ export const SERVICES: ServiceContent[] = [
     slug: "desenvolvimento-web",
     name: "Criação de sites e lojas virtuais",
     shortName: "Desenvolvimento Web",
-    description: "Criação de sites e lojas virtuais com SEO, GEO e AIO para presença no Google e em plataformas de IA. R$ 1.500 pela criação e pacote obrigatório de R$ 50/mês.",
-    updatedAt: "2026-10-12",
+    seoTitle: "Criação de sites e lojas virtuais por R$ 1.500 | Prometeus",
+    category: "Criação de sites e lojas virtuais",
+    description: "Criação de sites profissionais e lojas virtuais por R$ 1.500 + R$ 50/mês obrigatórios. Identidade da marca e SEO para o Google. Veja projetos e condições.",
+    updatedAt: "2026-10-14",
     image: "/images/capabilities/build.webp?v=20261014",
-    intro: "Seu site preparado para buscas no Google e respostas de IA. Da descoberta ao primeiro contato.",
+    intro: "Sites institucionais, landing pages e lojas virtuais com a identidade da sua marca. Estrutura de SEO para descoberta no Google e em buscas com IA.",
     applications: [
       { title: "Sites institucionais", text: "Apresentar a empresa e seus serviços com páginas próprias, conteúdo claro e caminhos para entrar em contato. A estrutura acompanha a identidade da marca e as dúvidas de quem está conhecendo o negócio." },
       { title: "Landing pages", text: "Criar uma página focada em um serviço ou campanha, com mensagem, exemplos e um próximo passo definido. Formulários e contato por WhatsApp podem fazer parte da entrega, conforme o objetivo." },
@@ -43,6 +47,7 @@ export const SERVICES: ServiceContent[] = [
     limits: "Publicar um site e preparar seu SEO não garante indexação, posição nas buscas ou volume de contatos. A descoberta depende também do conteúdo, da concorrência e das decisões dos buscadores. Domínio, hospedagem, produção de conteúdo e manutenção precisam ter responsabilidades definidas. O Perfil da Empresa no Google depende da elegibilidade e da verificação do negócio; mídia paga é um escopo separado.",
     example: { title: "Da indicação ao primeiro contato", before: "Uma pessoa recebe uma indicação, procura a empresa e encontra informações dispersas, sem uma página que explique o serviço e facilite o contato.", after: "Um site poderia reunir a apresentação da empresa, páginas de serviços e um caminho direto para conversar. A estrutura técnica seria preparada para as buscas e acompanhada nas ferramentas definidas no projeto." },
     faqs: [
+      { question: "Vocês criam sites profissionais e lojas virtuais (e-commerce)?", answer: "Sim. Criamos sites institucionais, landing pages e lojas virtuais com a identidade da empresa e navegação para celular e computador. Você pode conhecer projetos reais no portfólio desta página. Páginas, conteúdo e recursos da loja são definidos antes de começar." },
       { question: "Quanto custa criar um site ou uma loja virtual?", answer: "O valor da criação é R$ 1.500 para o site e para a loja virtual. Você pode parcelar em 10 vezes de R$ 150 sem juros ou pagar R$ 1.425 no Pix, com 5% de desconto. Além da criação, há o pacote obrigatório de R$ 50/mês." },
       { question: "O que está incluído nos R$ 50 mensais?", answer: "O pacote obrigatório inclui hospedagem do site, domínio, manutenção da infraestrutura e 3 ajustes mensais para manter o site atualizado. Vale tanto para sites quanto para lojas virtuais e é cobrado separadamente do valor da criação." },
       { question: "SEO, GEO e AIO garantem que minha empresa será recomendada?", answer: "A preparação ajuda buscadores e plataformas de IA a descobrir e compreender o conteúdo. Indexação, posição e citações dependem das decisões dessas plataformas e de outros fatores. Não garantimos uma posição no Google nem uma recomendação específica de uma IA." },

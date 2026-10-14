@@ -14,7 +14,7 @@ export interface ServicePresentation {
 export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   "prometeus-copiloto": {
     catalogImage: "/images/offers/prometeus-copiloto.webp?v=20261014",
-    scene: "copilot", lead: "CRM, campanhas e IA para organizar seu marketing. Personalizado para sua empresa.",
+    scene: "copilot", lead: "CRM para marketing, gestão de campanhas e IA em uma plataforma personalizada para sua empresa.",
     applicationLead: "Planejamento, informações e equipe no mesmo lugar.", demoTitle: "Seu marketing em uma visão comum.",
     stages: ["Campanhas organizadas", "Planejamento com IA", "Contexto no CRM"],
     stageDetails: ["A equipe acompanha campanhas, etapas e responsáveis.", "O agente apoia a construção de um plano para revisão da equipe.", "Informações comerciais ajudam a orientar o próximo contato."], ctaLabel: "Solicitar demonstração",
@@ -28,14 +28,14 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   },
   "prometeus-soft-phone": {
     catalogImage: "/images/offers/prometeus-soft-phone.webp?v=20261014",
-    scene: "softphone", lead: "Ligações e CRM no mesmo lugar. Uma plataforma personalizada para sua equipe comercial.",
+    scene: "softphone", lead: "Softphone com CRM: ligações, contatos e acompanhamento de vendas no mesmo lugar. Personalizado para sua equipe.",
     applicationLead: "Contato, conversa e continuidade na mesma experiência.", demoTitle: "Cada conversa com o contexto certo.",
     stages: ["Contato organizado", "Ligação com contexto", "Próxima ação no CRM"],
     stageDetails: ["O vendedor encontra as informações do contato.", "A experiência aproxima a telefonia do contexto comercial.", "O atendimento continua com a próxima ação registrada."], ctaLabel: "Solicitar demonstração",
   },
   "atendimento-ia-whatsapp": {
     catalogImage: "/images/offers/atendimento-ia-whatsapp.webp?v=20261014",
-    scene: "agent", lead: "Respostas para seus clientes. Contexto para sua equipe. Um agente de IA preparado para o seu atendimento.",
+    scene: "agent", lead: "Atendimento no WhatsApp com agente de IA. Respostas para seus clientes e contexto para sua equipe continuar a conversa.",
     applicationLead: "Da primeira dúvida à conversa com uma pessoa.", demoTitle: "Seu atendimento com continuidade.",
     stages: ["Pergunta recebida", "Contexto consultado", "Conversa encaminhada à equipe"],
     stageDetails: ["O cliente traz uma dúvida sobre o serviço.", "O agente consulta informações aprovadas e reúne o contexto.", "A equipe assume com um resumo quando a conversa precisa de uma pessoa."], ctaLabel: "Quero IA no meu atendimento",

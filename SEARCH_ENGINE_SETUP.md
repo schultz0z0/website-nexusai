@@ -2,13 +2,15 @@
 
 Domínio canônico: `https://agenciaprometeus.com.br`
 
+**Atualização 14/10/2026:** comece pelo [roteiro pós-deploy desta auditoria](docs/search-production-release.md), com as 11 URLs, verificações públicas, envio por plataforma e medição de palavras-chave. A entrega está na branch temporária; integre a versão aprovada em `main` antes de atualizar a VPS.
+
 ## Roteiro desta entrega — SEO, GEO e AIO
 
-Preparação local concluída nesta entrega; publicação, propriedades autenticadas e presença nos índices ainda precisam ser verificadas. Não existe um cadastro único que assegure ranking ou citações em todas as plataformas.
+Implementação revisada; publicação, propriedades autenticadas e presença nos índices ainda precisam ser verificadas. Não existe um cadastro único que assegure ranking ou citações em todas as plataformas.
 
 ### 1. Publicar a nova versão
 
-A versão para publicação está na branch `main`. Na VPS, atualize o checkout com `git pull --ff-only origin main` e siga `docs/vps-update.md` para reconstruir e iniciar o container. Depois de publicar, abra estas URLs e confirme HTTP 200:
+Primeiro integre a entrega aprovada em `main` e envie ao GitHub. Na VPS, atualize o checkout com `git pull --ff-only origin main` e siga `docs/vps-update.md` para reconstruir e iniciar o container. Depois de publicar, abra estas URLs e confirme HTTP 200:
 
 - `https://agenciaprometeus.com.br/servicos`
 
@@ -108,7 +110,7 @@ Fontes: [OpenAI crawlers](https://developers.openai.com/api/docs/bots), [FAQ par
 
 ### 6. Atualizar também a propriedade Google existente
 
-No Google Search Console, confira o sitemap atualizado e inspecione as cinco páginas novas. Verifique o canonical selecionado e solicite indexação quando necessário. A propriedade já estar cadastrada não significa que as URLs novas já tenham sido descobertas.
+No Google Search Console, confira o sitemap atualizado e inspecione as seis páginas de ofertas. Verifique o canonical selecionado e solicite indexação quando necessário. A propriedade já estar cadastrada não significa que as URLs novas já tenham sido descobertas.
 
 ### 7. Acompanhar resultados e desenvolver autoridade
 

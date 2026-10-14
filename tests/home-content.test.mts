@@ -56,11 +56,12 @@ test("contains no prohibited or unverified public claims", () => {
   );
 });
 
-test("labels both examples as functional demonstrations", () => {
+test("distinguishes conceptual home examples from product demonstrations", () => {
   assert.equal(HOME_DEMOS.length, 2);
   assert.ok(
-    HOME_DEMOS.every((demo) => demo.label === "Demonstração funcional"),
+    HOME_DEMOS.every((demo) => demo.label.startsWith("Exemplo conceitual")),
   );
+  assert.deepEqual(HOME_DEMOS.map(demo => demo.cta.href), ["/servicos/prometeus-rastro", "/servicos/prometeus-copiloto"]);
 });
 
 test("keeps contact classification lightweight", () => {

@@ -4,7 +4,7 @@ import "./globals.css";
 import { NexusNav } from "@/components/nexus-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ConsentManager } from "@/components/consent-manager";
-import { SITE_DESCRIPTION, SITE_OG_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_OG_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site-metadata";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
-  robots: { index: true, follow: true },
+  robots: INDEXABLE_ROBOTS,
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",

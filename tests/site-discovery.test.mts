@@ -23,8 +23,9 @@ test("keeps editorial modification dates stable across generations", () => {
 });
 
 test("positions Prometeus as a custom digital solutions company", () => {
-  assert.equal(SITE_TITLE, "Prometeus | Automação e IA sob medida para empresas");
-  assert.match(SITE_DESCRIPTION, /automações, agentes de IA e integrações sob medida/i);
+  assert.equal(SITE_TITLE, "Prometeus | Software sob medida, automação e IA");
+  assert.match(SITE_DESCRIPTION, /software sob medida, automação e agentes de IA/i);
+  assert.match(SITE_DESCRIPTION, /sites e lojas virtuais/i);
   assert.match(COMPANY.description, /soluções digitais sob medida/i);
   assert.doesNotMatch(COMPANY.description, /plataformas e agentes/i);
 });

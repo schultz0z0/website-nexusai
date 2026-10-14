@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
-import { SITE_OG_IMAGE } from "@/lib/site-metadata";
+import { COMMERCIAL_WHATSAPP } from "@/lib/commercial-contact";
+import { INDEXABLE_ROBOTS, SITE_OG_IMAGE } from "@/lib/site-metadata";
 
 import { ContactPage } from "./contact-page";
 
-const TITLE = "Diagnóstico de automação com IA | Prometeus";
+const TITLE = "Contato e demonstração de soluções para empresas | Prometeus";
 const DESCRIPTION =
-  "Conte onde sua operação perde tempo. A Prometeus analisa o contexto e organiza o próximo passo para um diagnóstico de automação com IA.";
+  "Fale com a Prometeus sobre CRM, estoque, telefonia, IA no WhatsApp, software sob medida e criação de sites. Agende uma demonstração ou conte seu projeto.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: "/contato" },
-  robots: { index: true, follow: true },
+  robots: INDEXABLE_ROBOTS,
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -22,19 +23,22 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Prometeus — diagnóstico de automação com IA" }],
+    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Contato com a equipe Prometeus" }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [{ url: SITE_OG_IMAGE, alt: "Prometeus — diagnóstico de automação com IA" }],
+    images: [{ url: SITE_OG_IMAGE, alt: "Contato com a equipe Prometeus" }],
   },
 };
 
 const contactSchema = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
+  "@id": `${COMPANY.url}/contato#webpage`,
+  inLanguage: "pt-BR",
+  isPartOf: { "@id": `${COMPANY.url}/#website` },
   name: TITLE,
   description: DESCRIPTION,
   url: `${COMPANY.url}/contato`,
@@ -47,6 +51,7 @@ const contactSchema = {
       "@type": "ContactPoint",
       contactType: "sales",
       email: COMPANY.email,
+      telephone: `+${COMMERCIAL_WHATSAPP}`,
       availableLanguage: ["pt-BR"],
     },
   },

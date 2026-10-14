@@ -20,8 +20,8 @@ test.describe("SEO, discovery and consent", () => {
 
   test("renders canonical metadata and keeps UTM out of canonical", async ({ page }) => {
     await page.goto("/?utm_source=test&utm_campaign=qa");
-    await expect(page).toHaveTitle(/Prometeus \| Automação e IA sob medida para empresas/);
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Automações, agentes de IA/);
+    await expect(page).toHaveTitle(/Prometeus \| Software sob medida, automação e IA/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Software sob medida, automação e agentes de IA/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://agenciaprometeus.com.br");
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /og-image\.png/);
   });

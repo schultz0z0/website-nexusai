@@ -3,8 +3,10 @@ import type { ServiceContent } from "./service-content.ts";
 export const SPECIALIZED_OFFERS: ServiceContent[] = [
   {
     slug: "prometeus-copiloto", kind: "product", name: "Prometeus Copiloto", shortName: "Prometeus Copiloto",
-    description: "CRM, campanhas e IA em uma plataforma de marketing personalizada para sua empresa. Solicite uma demonstração do Prometeus Copiloto pelo WhatsApp.",
-    updatedAt: "2026-10-13", image: "/images/capabilities/decide.webp?v=20261014",
+    seoTitle: "CRM para marketing e gestão de campanhas | Prometeus Copiloto",
+    category: "CRM para marketing e gestão de campanhas com IA",
+    description: "CRM para marketing, gestão de campanhas e planejamento com IA. Conheça o Prometeus Copiloto, personalizado para sua empresa. Agende uma demonstração.",
+    updatedAt: "2026-10-14", image: "/images/capabilities/decide.webp?v=20261014",
     intro: "Organize campanhas, reúna informações do CRM e use IA para apoiar estratégias, planejamento e análise de dados e concorrentes.",
     applications: [
       { title: "Campanhas organizadas", text: "Planejamento, etapas e responsáveis em uma visão comum para sua equipe." },
@@ -19,6 +21,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
     requirements: [], limits: "As funcionalidades, integrações, fontes de dados, prazo e investimento são definidos na proposta. A IA apoia a equipe; análises e estratégias precisam de revisão humana.",
     example: { title: "Da campanha ao próximo passo", before: "Planejamento, contatos e análises espalhados entre ferramentas.", after: "Uma plataforma para acompanhar campanhas, consultar o CRM e planejar com apoio de IA." },
     faqs: [
+      { question: "O que é o Prometeus Copiloto?", answer: "É uma plataforma de CRM para marketing e gestão de campanhas com apoio de IA. Reúne contatos, planejamento e informações para a equipe organizar campanhas e analisar dados e concorrentes. A base é demonstrada em reunião e personalizada para a operação da empresa." },
       { question: "O Copiloto é personalizado para minha empresa?", answer: "Sim. Partimos de uma base demonstrativa pronta e personalizamos a plataforma com os fluxos, informações e integrações definidos para sua operação de marketing." },
       { question: "Como posso ver a demonstração?", answer: "Fale com a equipe pelo WhatsApp para agendar uma reunião. O demonstrativo é apresentado nessa conversa; as telas desta página são prévias ilustrativas." },
       { question: "O que o agente de IA faz?", answer: "A proposta inclui apoio à estratégia, planejamento de campanhas e análise de dados e concorrentes. Fontes, ferramentas e permissões são definidos para cada empresa, com revisão humana das respostas." },
@@ -27,9 +30,11 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   },
   {
     slug: "prometeus-rastro", kind: "product", name: "Prometeus Rastro", shortName: "Prometeus Rastro",
-    description: "Organize seu estoque e saiba onde está cada item, quem está responsável e o histórico das movimentações. Conheça o Prometeus Rastro em uma demonstração personalizada.",
+    seoTitle: "Controle de estoque e rastreabilidade de ativos | Prometeus Rastro",
+    category: "Controle de estoque e rastreabilidade de ativos",
+    description: "Controle de estoque e rastreabilidade de ativos com local, responsável e histórico de movimentações. Conheça o Prometeus Rastro em uma demonstração.",
     updatedAt: "2026-10-14", image: "/images/rastro/hero-operacao-hq.webp?v=20261014",
-    intro: "Organize seu estoque, acompanhe responsáveis e consulte o histórico das movimentações. Uma plataforma personalizada para a operação da sua empresa.",
+    intro: "Controle de estoque e rastreabilidade de ativos: acompanhe responsáveis e o histórico das movimentações. Uma plataforma personalizada para a sua empresa.",
     applications: [
       { title: "Encontre o que precisa", text: "Itens organizados e pesquisáveis, com as informações que sua equipe precisa consultar." },
       { title: "Saiba onde e com quem está", text: "Local, responsável e situação reunidos no cadastro de cada item." },
@@ -46,6 +51,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
     requirements: [], limits: "A rastreabilidade depende da identificação dos ativos e do registro das movimentações. Integrações, formas de identificação e fontes de dados são definidas no projeto. Não prometemos rastreamento físico automático ou cobertura absoluta sem validar sua operação.",
     example: { title: "Um ativo, uma história", before: "Informações do estoque dispersas, sem uma visão comum das movimentações.", after: "Cada ativo com identificação, localização e histórico disponíveis para consulta." },
     faqs: [
+      { question: "O Rastro serve para controle de estoque e gestão de ativos?", answer: "Sim. O Rastro organiza o inventário e acompanha cada item com local, responsável e histórico de movimentações registradas. Pode ser personalizado para equipamentos, ferramentas, patrimônio e outros estoques, em diferentes setores. Não se limita a ativos de TI." },
       { question: "Que tipos de itens posso acompanhar?", answer: "Equipamentos, ferramentas, patrimônio e outros itens que sua empresa precisa identificar e acompanhar. Na demonstração, conversamos sobre o seu estoque e definimos os cadastros e fluxos adequados à operação." },
       { question: "O Rastro é personalizado para minha empresa?", answer: "Sim. Partimos de uma base demonstrativa e definimos os tipos de itens, informações, locais, responsáveis e regras que a sua empresa precisa. A personalização e a implantação são organizadas na proposta." },
       { question: "A localização dos itens é atualizada automaticamente?", answer: "A situação apresentada pelo Rastro acompanha os cadastros e as movimentações registradas. Formas de identificação, captura e conexões com outras ferramentas são avaliadas para cada projeto." },
@@ -55,8 +61,10 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   },
   {
     slug: "prometeus-soft-phone", kind: "product", name: "Prometeus Soft Phone", shortName: "Prometeus Soft Phone",
-    description: "Soft phone e CRM para equipes comerciais, em uma plataforma personalizada para sua operação. Solicite uma demonstração do Prometeus Soft Phone.",
-    updatedAt: "2026-10-13", image: "/images/capabilities/automate.webp?v=20261014",
+    seoTitle: "Softphone com CRM para vendas | Prometeus Soft Phone",
+    category: "Softphone com CRM para equipes comerciais",
+    description: "Softphone com CRM para reunir ligações, contatos e acompanhamento de vendas. Prometeus Soft Phone personalizado para sua equipe. Agende uma demonstração.",
+    updatedAt: "2026-10-14", image: "/images/capabilities/automate.webp?v=20261014",
     intro: "Aproxime ligações, contatos e acompanhamento comercial. Uma plataforma personalizada para o jeito que sua equipe atende e vende.",
     applications: [
       { title: "Ligações na plataforma", text: "Telefonia próxima das informações que o vendedor precisa consultar." },
@@ -71,6 +79,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
     requirements: [], limits: "A telefonia depende do provedor, dos números e da infraestrutura definidos no projeto. Custos de chamadas e recursos como gravação ou discadores não estão presumidos na oferta.",
     example: { title: "Do contato à próxima conversa", before: "Ligações e informações comerciais em lugares diferentes.", after: "O contato, a ligação e a próxima ação acompanhados na mesma experiência." },
     faqs: [
+      { question: "O que é um softphone com CRM para vendas?", answer: "É uma plataforma que aproxima as ligações das informações de contatos e do acompanhamento comercial. No Prometeus Soft Phone, a equipe consulta o contexto do cliente e organiza a continuidade da venda na mesma experiência, com fluxos personalizados para a empresa." },
       { question: "O Soft Phone já inclui um CRM?", answer: "Sim. A proposta reúne soft phone e CRM para equipes comerciais. Campos, etapas e fluxos são personalizados conforme a operação da empresa." },
       { question: "Como funciona a telefonia?", answer: "A implantação considera o provedor, os números, os acessos e a infraestrutura disponíveis. Esses pontos e os custos de chamadas são definidos na proposta; não presumimos que toda estrutura atual seja compatível." },
       { question: "A plataforma é personalizada para minha equipe?", answer: "Sim. O demonstrativo é a base para definir como contatos, ligações e acompanhamento comercial devem funcionar na sua empresa." },
@@ -79,8 +88,10 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   },
   {
     slug: "atendimento-ia-whatsapp", kind: "solution", name: "Atendimento com IA no WhatsApp", shortName: "IA no WhatsApp",
-    description: "Agente de IA para atendimento no WhatsApp, com informações do seu negócio, triagem e encaminhamento para a equipe. Implantação sob medida pela Prometeus.",
-    updatedAt: "2026-10-13", image: "/images/cinematic/contact-hero-desktop.webp?v=20261014",
+    seoTitle: "Atendimento com IA no WhatsApp para empresas | Prometeus",
+    category: "Agente de IA para atendimento no WhatsApp",
+    description: "Atendimento automatizado no WhatsApp com agente de IA, informações da sua empresa e encaminhamento humano. Conheça a implantação sob medida da Prometeus.",
+    updatedAt: "2026-10-14", image: "/images/cinematic/contact-hero-desktop.webp?v=20261014",
     intro: "Um agente para responder dúvidas, reunir o contexto da solicitação e encaminhar a conversa para sua equipe quando necessário.",
     applications: [
       { title: "Dúvidas respondidas", text: "Respostas apoiadas nas informações que sua empresa aprova." },
@@ -95,6 +106,7 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
     requirements: [], limits: "A implantação depende dos acessos e da integração disponíveis no WhatsApp. Custos de canal e modelos são definidos na proposta. A IA pode errar e precisa de testes, revisão e encaminhamento humano.",
     example: { title: "Uma conversa com continuidade", before: "A equipe precisa repetir as informações básicas em cada nova conversa.", after: "O agente reúne o contexto e a equipe assume com as informações necessárias." },
     faqs: [
+      { question: "Qual é a diferença entre um chatbot e um agente de IA no WhatsApp?", answer: "Um chatbot pode seguir respostas e caminhos previamente definidos. O agente de IA também interpreta perguntas com apoio das informações aprovadas pela empresa. No projeto, combinamos regras, testes e encaminhamento humano para os casos que precisam da equipe." },
       { question: "O agente usa informações da minha empresa?", answer: "Sim. Preparamos as fontes aprovadas e definimos o que pode ser consultado e respondido. A atualização dessas informações faz parte das responsabilidades combinadas no projeto." },
       { question: "Uma pessoa pode assumir a conversa?", answer: "Sim. O fluxo prevê encaminhamento humano em situações definidas com sua equipe, como negociações, exceções e informações que precisam de confirmação." },
       { question: "Posso usar meu WhatsApp atual?", answer: "Precisamos avaliar a conta, a integração disponível e os acessos necessários. A proposta define a implantação, os custos do canal e as condições para sua operação." },
@@ -103,8 +115,10 @@ export const SPECIALIZED_OFFERS: ServiceContent[] = [
   },
   {
     slug: "desenvolvimento-sob-medida", kind: "solution", name: "Software sob medida", shortName: "Software sob medida",
-    description: "Ferramentas internas, dashboards e aplicações web construídos para a operação da sua empresa, com integrações e perfis de acesso definidos.",
-    updatedAt: "2026-10-13", image: "/images/capabilities/build.webp?v=20261014",
+    seoTitle: "Desenvolvimento de software sob medida para empresas | Prometeus",
+    category: "Desenvolvimento de software sob medida",
+    description: "Desenvolvimento de software sob medida: sistemas personalizados, ferramentas internas, automações e integrações para sua empresa. Converse com a Prometeus.",
+    updatedAt: "2026-10-14", image: "/images/capabilities/build.webp?v=20261014",
     intro: "Desenvolvemos aplicações para organizar o trabalho, os dados e as decisões que suas ferramentas atuais não atendem.",
     applications: [
       { title: "Ferramentas internas", text: "Solicitações, responsáveis e aprovações em uma experiência feita para sua equipe." },

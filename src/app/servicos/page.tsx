@@ -9,14 +9,14 @@ import { COMPANY } from "@/lib/content";
 import { whatsappContact } from "@/lib/commercial-contact";
 import { SERVICES, servicePath } from "@/lib/service-content";
 import { SERVICE_PRESENTATION } from "@/lib/service-presentation";
-import { SITE_OG_IMAGE } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_OG_IMAGE } from "@/lib/site-metadata";
 import shared from "@/components/services.module.css";
 import styles from "@/components/offer-catalog.module.css";
 
-const title = "Produtos e soluções para empresas | Prometeus";
-const description = "Conheça Prometeus Copiloto, Rastro e Soft Phone, atendimento com IA no WhatsApp, software sob medida e criação de sites e lojas virtuais.";
+const title = "Produtos, software sob medida e soluções de IA | Prometeus";
+const description = "CRM para marketing, controle de estoque, softphone, IA no WhatsApp, software sob medida e criação de sites e lojas virtuais. Conheça as soluções Prometeus.";
 export const metadata: Metadata = {
-  title, description, alternates: { canonical: "/servicos" }, robots: { index: true, follow: true },
+  title, description, alternates: { canonical: "/servicos" }, robots: INDEXABLE_ROBOTS,
   openGraph: { title, description, url: COMPANY.url + "/servicos", siteName: COMPANY.name, locale: "pt_BR", type: "website", images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: title }] },
   twitter: { card: "summary_large_image", title, description, images: [SITE_OG_IMAGE] },
 };
@@ -24,12 +24,22 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   const schema = {
     "@context": "https://schema.org", "@type": "CollectionPage", name: title, description, url: COMPANY.url + "/servicos",
+    "@id": `${COMPANY.url}/servicos#webpage`, inLanguage: "pt-BR", dateModified: "2026-10-14",
+    isPartOf: { "@id": `${COMPANY.url}/#website` },
+    breadcrumb: { "@id": `${COMPANY.url}/servicos#breadcrumbs` },
     publisher: { "@type": "Organization", "@id": COMPANY.url + "/#organization", name: COMPANY.name, url: COMPANY.url },
     hasPart: SERVICES.map(service => ({ "@type": "WebPage", name: service.name, url: COMPANY.url + servicePath(service) })),
+    mainEntity: {
+      "@type": "ItemList", itemListElement: SERVICES.map((service, index) => ({ "@type": "ListItem", position: index + 1, name: service.name, url: COMPANY.url + servicePath(service) })),
+    },
   };
+  const breadcrumbs = { "@context": "https://schema.org", "@type": "BreadcrumbList", "@id": `${COMPANY.url}/servicos#breadcrumbs`, itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Início", item: COMPANY.url },
+    { "@type": "ListItem", position: 2, name: "Serviços", item: `${COMPANY.url}/servicos` },
+  ] };
   const products = SERVICES.filter(service => service.kind === "product");
   const solutions = SERVICES.filter(service => service.kind !== "product");
-  return <main className={shared.page}><JsonLd schema={schema} /><ServiceMotion>
+  return <main className={shared.page}><JsonLd schema={[schema, breadcrumbs]} /><ServiceMotion>
     <header className={shared.catalogHero}>
       <div className={shared.catalogBackdrop} aria-hidden="true" data-service-artwork><Image src="/images/cinematic/solutions-hero-desktop.webp?v=20261014" alt="" fill sizes="(max-width: 760px) 832px, max(100vw, 1232px)" quality={90} loading="eager" fetchPriority="high" data-service-photo /></div>
       <div className={shared.container}>
