@@ -9,9 +9,11 @@ import { WebOffers } from "./web-offers";
 import { WebDiscovery } from "./web-discovery";
 import { WebPortfolio } from "./web-portfolio";
 import { SolutionDetail } from "./solution-detail";
+import { RastroDetail } from "./rastro-detail";
 import styles from "./services.module.css";
 
 export function ServiceDetail({ service }: { service: ServiceContent }) {
+  if (service.slug === "prometeus-rastro") return <RastroDetail service={service} />;
   const presentation = SERVICE_PRESENTATION[service.slug];
   if (presentation.scene !== "web") return <SolutionDetail service={service} />;
   return (

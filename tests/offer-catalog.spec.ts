@@ -22,13 +22,17 @@ test("old service URLs permanently forward to relevant offers", async ({ request
 test("product CTAs request private demonstrations at the official WhatsApp number", async ({ page }) => {
   for (const service of SERVICES.filter(item=>item.kind==="product")) {
     await page.goto(servicePath(service));
-    const cta = page.getByRole("link", { name: "Solicitar demonstração", exact: true });
+    const cta = page.getByRole("link", { name: service.slug === "prometeus-rastro" ? "Agendar demonstração" : "Solicitar demonstração", exact: true }).first();
     const url = new URL(await cta.getAttribute("href") ?? "");
     expect(url.origin).toBe("https://wa.me");
     expect(url.pathname).toBe("/5521973231943");
     expect(url.searchParams.get("text")).toContain(service.name);
     expect(url.searchParams.get("text")).toContain("personalização");
     await expect(page.locator("main")).toContainText("Demonstração em reunião");
-    await expect(page.getByRole("region",{name:"Exemplo na prática"})).toContainText("Prévia ilustrativa");
+    if (service.slug === "prometeus-rastro") {
+      await expect(page.locator("#rastro-em-acao")).toContainText("Telas reais do demonstrativo");
+    } else {
+      await expect(page.getByRole("region",{name:"Exemplo na prática"})).toContainText("Prévia ilustrativa");
+    }
   }
 });

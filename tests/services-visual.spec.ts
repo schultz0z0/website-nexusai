@@ -5,7 +5,7 @@ import { assertNoHorizontalOverflow } from "./helpers/layout-assertions";
 for (const width of [1280, 320]) {
   test.describe(`workflow at ${width}px`, () => {
     test.use({ viewport: { width, height: 900 } });
-    for (const service of SERVICES.filter((service) => service.slug !== "desenvolvimento-web")) {
+    for (const service of SERVICES.filter((service) => !["desenvolvimento-web", "prometeus-rastro"].includes(service.slug))) {
       test(`explores the illustrative workflow for ${service.slug} with the keyboard`, async ({ page }) => {
         await page.goto(servicePath(service));
         const example = page.getByRole("region", { name: "Exemplo na prática" });
@@ -14,17 +14,16 @@ for (const width of [1280, 320]) {
         const first = await status.textContent();
         const advance = example.getByRole("button", { name: "Avançar etapa" });
         await advance.focus();
-        const initialBox = await advance.boundingBox();
-        expect(initialBox).not.toBeNull();
+        const initialTop = await advance.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
         await page.keyboard.press("Enter");
         await expect(status).not.toHaveText(first ?? "");
         const second = await status.textContent();
         await page.keyboard.press("Space");
         await expect(status).not.toHaveText(second ?? "");
         const restart = example.getByRole("button", { name: "Recomeçar exemplo" });
-        const finalBox = await restart.boundingBox();
-        expect(finalBox).not.toBeNull();
-        expect(Math.abs(finalBox!.y - initialBox!.y)).toBeLessThan(2);
+        // Compare document positions: focus may still be smoothly scrolling the viewport.
+        const finalTop = await restart.evaluate(element => element.getBoundingClientRect().top + window.scrollY);
+        expect(Math.abs(finalTop - initialTop)).toBeLessThan(2);
         await restart.click();
         await expect(status).toHaveText(first ?? "");
       });
