@@ -8,34 +8,40 @@ export interface ServicePresentation {
   stages: readonly [string, string, string];
   stageDetails: readonly [string, string, string];
   ctaLabel?: string;
+  catalogImage?: string;
 }
 
 export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   "prometeus-copiloto": {
+    catalogImage: "/images/offers/prometeus-copiloto.webp",
     scene: "copilot", lead: "CRM, campanhas e IA para organizar seu marketing. Personalizado para sua empresa.",
     applicationLead: "Planejamento, informações e equipe no mesmo lugar.", demoTitle: "Seu marketing em uma visão comum.",
     stages: ["Campanhas organizadas", "Planejamento com IA", "Contexto no CRM"],
     stageDetails: ["A equipe acompanha campanhas, etapas e responsáveis.", "O agente apoia a construção de um plano para revisão da equipe.", "Informações comerciais ajudam a orientar o próximo contato."], ctaLabel: "Solicitar demonstração",
   },
   "prometeus-rastro": {
+    catalogImage: "/images/offers/prometeus-rastro.webp",
     scene: "trace", lead: "Controle seu estoque e acompanhe cada ativo. Com apoio de IA e uma operação feita para sua empresa.",
     applicationLead: "Identificação, movimentações e informações para consultar.", demoTitle: "Um ativo. Todo o seu histórico.",
     stages: ["Ativo identificado", "Movimentação registrada", "Informação consultada"],
     stageDetails: ["Cada item reúne identificação e informações do cadastro.", "Local e responsável acompanham o registro da movimentação.", "A equipe consulta o histórico com apoio do agente."], ctaLabel: "Solicitar demonstração",
   },
   "prometeus-soft-phone": {
+    catalogImage: "/images/offers/prometeus-soft-phone.webp",
     scene: "softphone", lead: "Ligações e CRM no mesmo lugar. Uma plataforma personalizada para sua equipe comercial.",
     applicationLead: "Contato, conversa e continuidade na mesma experiência.", demoTitle: "Cada conversa com o contexto certo.",
     stages: ["Contato organizado", "Ligação com contexto", "Próxima ação no CRM"],
     stageDetails: ["O vendedor encontra as informações do contato.", "A experiência aproxima a telefonia do contexto comercial.", "O atendimento continua com a próxima ação registrada."], ctaLabel: "Solicitar demonstração",
   },
   "atendimento-ia-whatsapp": {
+    catalogImage: "/images/offers/atendimento-ia-whatsapp.webp",
     scene: "agent", lead: "Respostas para seus clientes. Contexto para sua equipe. Um agente de IA preparado para o seu atendimento.",
     applicationLead: "Da primeira dúvida à conversa com uma pessoa.", demoTitle: "Seu atendimento com continuidade.",
     stages: ["Pergunta recebida", "Contexto consultado", "Conversa encaminhada à equipe"],
     stageDetails: ["O cliente traz uma dúvida sobre o serviço.", "O agente consulta informações aprovadas e reúne o contexto.", "A equipe assume com um resumo quando a conversa precisa de uma pessoa."], ctaLabel: "Quero IA no meu atendimento",
   },
   "desenvolvimento-web": {
+    catalogImage: "/images/offers/sites-lojas-prometeus.webp",
     scene: "web",
     lead: "Seu site ou sua loja virtual, com a identidade da sua marca. Uma presença digital feita para apresentar seu negócio e facilitar o próximo contato.",
     applicationLead: "Da primeira busca ao primeiro contato. Uma presença digital que ajuda a pessoa a entender o que sua empresa faz.",
@@ -68,6 +74,7 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
     stageDetails: ["Uma mudança de etapa no CRM inicia a transferência dos dados autorizados.", "O fluxo confere os campos e identifica o registro antes de enviar ao destino.", "A operação recebe o registro. Falhas e dados ausentes seguem para tratamento."],
   },
   "desenvolvimento-sob-medida": {
+    catalogImage: "/images/offers/software-sob-medida.webp",
     scene: "software",
     lead: "Uma aplicação para o que suas ferramentas atuais não atendem. Construída para a operação da sua empresa.",
     ctaLabel: "Quero uma solução sob medida",

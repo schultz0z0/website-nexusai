@@ -42,14 +42,14 @@ export default function ServicesPage() {
     <section id="produtos" className={styles.products} aria-labelledby="products-heading"><div className={shared.container}>
       <div className={styles.sectionHeading}><h2 id="products-heading">Conheça nossos produtos.</h2><p>Uma base pronta para demonstrar. Uma versão personalizada para sua operação.</p></div>
       <div className={styles.productGrid}>{products.map(service => <Link key={service.slug} href={servicePath(service)} className={styles.product}>
-        <div className={styles.productPhoto} aria-hidden="true" data-service-artwork><Image src={service.image} alt="" fill sizes="(max-width:760px) 100vw, 33vw" data-service-photo /></div>
+        <div className={styles.productPhoto} aria-hidden="true" data-service-artwork><Image src={SERVICE_PRESENTATION[service.slug].catalogImage ?? service.image} alt="" fill sizes="(max-width:760px) 100vw, 33vw" data-service-photo /></div>
         <h3>{service.name}</h3><p>{SERVICE_PRESENTATION[service.slug].lead}</p><span className={styles.visit}>Conhecer o produto<ArrowUpRight aria-hidden="true" /></span>
       </Link>)}</div>
     </div></section>
     <section id="solucoes" className={styles.solutions} aria-labelledby="solutions-heading"><div className={shared.container}>
       <div className={styles.sectionHeading}><h2 id="solutions-heading">Soluções para o seu próximo passo.</h2><p>Atendimento, aplicações e uma presença digital com a identidade da sua empresa.</p></div>
       <div className={styles.solutionList}>{solutions.map(service => <Link key={service.slug} href={servicePath(service)} className={styles.solution}>
-        <div className={styles.solutionPhoto} aria-hidden="true"><Image src={service.image} alt="" fill sizes="(max-width:760px) 100vw, 230px" /></div>
+        <div className={styles.solutionPhoto} aria-hidden="true"><Image src={SERVICE_PRESENTATION[service.slug].catalogImage ?? service.image} alt="" fill sizes="(max-width:760px) 100vw, 230px" /></div>
         <div><h3>{service.name}</h3><p>{SERVICE_PRESENTATION[service.slug].lead}</p></div><span className={styles.solutionArrow}><ArrowUpRight aria-hidden="true" /></span>
       </Link>)}</div>
     </div></section>
