@@ -1,5 +1,6 @@
 import { SERVICES, servicePath } from "../../lib/service-content.ts";
 import { COMPANY } from "../../lib/content.ts";
+import { WEB_PORTFOLIO } from "../../lib/web-portfolio.ts";
 
 const CONTENT = `# Prometeus
 
@@ -27,7 +28,7 @@ ${SERVICES.map((service) => `- [${service.name} — ${service.category}](${COMPA
 
 ## Escopo e condições
 
-Atendimento a empresas no Brasil. Nos projetos sob medida, viabilidade, investimento, prazo, acessos e responsabilidades são definidos após entender o contexto. A criação de site e loja virtual custa R$ 1.500, em 10 parcelas de R$ 150 sem juros ou R$ 1.425 no Pix (5% de desconto). Ambos exigem pacote adicional de R$ 50/mês, com hospedagem, domínio, manutenção da infraestrutura e 3 ajustes mensais. O checkout atual é apenas uma simulação e não realiza cobranças. Os exemplos conceituais nas páginas de serviços são ilustrativos. O portfólio de desenvolvimento web apresenta projetos reais: Jotape Publicidade (publicado) e Foxstage (em desenvolvimento). Código, dados e dependências de terceiros são tratados explicitamente no escopo.
+Atendimento a empresas no Brasil. Nos projetos sob medida, viabilidade, investimento, prazo, acessos e responsabilidades são definidos após entender o contexto. A criação de site e loja virtual custa R$ 1.500, em 10 parcelas de R$ 150 sem juros ou R$ 1.425 no Pix (5% de desconto). Ambos incluem a contratação do pacote adicional de R$ 50/mês, com hospedagem, domínio, manutenção da infraestrutura e 3 ajustes mensais. O checkout atual é apenas uma simulação e não realiza cobranças. Os exemplos conceituais nas páginas de serviços são ilustrativos. O portfólio de desenvolvimento web apresenta projetos reais: ${WEB_PORTFOLIO.map(project => `${project.name} (${project.status.toLowerCase()})`).join(", ")}. Código, dados e dependências de terceiros são tratados explicitamente no escopo.
 
 ## Páginas Principais
 

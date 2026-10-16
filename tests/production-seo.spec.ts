@@ -70,7 +70,7 @@ test.describe("public search contract, without JavaScript", () => {
     await expect(page.locator("#ofertas")).toContainText("50");
     for (const offer of offers) {
       expect(offer.price).toBe(1500);
-      expect(offer.description).toContain("obrigatório adicional de R$ 50/mês");
+      expect(offer.description).toContain("mensal adicional de R$ 50/mês");
       expect(offer.description).toContain("não realiza cobranças");
     }
   });

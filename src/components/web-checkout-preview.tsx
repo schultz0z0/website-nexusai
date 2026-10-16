@@ -34,7 +34,7 @@ export function WebCheckoutPreview({ offer }: { offer: WebOffer }) {
           <dl className={styles.summary}>
             <div><dt>Valor da criação</dt><dd>{money(payment === "pix" ? prices.pixTotalCents : prices.totalCents)}</dd></div>
             {payment === "pix" && <div><dt>Desconto no Pix</dt><dd>{money(prices.totalCents - prices.pixTotalCents)}</dd></div>}
-            <div><dt>Pacote mensal obrigatório</dt><dd>{money(WEB_MAINTENANCE.monthlyCents)}/mês</dd></div>
+            <div><dt>Pacote mensal</dt><dd>{money(WEB_MAINTENANCE.monthlyCents)}/mês</dd></div>
           </dl>
           <p className={styles.checkoutNote}>A mensalidade é adicional ao valor da criação. Inclui hospedagem, domínio, manutenção da infraestrutura e 3 ajustes mensais.</p>
           {completed ? <p role="status" className={styles.completed}>Simulação concluída. Nenhuma cobrança foi feita.</p> : <button type="button" className={styles.cta} onClick={() => setCompleted(true)}>Concluir simulação<ArrowUpRight aria-hidden="true" /></button>}

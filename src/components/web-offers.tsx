@@ -23,7 +23,7 @@ export function WebOffers() {
                 <p className={styles.description}>{offer.description}</p>
                 <p className={styles.price}>{money(price.totalCents)}<span>pela criação</span></p>
                 <p className={styles.installments}>ou {price.installments}× de {money(price.installmentCents)} <span>sem juros</span></p>
-                <p className={styles.recurring}>+ {money(WEB_MAINTENANCE.monthlyCents)}/mês obrigatórios</p>
+                <p className={styles.recurring}>+ {money(WEB_MAINTENANCE.monthlyCents)}/mês</p>
                 <p className={styles.pix}><strong>{money(price.pixTotalCents)} no Pix</strong><span>{price.pixDiscountPercent}% de desconto na criação</span></p>
                 <WebCheckoutPreview offer={offer} />
               </article>
@@ -31,7 +31,7 @@ export function WebOffers() {
           })}
         </div>
         <div className={styles.maintenance}>
-          <div><h3>Seu site publicado e atualizado.</h3><p className={styles.monthlyPrice}>{money(WEB_MAINTENANCE.monthlyCents)}<span>/mês</span></p><p>Pacote obrigatório para sites e lojas virtuais, adicional à criação.</p></div>
+          <div><h3>Seu site publicado e atualizado.</h3><p className={styles.monthlyPrice}>{money(WEB_MAINTENANCE.monthlyCents)}<span>/mês</span></p><p>Pacote mensal para sites e lojas virtuais, adicional à criação.</p></div>
           <ul>{WEB_MAINTENANCE.includes.map((item) => <li key={item}>{item}</li>)}</ul>
         </div>
       </div>

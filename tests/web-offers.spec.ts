@@ -57,3 +57,57 @@ test("shows real projects with honest publication status and a controllable Remo
   await portfolio.getByRole("button", { name: "Sair da tela cheia", exact: true }).click();
   await expect.poll(() => page.evaluate(() => document.fullscreenElement === null)).toBe(true);
 });
+
+test("adds Clementino and Fast Limp below the existing projects in two desktop columns", async ({ page, request }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/servicos/desenvolvimento-web");
+  const portfolio = page.getByRole("region", { name: "Projetos de clientes. Veja os sites em movimento." });
+  const projects = portfolio.locator("figure");
+  await expect(projects).toHaveCount(4);
+  await expect(projects.nth(2)).toContainText("Clementino Imóveis");
+  await expect(projects.nth(2)).toContainText("Publicado");
+  await expect(projects.nth(2).getByRole("link", { name: "Visitar site" })).toHaveAttribute("href", "https://clementinoimoveis.com.br/");
+  await expect(projects.nth(3)).toContainText("Fast Limp");
+  await expect(projects.nth(3)).toContainText("Em desenvolvimento");
+  await expect(projects.nth(3).getByRole("link")).toHaveCount(0);
+  const boxes = await projects.evaluateAll(elements => elements.map(element => {
+    const rect = element.getBoundingClientRect();
+    return { x: rect.x, y: rect.y, bottom: rect.bottom };
+  }));
+  expect(boxes[0].y).toBe(boxes[1].y);
+  expect(boxes[2].y).toBe(boxes[3].y);
+  expect(boxes[2].y).toBeGreaterThan(boxes[0].bottom);
+  expect(boxes[2].x).toBe(boxes[0].x);
+  expect(boxes[3].x).toBe(boxes[1].x);
+  for (const id of ["clementino", "fast-limp"]) {
+    expect((await request.get(`/images/portfolio/${id}-poster.webp`)).status()).toBe(200);
+    expect((await request.get(`/videos/portfolio/${id}-scroll.mp4`)).status()).toBe(200);
+  }
+  for (const name of ["Clementino Imóveis", "Fast Limp"]) {
+    const project = projects.filter({ has: page.getByRole("heading", { name, exact: true }) });
+    await project.getByRole("button", { name: `Reproduzir apresentação de ${name}`, exact: true }).click();
+    await expect.poll(() => project.locator("video").evaluate((video: HTMLVideoElement) => video.currentTime)).toBeGreaterThan(0);
+    await project.getByRole("button", { name: `Pausar apresentação de ${name}`, exact: true }).click();
+    await expect(project.getByRole("button", { name: `Reproduzir apresentação de ${name}`, exact: true })).toBeVisible();
+  }
+});
+
+test("keeps the discovery CTA background visible throughout hover", async ({ page }) => {
+  await page.goto("/servicos/desenvolvimento-web");
+  const cta = page.getByRole("link", { name: "Quero minha empresa online", exact: true });
+  await cta.hover();
+  const samples = await cta.evaluate(async element => {
+    const backgrounds: { image: string; color: string }[] = [];
+    for (let frame = 0; frame < 18; frame++) {
+      const style = getComputedStyle(element);
+      backgrounds.push({ image: style.backgroundImage, color: style.backgroundColor });
+      await new Promise(requestAnimationFrame);
+    }
+    return backgrounds;
+  });
+  for (const sample of samples) {
+    const opaqueColor = sample.color.startsWith("rgb(") || /,\s*1\)$/.test(sample.color);
+    expect(sample.image !== "none" || opaqueColor, JSON.stringify(sample)).toBe(true);
+  }
+  await expect(cta).toBeVisible();
+});

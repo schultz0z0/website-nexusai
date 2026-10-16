@@ -31,7 +31,7 @@ test("web offer markup preserves the creation price and mandatory monthly packag
     assert.equal(offer.price, prices.totalCents / 100);
     assert.equal(offer.priceCurrency, "BRL");
     assert.ok(String(offer.description).includes(`R$ ${WEB_MAINTENANCE.monthlyCents / 100}/mês`));
-    assert.match(String(offer.description), /obrigatório adicional/);
+    assert.match(String(offer.description), /mensal adicional/);
     assert.match(String(offer.description), /não realiza cobranças/);
     assert.equal(offer.availability, undefined, "A simulated checkout cannot imply immediate availability");
   });

@@ -27,7 +27,7 @@ export function buildServiceSchemas(service: ServiceContent): Record<string, unk
             url: `${url}#ofertas`,
             price: prices.totalCents / 100,
             priceCurrency: "BRL",
-            description: `Criação por R$ ${prices.totalCents / 100}, em ${prices.installments} parcelas sem juros, ou R$ ${prices.pixTotalCents / 100} no Pix. Pacote obrigatório adicional de R$ ${WEB_MAINTENANCE.monthlyCents / 100}/mês: hospedagem, domínio, manutenção da infraestrutura e ${WEB_MAINTENANCE.monthlyAdjustments} ajustes mensais. O checkout é uma simulação e não realiza cobranças.`,
+            description: `Criação por R$ ${prices.totalCents / 100}, em ${prices.installments} parcelas sem juros, ou R$ ${prices.pixTotalCents / 100} no Pix. Pacote mensal adicional de R$ ${WEB_MAINTENANCE.monthlyCents / 100}/mês: hospedagem, domínio, manutenção da infraestrutura e ${WEB_MAINTENANCE.monthlyAdjustments} ajustes mensais. O checkout é uma simulação e não realiza cobranças.`,
             seller: { "@id": `${COMPANY.url}/#organization` },
           };
         }),

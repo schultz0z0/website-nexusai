@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { COMPANY } from "../lib/content.ts";
 import { SERVICES, servicePath } from "../lib/service-content.ts";
+import { WEB_PORTFOLIO } from "../lib/web-portfolio.ts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = COMPANY.url;
@@ -40,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: service.slug === "prometeus-rastro"
         ? ["demo-inventory-original", "demo-movement-original", "demo-history-original"].map(name => `${baseUrl}/images/rastro/${name}.webp`)
         : service.slug === "desenvolvimento-web"
-          ? ["jotape", "foxstage"].map(name => `${baseUrl}/images/portfolio/${name}-poster.webp`)
+          ? WEB_PORTFOLIO.map(project => `${baseUrl}${project.poster}`)
           : undefined,
       changeFrequency: "monthly" as const,
       priority: 0.8,
