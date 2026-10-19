@@ -14,7 +14,7 @@ Os valores ficam centralizados em `src/lib/web-offers.ts`. A página explica SEO
 As apresentações usam gravações da navegação real, com movimentos presentes nos sites, aceleradas para aproximadamente 30 segundos. Arquivos MP4 locais em `public/videos/portfolio/` e capas em `public/images/portfolio/` evitam incorporar páginas externas na visita. O Remotion Player carrega somente quando o visitante escolhe assistir.
 
 - Jotape Publicidade: publicado em https://jotapepublicidade.com.br/.
-- Foxstage: projeto em desenvolvimento, capturado no ambiente local. A página pública não oferece um link para localhost.
+- Foxstage: publicado em https://foxstage.com.br/.
 
 ## Pagamento
 
