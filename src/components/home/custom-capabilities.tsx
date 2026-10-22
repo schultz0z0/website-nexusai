@@ -135,7 +135,8 @@ export function CustomCapabilities() {
                 <Image
                   key={item.id}
                   src={CAPABILITY_IMAGES[item.id].src}
-                  alt={index === activeIndex ? CAPABILITY_IMAGES[item.id].alt : ""}
+                  alt={CAPABILITY_IMAGES[item.id].alt}
+                  aria-hidden={index !== activeIndex}
                   fill
                   sizes="(min-width: 900px) 54vw, 100vw"
                   quality={85}

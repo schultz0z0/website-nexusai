@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { SITE_OG_IMAGE, SITE_URL } from "../src/lib/site-metadata";
 
 test.describe("SEO, discovery and consent", () => {
   test("publishes crawl resources and a real 404", async ({ request }) => {
@@ -23,7 +24,7 @@ test.describe("SEO, discovery and consent", () => {
     await expect(page).toHaveTitle(/Prometeus \| Software sob medida, automação e IA/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Software sob medida, automação e agentes de IA/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://agenciaprometeus.com.br");
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", /og-image\.png/);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", SITE_URL + SITE_OG_IMAGE);
   });
 
   test("publishes the Prometeus identity on its canonical domain", async ({ page }) => {

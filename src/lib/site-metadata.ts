@@ -1,5 +1,12 @@
 export const SITE_URL = "https://agenciaprometeus.com.br";
-export const SITE_OG_IMAGE = "/og-image.png";
+export const SITE_OG_IMAGE = "/images/social/home-hero-20261021.jpg";
+export const SITE_SOCIAL_IMAGE = {
+  url: SITE_OG_IMAGE,
+  width: 1200,
+  height: 630,
+  type: "image/jpeg",
+  alt: "Hero da Prometeus: mão humana e mão robótica se tocando, com a mensagem Multiplique a capacidade da sua equipe com IA.",
+};
 
 export const SITE_TITLE = "Prometeus | Software sob medida, automação e IA";
 

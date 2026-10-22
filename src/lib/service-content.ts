@@ -10,6 +10,7 @@ export interface ServiceContent {
   description: string;
   updatedAt: string;
   image: string;
+  imageAlt: string;
   intro: string;
   applications: Array<{ title: string; text: string }>;
   steps: Array<{ title: string; text: string }>;
@@ -31,6 +32,7 @@ export const SERVICES: ServiceContent[] = [
     description: "Criação de sites profissionais e lojas virtuais por R$ 1.500 + R$ 50/mês. Identidade da marca e SEO para o Google. Veja projetos e condições.",
     updatedAt: "2026-10-16",
     image: "/images/capabilities/build.webp?v=20261014",
+    imageAlt: "Equipe reunida em torno de um notebook, planejando um projeto digital.",
     intro: "Sites institucionais, landing pages e lojas virtuais com a identidade da sua marca. Estrutura de SEO para descoberta no Google e em buscas com IA.",
     applications: [
       { title: "Sites institucionais", text: "Apresentar a empresa e seus serviços com páginas próprias, conteúdo claro e caminhos para entrar em contato. A estrutura acompanha a identidade da marca e as dúvidas de quem está conhecendo o negócio." },

@@ -4,7 +4,7 @@ import { ArrowLeft, Cookie, ShieldCheck } from "lucide-react";
 
 import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
-import { SITE_OG_IMAGE } from "@/lib/site-metadata";
+import { SITE_SOCIAL_IMAGE } from "@/lib/site-metadata";
 
 const TITLE = "Política de Cookies | Prometeus";
 const DESCRIPTION = "Entenda quais cookies e tecnologias de rastreamento podem ser utilizados pela Prometeus e como gerenciar suas preferências.";
@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Política de Cookies da Prometeus" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [{ url: SITE_OG_IMAGE, alt: "Política de Cookies da Prometeus" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
 };
 

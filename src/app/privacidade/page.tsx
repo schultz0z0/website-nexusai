@@ -4,7 +4,7 @@ import { ArrowLeft, Eye, FileText, Lock, Mail, ShieldCheck } from "lucide-react"
 
 import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
-import { SITE_OG_IMAGE } from "@/lib/site-metadata";
+import { SITE_SOCIAL_IMAGE } from "@/lib/site-metadata";
 
 const TITLE = "Política de Privacidade | Prometeus";
 const DESCRIPTION = "Saiba como a Prometeus coleta, utiliza, protege e trata dados pessoais enviados pelo site, incluindo seus direitos previstos na LGPD.";
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/privacidade" },
   robots: { index: true, follow: true },
-  openGraph: { title: TITLE, description: DESCRIPTION, url: `${COMPANY.url}/privacidade`, siteName: COMPANY.name, locale: "pt_BR", type: "website", images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Política de Privacidade da Prometeus" }] },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [SITE_OG_IMAGE] },
+  openGraph: { title: TITLE, description: DESCRIPTION, url: `${COMPANY.url}/privacidade`, siteName: COMPANY.name, locale: "pt_BR", type: "website", images: [SITE_SOCIAL_IMAGE] },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: [SITE_SOCIAL_IMAGE] },
 };
 
 const privacySchema = { "@context": "https://schema.org", "@type": "WebPage", name: TITLE, description: DESCRIPTION, url: `${COMPANY.url}/privacidade`, publisher: { "@type": "Organization", name: COMPANY.name, url: COMPANY.url } };

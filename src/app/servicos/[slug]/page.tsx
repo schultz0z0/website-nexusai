@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
 import { SERVICES, getService, servicePath } from "@/lib/service-content";
 import { buildServiceSchemas } from "@/lib/service-schema";
-import { INDEXABLE_ROBOTS, SITE_OG_IMAGE } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_SOCIAL_IMAGE } from "@/lib/site-metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: service.description,
     alternates: { canonical: servicePath(service) },
     robots: INDEXABLE_ROBOTS,
-    openGraph: { title, description: service.description, url: `${COMPANY.url}${servicePath(service)}`, siteName: COMPANY.name, locale: "pt_BR", type: "website", images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: title }] },
-    twitter: { card: "summary_large_image", title, description: service.description, images: [SITE_OG_IMAGE] },
+    openGraph: { title, description: service.description, url: `${COMPANY.url}${servicePath(service)}`, siteName: COMPANY.name, locale: "pt_BR", type: "website", images: [SITE_SOCIAL_IMAGE] },
+    twitter: { card: "summary_large_image", title, description: service.description, images: [SITE_SOCIAL_IMAGE] },
   };
 }
 

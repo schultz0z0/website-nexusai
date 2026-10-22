@@ -4,7 +4,7 @@ import "./globals.css";
 import { NexusNav } from "@/components/nexus-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ConsentManager } from "@/components/consent-manager";
-import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_OG_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_SOCIAL_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site-metadata";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
     siteName: "Prometeus",
     locale: "pt_BR",
     type: "website",
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Prometeus — soluções digitais sob medida" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [{ url: SITE_OG_IMAGE, alt: "Prometeus — soluções digitais sob medida" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,

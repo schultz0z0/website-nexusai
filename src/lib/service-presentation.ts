@@ -9,11 +9,13 @@ export interface ServicePresentation {
   stageDetails: readonly [string, string, string];
   ctaLabel?: string;
   catalogImage?: string;
+  catalogImageAlt?: string;
 }
 
 export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   "prometeus-copiloto": {
     catalogImage: "/images/offers/prometeus-copiloto.webp?v=20261014",
+    catalogImageAlt: "Profissional diante de um painel de campanhas de marketing e CRM.",
     scene: "copilot", lead: "CRM para marketing, gestão de campanhas e IA em uma plataforma personalizada para sua empresa.",
     applicationLead: "Planejamento, informações e equipe no mesmo lugar.", demoTitle: "Seu marketing em uma visão comum.",
     stages: ["Campanhas organizadas", "Planejamento com IA", "Contexto no CRM"],
@@ -21,6 +23,7 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   },
   "prometeus-rastro": {
     catalogImage: "/images/offers/prometeus-rastro.webp?v=20261014",
+    catalogImageAlt: "Profissional consultando etiquetas de equipamentos organizados no estoque.",
     scene: "trace", lead: "Controle seu estoque e acompanhe cada ativo. Com apoio de IA e uma operação feita para sua empresa.",
     applicationLead: "Identificação, movimentações e informações para consultar.", demoTitle: "Um ativo. Todo o seu histórico.",
     stages: ["Ativo identificado", "Movimentação registrada", "Informação consultada"],
@@ -28,6 +31,7 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   },
   "prometeus-soft-phone": {
     catalogImage: "/images/offers/prometeus-soft-phone.webp?v=20261014",
+    catalogImageAlt: "Profissional com headset diante de uma interface de ligações e contatos.",
     scene: "softphone", lead: "Softphone com CRM: ligações, contatos e acompanhamento de vendas no mesmo lugar. Personalizado para sua equipe.",
     applicationLead: "Contato, conversa e continuidade na mesma experiência.", demoTitle: "Cada conversa com o contexto certo.",
     stages: ["Contato organizado", "Ligação com contexto", "Próxima ação no CRM"],
@@ -35,6 +39,7 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   },
   "atendimento-ia-whatsapp": {
     catalogImage: "/images/offers/atendimento-ia-whatsapp.webp?v=20261014",
+    catalogImageAlt: "Celular exibindo uma conversa de atendimento pelo WhatsApp.",
     scene: "agent", lead: "Atendimento no WhatsApp com agente de IA. Respostas para seus clientes e contexto para sua equipe continuar a conversa.",
     applicationLead: "Da primeira dúvida à conversa com uma pessoa.", demoTitle: "Seu atendimento com continuidade.",
     stages: ["Pergunta recebida", "Contexto consultado", "Conversa encaminhada à equipe"],
@@ -42,6 +47,7 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   },
   "desenvolvimento-web": {
     catalogImage: "/images/offers/sites-lojas-prometeus.webp?v=20261014",
+    catalogImageAlt: "Site da Prometeus apresentado em um notebook e um celular.",
     scene: "web",
     lead: "Seu site ou sua loja virtual, com a identidade da sua marca. Uma presença digital feita para apresentar seu negócio e facilitar o próximo contato.",
     applicationLead: "Da primeira busca ao primeiro contato. Uma presença digital que ajuda a pessoa a entender o que sua empresa faz.",
@@ -75,6 +81,7 @@ export const SERVICE_PRESENTATION: Record<string, ServicePresentation> = {
   },
   "desenvolvimento-sob-medida": {
     catalogImage: "/images/offers/software-sob-medida.webp?v=20261014",
+    catalogImageAlt: "Profissional desenvolvendo uma aplicação em um computador com dois monitores.",
     scene: "software",
     lead: "Uma aplicação para o que suas ferramentas atuais não atendem. Construída para a operação da sua empresa.",
     ctaLabel: "Quero uma solução sob medida",

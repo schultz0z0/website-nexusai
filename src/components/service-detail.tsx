@@ -20,7 +20,7 @@ export function ServiceDetail({ service }: { service: ServiceContent }) {
     <main className={styles.page}>
       <ServiceMotion>
         <header className={styles.webHero}>
-          <div className={styles.webHeroBackdrop} aria-hidden="true" data-service-artwork><Image src={service.image} alt="" fill sizes="(max-width: 760px) 784px, max(100vw, 1280px)" quality={90} loading="eager" fetchPriority="high" data-service-photo /></div>
+          <div className={styles.webHeroBackdrop} data-service-artwork><Image src={service.image} alt={service.imageAlt} fill sizes="(max-width: 760px) 784px, max(100vw, 1280px)" quality={90} loading="eager" fetchPriority="high" data-service-photo /></div>
           <div className={styles.container}>
             <nav aria-label="Caminho da página" className={styles.breadcrumbs}>
               <Link href="/">Início</Link><span aria-hidden="true">/</span>

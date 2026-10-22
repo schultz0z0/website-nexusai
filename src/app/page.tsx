@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
 import { COMMERCIAL_WHATSAPP } from "@/lib/commercial-contact";
 import { SERVICES, servicePath } from "@/lib/service-content";
-import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_OG_IMAGE, SITE_TITLE } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_SOCIAL_IMAGE, SITE_TITLE } from "@/lib/site-metadata";
 
 export const metadata: Metadata = {
   title: SITE_TITLE,
@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Prometeus — soluções digitais sob medida" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [SITE_OG_IMAGE],
+    images: [SITE_SOCIAL_IMAGE],
   },
 };
 

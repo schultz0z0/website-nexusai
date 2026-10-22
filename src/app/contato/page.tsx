@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
 import { COMMERCIAL_WHATSAPP } from "@/lib/commercial-contact";
-import { INDEXABLE_ROBOTS, SITE_OG_IMAGE } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_SOCIAL_IMAGE } from "@/lib/site-metadata";
 
 import { ContactPage } from "./contact-page";
 
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
     siteName: COMPANY.name,
     locale: "pt_BR",
     type: "website",
-    images: [{ url: SITE_OG_IMAGE, width: 1200, height: 630, alt: "Contato com a equipe Prometeus" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [{ url: SITE_OG_IMAGE, alt: "Contato com a equipe Prometeus" }],
+    images: [SITE_SOCIAL_IMAGE],
   },
 };
 

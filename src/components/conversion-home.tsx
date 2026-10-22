@@ -46,11 +46,11 @@ export function ConversionHome() {
         data-home-chapter="hero"
         className={styles.hero}
       >
-        <div className={styles.heroMedia} data-home-hero-media aria-hidden="true">
+        <div className={styles.heroMedia} data-home-hero-media>
           <Image
             data-home-hero-poster
             src="/images/cinematic/home-hero-touch-desktop.webp?v=20261014"
-            alt=""
+            alt="Mão humana e mão robótica com as pontas dos dedos se tocando."
             width={1672}
             height={941}
             sizes="(min-width: 1600px) 1600px, 100vw"
