@@ -31,7 +31,9 @@ export function proxy(request: NextRequest) {
   }
 
   if (!prefersMarkdown(request.headers.get("accept"))) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set("Vary", "Accept");
+    return response;
   }
 
   const resolution = resolveMarkdown(pathname);

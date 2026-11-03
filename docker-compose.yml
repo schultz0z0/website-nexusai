@@ -45,4 +45,5 @@ services:
       - "traefik.http.middlewares.prometeus-security.headers.permissionsPolicy=camera=(), microphone=(), geolocation=()"
       - "traefik.http.middlewares.prometeus-security.headers.stsSeconds=31536000"
       - "traefik.http.middlewares.prometeus-security.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.prometeus-security.headers.customresponseheaders.Vary=Accept, rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, accept-encoding"
       - "traefik.http.services.prometeus.loadbalancer.server.port=3000"
