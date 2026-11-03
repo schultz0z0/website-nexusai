@@ -1,56 +1,7 @@
-import { SERVICES, servicePath } from "../../lib/service-content.ts";
-import { COMPANY } from "../../lib/content.ts";
-import { WEB_PORTFOLIO } from "../../lib/web-portfolio.ts";
-
-const CONTENT = `# Prometeus
-
-> A Prometeus oferece plataformas personalizadas para marketing, estoque e vendas, além de atendimento com IA no WhatsApp, software sob medida e criação de sites e lojas virtuais.
-
-## O que fazemos
-
-- **Prometeus Copiloto**: CRM, campanhas e IA para organizar a operação de marketing, com apoio a estratégia, planejamento e análise de dados e concorrentes.
-- **Prometeus Rastro**: Controle de estoque e rastreabilidade de ativos em diferentes setores, com local, responsável e histórico de movimentações registradas. O demonstrativo tem apoio à preparação de rascunhos de atendimento; outros usos de IA dependem da personalização.
-- **Prometeus Soft Phone**: Soft phone e CRM em uma plataforma para equipes comerciais.
-- **Atendimento com IA no WhatsApp**: Agente personalizado com fontes aprovadas, triagem e encaminhamento humano.
-- **Software Sob Medida**: Aplicações, ferramentas internas, automações e integrações para os processos da empresa.
-- **Sites, Lojas Virtuais & Presença Digital**: Criação de sites e lojas virtuais com identidade da empresa, design responsivo e preparação com SEO, GEO e AIO para descoberta no Google e em plataformas de IA. Sem garantia de indexação, posição ou recomendação.
-
-## Como trabalhamos
-
-1. **Demonstração e conversa**: Copiloto, Rastro e Soft Phone têm uma base demonstrativa pronta, apresentada em reunião de vendas. O Rastro apresenta capturas reais do demonstrativo com dados de exemplo; as demais prévias são ilustrativas.
-2. **Personalização**: Adaptamos a base aos fluxos e informações da empresa; as demais soluções são definidas a partir da necessidade.
-3. **Proposta e entrega**: Escopo, prazo, investimento, código, dados, acessos e responsabilidades são definidos explicitamente.
-
-## Serviços detalhados
-
-- [Todos os serviços](${COMPANY.url}/servicos): Aplicações, requisitos e limites dos serviços.
-${SERVICES.map((service) => `- [${service.name} — ${service.category}](${COMPANY.url}${servicePath(service)}): ${service.description}`).join("\n")}
-
-## Escopo e condições
-
-Atendimento a empresas no Brasil. Nos projetos sob medida, viabilidade, investimento, prazo, acessos e responsabilidades são definidos após entender o contexto. A criação de site e loja virtual custa R$ 1.500, em 10 parcelas de R$ 150 sem juros ou R$ 1.425 no Pix (5% de desconto). Ambos incluem a contratação do pacote adicional de R$ 50/mês, com hospedagem, domínio, manutenção da infraestrutura e 3 ajustes mensais. O checkout atual é apenas uma simulação e não realiza cobranças. Os exemplos conceituais nas páginas de serviços são ilustrativos. O portfólio de desenvolvimento web apresenta projetos reais: ${WEB_PORTFOLIO.map(project => `${project.name} (${project.status.toLowerCase()})`).join(", ")}. Código, dados e dependências de terceiros são tratados explicitamente no escopo.
-
-## Páginas Principais
-
-- [Início](https://agenciaprometeus.com.br): Apresentação da empresa, proposta de valor, garantias e fluxo de trabalho.
-- [Contato e demonstrações](https://agenciaprometeus.com.br/contato): Agendamento e conversa sobre produtos, software sob medida, sites e lojas virtuais.
-
-## Informações Corporativas
-
-- **Nome / Marca**: Prometeus
-- **Site Oficial**: https://agenciaprometeus.com.br
-- **E-mail de Contato**: comercial@agenciaprometeus.com.br
-- **WhatsApp comercial**: +55 21 97323-1943. O contato agenda a demonstração dos produtos e a conversa sobre as soluções.
-- **Atendimento**: Brasil (Nacional)
-
-## Legal
-
-- [Política de Privacidade](https://agenciaprometeus.com.br/privacidade)
-- [Política de Cookies](https://agenciaprometeus.com.br/cookies)
-`;
+import { LLMS_TXT } from "../../lib/llms-content.ts";
 
 export function GET() {
-  return new Response(CONTENT, {
+  return new Response(LLMS_TXT, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   });
 }

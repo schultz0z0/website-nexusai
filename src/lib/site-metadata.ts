@@ -13,6 +13,21 @@ export const SITE_TITLE = "Prometeus | Software sob medida, automação e IA";
 export const SITE_DESCRIPTION =
   "Software sob medida, automação e agentes de IA para empresas. CRM, controle de estoque, telefonia e criação de sites e lojas virtuais com a Prometeus.";
 
+export const SITE_KEYWORDS = [
+  "Prometeus",
+  "software sob medida",
+  "automação e IA",
+  "agentes de IA",
+  "Prometeus Copiloto",
+  "Prometeus Rastro",
+  "Prometeus Soft Phone",
+  "atendimento com IA no WhatsApp",
+  "criação de sites e lojas virtuais",
+  "desenvolvimento sob medida",
+  "automação de processos",
+  "integração de sistemas",
+] as const;
+
 // Canonicals and snippets remain public even when a build is validated elsewhere.
 export const INDEXABLE_ROBOTS = {
   index: true,

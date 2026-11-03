@@ -5,11 +5,12 @@ import { JsonLd } from "@/components/json-ld";
 import { COMPANY } from "@/lib/content";
 import { COMMERCIAL_WHATSAPP } from "@/lib/commercial-contact";
 import { SERVICES, servicePath } from "@/lib/service-content";
-import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_SOCIAL_IMAGE, SITE_TITLE } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_SOCIAL_IMAGE, SITE_TITLE } from "@/lib/site-metadata";
 
 export const metadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
+  keywords: [...SITE_KEYWORDS],
   alternates: { canonical: "/" },
   robots: INDEXABLE_ROBOTS,
   openGraph: {
@@ -39,7 +40,24 @@ export default function Home() {
     logo: `${COMPANY.url}/images/logo.png`,
     email: COMPANY.email,
     description: COMPANY.description,
+    keywords: [...SITE_KEYWORDS],
+    knowsAbout: [
+      "Software sob medida",
+      "Automação de processos",
+      "Agentes de inteligência artificial",
+      "Atendimento automatizado com IA no WhatsApp",
+      "CRM para marketing e vendas",
+      "Controle de estoque e rastreabilidade",
+      "Criação de sites institucionais e lojas virtuais",
+      "Integração de sistemas e APIs",
+    ],
     areaServed: { "@type": "Country", name: "Brasil" },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "BR",
+      addressRegion: "RJ",
+      addressLocality: "Rio de Janeiro",
+    },
     sameAs: COMPANY.socials.map((social) => social.href),
     contactPoint: {
       "@type": "ContactPoint",
@@ -66,6 +84,7 @@ export default function Home() {
     "@id": `${COMPANY.url}/#webpage`,
     name: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    keywords: [...SITE_KEYWORDS],
     url: COMPANY.url,
     inLanguage: "pt-BR",
     dateModified: "2026-10-14",

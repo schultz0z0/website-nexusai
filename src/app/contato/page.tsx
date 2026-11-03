@@ -54,6 +54,12 @@ const contactSchema = {
       telephone: `+${COMMERCIAL_WHATSAPP}`,
       availableLanguage: ["pt-BR"],
     },
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "BR",
+      addressRegion: "RJ",
+      addressLocality: "Rio de Janeiro",
+    },
   },
 };
 

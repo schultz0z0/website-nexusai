@@ -4,7 +4,7 @@ import "./globals.css";
 import { NexusNav } from "@/components/nexus-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { ConsentManager } from "@/components/consent-manager";
-import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_SOCIAL_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site-metadata";
+import { INDEXABLE_ROBOTS, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_SOCIAL_IMAGE, SITE_TITLE, SITE_URL } from "@/lib/site-metadata";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -19,6 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
+  keywords: [...SITE_KEYWORDS],
   metadataBase: new URL(SITE_URL),
   robots: INDEXABLE_ROBOTS,
   icons: {
