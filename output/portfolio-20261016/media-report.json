@@ -1,0 +1,18 @@
+[
+  {
+    "id": "clementino",
+    "videoBytes": 1387740,
+    "posterBytes": 171080,
+    "width": 1280,
+    "height": 800,
+    "seconds": 30
+  },
+  {
+    "id": "fast-limp",
+    "videoBytes": 2177380,
+    "posterBytes": 92756,
+    "width": 1280,
+    "height": 800,
+    "seconds": 30
+  }
+]

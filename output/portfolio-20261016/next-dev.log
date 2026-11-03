@@ -1,0 +1,11 @@
+▲ Next.js 16.2.11 (Turbopack)
+- Local:         http://127.0.0.1:3107
+- Network:       http://127.0.0.1:3107
+- Environments: .env.local
+✓ Ready in 1472ms
+
+ GET /servicos/desenvolvimento-web 200 in 1945ms (next.js: 1781ms, generate-params: 1336ms, application-code: 164ms)
+ GET / 200 in 960ms (next.js: 83ms, application-code: 876ms)
+ GET / 200 in 217ms (next.js: 14ms, application-code: 204ms)
+ GET /servicos/desenvolvimento-web 200 in 219ms (next.js: 20ms, generate-params: 12ms, application-code: 199ms)
+[?25h
